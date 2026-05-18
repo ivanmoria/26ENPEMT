@@ -3,9 +3,11 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>XXVI ENPEMT 2026 — Belo Horizonte</title>
+<title>XXVI ENPEMT 2026</title>
+<link rel="icon" type="image/png" href="img/logo-enpemt-nav.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=DM+Sans:wght@300;400;500;600&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="mobile.css">
 <style>
   :root {
     --verde: #2D6A4F;
@@ -28,28 +30,35 @@
     background: var(--branco);
     color: var(--cinza-texto);
     overflow-x: hidden;
+    padding-left: 220px;
   }
 
   /* ─── NAV ─── */
   nav {
-    position: fixed; top: 0; width: 100%; z-index: 100;
-    padding: 18px 40px;
-    display: flex; align-items: center; justify-content: space-between;
-    background: rgba(253, 250, 245, 0.379);
+    position: fixed; left: 0; top: 0; z-index: 100;
+    width: 220px; height: 100vh;
+    display: flex; flex-direction: column;
+    padding: 28px 0;
+    background: rgba(253,250,245,.97);
     backdrop-filter: blur(12px);
-    border-bottom: 1px solid rgba(201, 149, 58, 0);
-    transition: all .3s;
+    border-right: 1px solid var(--creme-escuro);
+    box-shadow: 2px 0 20px rgba(0,0,0,.05);
+    overflow-y: auto;
+    transition: box-shadow .3s;
   }
   .nav-brand {
     font-family: 'Playfair Display', serif;
-    font-size: 1.1rem; font-weight: 700;
+    font-size: .95rem; font-weight: 700;
     color: var(--verde); letter-spacing: .5px;
-    display: flex; align-items: center; gap: 10px;
+    display: flex; flex-direction: column; align-items: flex-start; gap: 4px;
+    padding: 0 20px 24px;
+    border-bottom: 1px solid var(--creme-escuro);
+    margin-bottom: 8px;
   }
   /* ==== LOGOMARCA NAV ==== */
   /* INSTRUÇÃO: substitua o src abaixo pelo caminho da imagem da logomarca ENPEMT */
   .nav-logo {
-    height: 36px; width: auto;
+    height: 40px; width: auto; max-width: 160px;
      src: url('img/logo-enpemt-nav.png') 
   }
   .nav-logo-placeholder {
@@ -61,18 +70,26 @@
     text-align: center; line-height: 1.2;
   }
   .nav-brand span { color: var(--ouro); }
-  .nav-links { display: flex; gap: 28px; list-style: none; }
+  .nav-links { display: flex; flex-direction: column; gap: 2px; list-style: none; padding: 8px 12px; }
   .nav-links a {
-    font-size: .82rem; font-weight: 500;
+    font-size: .78rem; font-weight: 500;
     color: var(--marrom); text-decoration: none;
-    letter-spacing: .8px; text-transform: uppercase;
-    transition: color .2s;
+    letter-spacing: .5px; text-transform: uppercase;
+    padding: 10px 12px; border-radius: 10px; display: block;
+    transition: background .2s, color .2s;
   }
-  .nav-links a:hover { color: var(--ouro); }
+  .nav-links a:hover { background: var(--creme-escuro); color: var(--verde); }
+  .nav-links a.nav-active {
+    background: var(--creme-escuro);
+    color: var(--verde); font-weight: 700;
+    border-left: 3px solid var(--verde);
+    padding-left: 9px;
+  }
   .nav-btn-inscricao {
     background: var(--ouro); color: #fff !important;
-    padding: 8px 18px; border-radius: 20px;
-    font-weight: 600 !important;
+    padding: 10px 18px; border-radius: 20px;
+    font-weight: 600 !important; display: block;
+    text-align: center; margin-top: 6px;
     transition: background .2s !important;
   }
   .nav-btn-inscricao:hover { background: var(--ouro-claro) !important; color: #fff !important; }
@@ -232,32 +249,49 @@
   }
 
   /* ─── SOBRE ─── */
-  #sobre { background: var(--branco); }
+  #sobre { background-color: rgba(253, 250, 245, 0.029); }
   .sobre-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center; }
   .sobre-visual { position: relative; }
   .sobre-card-bg {
-    background: linear-gradient(135deg, var(--verde) 0%, #1a4a35 100%);
-    border-radius: 20px; padding: 50px 40px;
-    color: #fff; position: relative; overflow: hidden;
+    background: rgba(253, 250, 245, 0.18);
+    border: 1px solid rgba(255,255,255,.6);
+    border-radius: 24px; padding: 44px 40px;
+    color: var(--marrom); position: relative; overflow: hidden;
+    box-shadow: 0 8px 32px rgba(0,0,0,.08);
   }
-  .sobre-card-bg::before {
-    content: '♩';
-    position: absolute; right: -10px; bottom: -30px;
-    font-size: 160px; opacity: .06; line-height: 1;
+  #sobre { position: relative; overflow: hidden; }
+  .sobre-bg-logo {
+    position: absolute;
+    right: -5%; top: 50%;
+    transform: translateY(-50%);
+    width: 55%; max-width: 700px;
+    opacity: .22;
+    pointer-events: none; z-index: 0;
   }
-  .date-block { margin-bottom: 24px; }
+  .sobre-grid { position: relative; z-index: 1; }
+  .card-brasil-bg {
+    position: absolute; right: -30px; top: 50%;
+    transform: translateY(-50%);
+    width: 62%; pointer-events: none;
+    opacity: .22;
+  }
+  .date-block { margin-bottom: 24px; position: relative; }
   .date-big {
     font-family: 'Playfair Display', serif;
-    font-size: 4rem; font-weight: 900; line-height: 1; color: var(--ouro-claro);
+    font-size: 4rem; font-weight: 900; line-height: 1; color: var(--verde);
   }
-  .date-month { font-size: 1rem; font-weight: 600; letter-spacing: 2px; text-transform: uppercase; opacity: .8; margin-top: 4px; }
-  .sobre-info-list { list-style: none; }
+  .date-month {
+    font-size: .88rem; font-weight: 600; letter-spacing: 2.5px;
+    text-transform: uppercase; color: var(--marrom); opacity: .7; margin-top: 6px;
+  }
+  .sobre-info-list { list-style: none; margin-top: 4px; position: relative; }
   .sobre-info-list li {
-    padding: 10px 0; border-bottom: 1px solid rgba(255,255,255,.12);
-    font-size: .95rem; display: flex; align-items: center; gap: 12px;
+    padding: 9px 0; border-bottom: 1px solid rgba(61,43,31,.1);
+    font-size: .9rem; display: flex; align-items: center; gap: 12px;
+    color: var(--marrom);
   }
   .sobre-info-list li:last-child { border-bottom: none; }
-  .info-icon { font-size: 1.1rem; }
+  .info-icon { font-size: 1rem; flex-shrink: 0; }
   .tag-retorno {
     display: inline-block; background: var(--ouro); color: #fff;
     font-size: .75rem; font-weight: 700; letter-spacing: 1px;
@@ -400,7 +434,48 @@
     border-radius: 12px; padding: 16px 20px; font-size: .9rem;
   }
   .local-fact strong { display: block; color: var(--ouro-claro); margin-bottom: 2px; font-size: .75rem; letter-spacing: 1px; text-transform: uppercase; }
-  .mapa-section { margin-top: 40px; }
+  .local-fotos {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 16px;
+    margin: 36px 0;
+  }
+  .local-foto {
+    border-radius: 16px; overflow: hidden;
+    box-shadow: 0 8px 24px rgba(0,0,0,.12);
+    aspect-ratio: 4/3; position: relative;
+  }
+  .local-foto img {
+    width: 100%; height: 100%; object-fit: cover;
+    display: block; transition: transform .4s ease;
+  }
+  .local-foto:hover img { transform: scale(1.04); }
+  .local-foto figcaption {
+    position: absolute; bottom: 0; left: 0; right: 0;
+    background: linear-gradient(transparent, rgba(0,0,0,.6));
+    color: #fff; font-size: .78rem; font-weight: 600;
+    letter-spacing: .8px; text-transform: uppercase;
+    padding: 28px 16px 12px;
+  }
+  .local-foto-wide {
+    margin: 0 0 36px; border-radius: 16px; overflow: hidden;
+    box-shadow: 0 8px 24px rgba(0,0,0,.12); position: relative;
+  }
+  .local-foto-wide img {
+    width: 100%; max-height: 380px; object-fit: cover; display: block;
+    transition: transform .4s ease;
+  }
+  .local-foto-wide:hover img { transform: scale(1.02); }
+  .local-foto-wide > figcaption {
+    position: absolute; bottom: 56px; left: 0; right: 0;
+    background: linear-gradient(transparent, rgba(0,0,0,.55));
+    color: #fff; font-size: .78rem; font-weight: 600;
+    letter-spacing: .8px; text-transform: uppercase;
+    padding: 28px 20px 8px;
+  }
+  .local-foto-nota {
+    background: rgba(201,148,58,.1); border-left: 3px solid var(--ouro);
+    padding: 14px 20px; font-size: .875rem; color: var(--cinza-texto); line-height: 1.6;
+  }
+  .mapa-section { margin-top: 8px; }
   .mapa-section h4 { font-family: 'Playfair Display', serif; font-size: 1.4rem; color: var(--marrom); margin-bottom: 24px; }
   .mapa-tabs { display: flex; gap: 8px; margin-bottom: 24px; flex-wrap: wrap; }
   .mapa-tab {
@@ -505,27 +580,32 @@
   .preco-features li { font-size: .85rem; color: rgba(255,255,255,.8); display: flex; align-items: center; gap: 8px; }
   .preco-features li::before { content: '✓'; color: var(--ouro-claro); font-weight: 700; flex-shrink: 0; }
   .inscricao-cta { text-align: center; }
-  .inscricao-selecionada {
-    margin: 24px auto 0; max-width: 400px;
-    background: rgba(255,255,255,.12); border: 1px solid rgba(255,255,255,.25);
-    border-radius: 12px; padding: 16px 20px;
-    font-size: .9rem; color: rgba(255,255,255,.9);
-    display: none;
+  .inscricao-como {
+    display: flex; gap: 0; max-width: 700px; margin: 0 auto 28px;
+    background: rgba(255,255,255,.07); border: 1px solid rgba(255,255,255,.14);
+    border-radius: 16px; overflow: hidden;
   }
-  .inscricao-selecionada.visible { display: block; }
-  .btn-inscricao-finalizar {
+  .inscricao-passo {
+    flex: 1; padding: 24px 20px; display: flex; flex-direction: column;
+    align-items: center; gap: 12px; text-align: center;
+    border-right: 1px solid rgba(255,255,255,.1);
+  }
+  .inscricao-passo:last-child { border-right: none; }
+  .inscricao-num {
+    width: 36px; height: 36px; border-radius: 50%;
     background: var(--ouro); color: #fff;
-    padding: 16px 48px; border-radius: 50px;
-    font-size: 1rem; font-weight: 700; border: none; cursor: pointer;
-    transition: all .3s; box-shadow: 0 4px 20px rgba(201,148,58,.4);
-    display: inline-block;
-    opacity: .5; pointer-events: none;
-    transition: all .3s;
+    font-size: .95rem; font-weight: 700;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
   }
-  .btn-inscricao-finalizar.ativo {
-    opacity: 1; pointer-events: auto;
+  .inscricao-passo p { font-size: .85rem; color: rgba(255,255,255,.75); line-height: 1.55; }
+  .inscricao-aviso-trabalhos {
+    max-width: 700px; margin: 0 auto;
+    background: rgba(201,148,58,.15); border: 1px solid rgba(201,148,58,.35);
+    border-radius: 12px; padding: 16px 24px;
+    font-size: .88rem; color: rgba(255,255,255,.85); line-height: 1.6;
   }
-  .btn-inscricao-finalizar.ativo:hover { background: var(--ouro-claro); transform: translateY(-2px); }
+  .inscricao-aviso-trabalhos a { color: var(--ouro-claro); text-decoration: underline; }
 
   /* ─── SUBMISSÃO DE TRABALHOS ─── */
   #submissao { background: var(--branco); }
@@ -541,40 +621,7 @@
   .sub-tipo-nome { font-family: 'Playfair Display', serif; font-size: 1.05rem; font-weight: 700; color: var(--marrom); margin-bottom: 6px; }
   .sub-tipo-desc { font-size: .85rem; color: #666; line-height: 1.55; }
   .sub-tipo-prazo { font-size: .78rem; font-weight: 700; color: var(--ouro); margin-top: 12px; display: block; }
-  .sub-form-area { display: none; }
-  .sub-form-area.active {
-    display: block;
-    background: var(--creme); border-radius: 20px; padding: 36px;
-    border: 1px solid var(--creme-escuro); margin-top: 16px;
-  }
-  .sub-form-title { font-family: 'Playfair Display', serif; font-size: 1.3rem; font-weight: 700; color: var(--marrom); margin-bottom: 24px; }
-  .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
-  .form-group { display: flex; flex-direction: column; gap: 6px; }
-  .form-group.full { grid-column: 1 / -1; }
-  .form-group label { font-size: .82rem; font-weight: 600; letter-spacing: .8px; text-transform: uppercase; color: var(--marrom); }
-  .form-group input, .form-group textarea, .form-group select {
-    padding: 12px 16px; border: 1.5px solid var(--creme-escuro);
-    border-radius: 10px; font-family: 'DM Sans', sans-serif; font-size: .92rem;
-    background: #fff; color: var(--cinza-texto);
-    transition: border-color .2s;
-    outline: none;
-  }
-  .form-group input:focus, .form-group textarea:focus, .form-group select:focus { border-color: var(--verde); }
-  .form-group textarea { resize: vertical; min-height: 120px; }
-  .form-normas {
-    margin-top: 20px; padding: 18px 22px;
-    background: rgba(45,106,79,.07); border-radius: 12px;
-    border-left: 3px solid var(--verde);
-  }
-  .form-normas h6 { font-size: .82rem; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; color: var(--verde); margin-bottom: 10px; }
-  .form-normas ul { padding-left: 16px; font-size: .85rem; color: #555; line-height: 1.8; }
-  .btn-form {
-    margin-top: 24px; background: var(--verde); color: #fff;
-    padding: 13px 36px; border-radius: 50px;
-    border: none; cursor: pointer; font-family: 'DM Sans', sans-serif;
-    font-size: .95rem; font-weight: 600; transition: all .3s;
-  }
-  .btn-form:hover { background: #1a4a35; transform: translateY(-2px); }
+
 
   /* ─── FOOTER ─── */
   footer {
@@ -637,10 +684,65 @@
 
   /* ─── SCROLL PROGRESS ─── */
   #progress-bar {
-    position: fixed; top: 0; left: 0; height: 3px;
+    position: fixed; top: 0; left: 220px; height: 3px;
     background: linear-gradient(90deg, var(--verde), var(--ouro));
     z-index: 200; transition: width .1s;
   }
+
+  /* ─── PROGRAMAÇÃO: HEADER WRAPPER ─── */
+  .prog-header { margin-top: 36px; }
+  .prog-header .prog-tabs { margin-bottom: 12px; }
+
+  /* ─── FILTRO DE ATIVIDADES ─── */
+  .prog-filtro {
+    display: flex; align-items: center; gap: 10px; margin-bottom: 28px;
+  }
+  .prog-filtro-label {
+    font-size: .78rem; font-weight: 700; letter-spacing: 1px;
+    text-transform: uppercase; color: var(--marrom); white-space: nowrap;
+  }
+  .prog-vazio {
+    text-align: center; color: #aaa; padding: 48px 0; font-size: .95rem;
+  }
+  .prog-filtro select {
+    padding: 9px 40px 9px 18px; border-radius: 50px;
+    border: 1.5px solid var(--creme-escuro);
+    background-color: #fff; color: var(--marrom);
+    font-family: 'DM Sans', sans-serif; font-size: .85rem; font-weight: 500;
+    cursor: pointer; outline: none; min-width: 220px;
+    appearance: none; -webkit-appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='7' viewBox='0 0 12 7'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%233D2B1F' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+    background-repeat: no-repeat; background-position: right 14px center;
+    transition: border-color .2s;
+  }
+  .prog-filtro select:focus { border-color: var(--verde); }
+
+  /* ─── BOTÃO DOWNLOAD PDF ─── */
+  .btn-download-pdf {
+    display: inline-flex; align-items: center; gap: 6px;
+    background: var(--verde); color: #fff;
+    padding: 9px 18px; border-radius: 50px;
+    font-family: 'DM Sans', sans-serif; font-size: .82rem; font-weight: 600;
+    text-decoration: none; cursor: pointer; border: none;
+    transition: background .2s, transform .2s; white-space: nowrap;
+    margin-left: auto;
+  }
+  .btn-download-pdf:hover { background: #1a4a35; transform: translateY(-1px); }
+  .btn-download-pdf svg { width: 14px; height: 14px; fill: currentColor; flex-shrink: 0; }
+
+  /* ─── VISTA "TODOS OS 3 DIAS" ─── */
+  .prog-dia-grupo { margin-bottom: 44px; }
+  .prog-dia-grupo:last-child { margin-bottom: 0; }
+  .prog-dia-header {
+    font-family: 'Playfair Display', serif; font-size: 1rem; font-weight: 700;
+    color: var(--verde); background: var(--creme-escuro);
+    padding: 9px 20px; border-radius: 12px; margin-bottom: 24px;
+    display: inline-flex; align-items: center; gap: 8px;
+    border-left: 3px solid var(--verde-agua);
+  }
+
+  /* ─── FILTROS CSS ─── */
+
 
   /* ─── RESPONSIVO ─── */
   @media (max-width: 900px) {
@@ -656,35 +758,112 @@
     .footer-grid { grid-template-columns: 1fr; }
     .local-hero { grid-template-columns: 1fr; }
     .hero-content { padding: 100px 20px 40px; }
-    .form-grid { grid-template-columns: 1fr; }
+
   }
   @media (max-width: 480px) {
     .bh-grid { grid-template-columns: 1fr; }
     .hero-cta { flex-direction: column; align-items: center; }
   }
+
+  /* ─── TTS BAR ─── */
+  #tts-bar {
+    position: fixed; top: 14px; right: 20px; z-index: 500;
+    display: flex; align-items: center; gap: 12px;
+    background: rgba(18,18,18,.92); backdrop-filter: blur(14px);
+    color: #fff; border-radius: 50px; padding: 8px 8px 8px 16px;
+    box-shadow: 0 4px 24px rgba(0,0,0,.28);
+    font-family: 'DM Sans', sans-serif;
+    transition: background .3s;
+  }
+  #tts-bar.tts-playing { background: rgba(0,60,30,.96); }
+  #tts-label {
+    font-size: .68rem; color: rgba(255,255,255,.5);
+    letter-spacing: .6px; text-transform: uppercase;
+    max-width: 130px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+  }
+  .tts-controls { display: flex; align-items: center; gap: 6px; }
+  #tts-play-btn, #tts-stop-btn {
+    background: rgba(255,255,255,.12); border: none; color: #fff;
+    width: 32px; height: 32px; border-radius: 50%; font-size: .88rem;
+    cursor: pointer; display: flex; align-items: center; justify-content: center;
+    transition: background .2s;
+  }
+  #tts-play-btn:hover, #tts-stop-btn:hover { background: rgba(255,255,255,.25); }
+  #tts-bar.tts-playing #tts-play-btn { background: var(--verde); }
+  #tts-speed {
+    background: rgba(255,255,255,.1); border: 1px solid rgba(255,255,255,.18);
+    color: #fff; font-family: 'DM Sans', sans-serif; font-size: .74rem;
+    padding: 5px 10px; border-radius: 20px; cursor: pointer; outline: none;
+  }
+  #tts-speed option { background: #1a1a1a; color: #fff; }
+
+  /* ─── TTS DESTAQUES ─── */
+  @keyframes tts-pulse {
+    0%, 100% { background: rgba(45,106,79,.05) !important; }
+    50%       { background: rgba(45,106,79,.13) !important; }
+  }
+  .tts-el-active {
+    border-radius: 4px;
+    box-shadow: inset 3px 0 0 rgba(45,106,79,.55);
+    animation: tts-pulse 1.8s ease-in-out infinite;
+  }
+  .tts-card-active {
+    outline: 2px solid rgba(45,106,79,.28) !important;
+    box-shadow: 0 0 0 5px rgba(45,106,79,.06), 0 4px 24px rgba(45,106,79,.1) !important;
+    transition: outline .2s, box-shadow .2s;
+  }
+  .tts-clickable { cursor: pointer; }
+  .tts-clickable:hover { background: rgba(45,106,79,.04); border-radius: 4px; }
+
+  /* ─── LANG FLAGS ─── */
+  .tts-sep { color: rgba(255,255,255,.25); font-size: .8rem; margin: 0 2px; }
+  .lang-flags { display: flex; gap: 3px; align-items: center; }
+  .lang-flag {
+    background: none; border: none; cursor: pointer;
+    font-size: 1.05rem; padding: 3px 5px; border-radius: 6px;
+    transition: background .2s; opacity: .45; line-height: 1;
+  }
+  .lang-flag:hover { opacity: 1; background: rgba(255,255,255,.12); }
+  .lang-flag.lang-active { opacity: 1; background: rgba(255,255,255,.2); }
+  #tts-lang-btn {
+    display: none;
+    background: rgba(255,255,255,.12); border: none; cursor: pointer;
+    font-size: 1.2rem; padding: 5px 8px; border-radius: 8px;
+    line-height: 1; transition: background .2s; color: #fff;
+  }
+  #tts-lang-btn:hover { background: rgba(255,255,255,.25); }
+
+
 </style>
 </head>
 <body>
 
 <div id="progress-bar"></div>
+<div class="nav-overlay" id="nav-overlay"></div>
 
 <!-- NAV -->
 <nav id="navbar">
   <div class="nav-brand">
 
-      <img src="img/logo-enpemt-horizontal.png" class="nav-logo" alt="ENPEMT">
 
-    <span style="color:var(--verde)">XXVI</span> ENPEMT
+ <span style="color:var(--verde)">
+   
+          <img src="img/logo-enpemt-horizontal.png" class="nav-logo" alt="ENPEMT">
+
+      XXVI ENPEMT     </span>
   </div>
-  <ul class="nav-links">
-    <li><a href="#sobre">Evento</a></li>
-    <li><a href="#programacao">Programação</a></li>
-    <li><a href="#submissao">Trabalhos</a></li>
-    <li><a href="#bh">Belo Horizonte</a></li>
-    <li><a href="#restaurantes">Restaurantes</a></li>
-    <li><a href="#local">Local</a></li>
-    <li><a href="#hospedagem">Hospedagem</a></li>
-    <li><a href="#inscricoes" class="nav-btn-inscricao">Inscrições</a></li>
+  <button class="nav-menu-btn" id="nav-menu-btn" aria-label="Abrir menu">
+    <span></span><span></span><span></span>
+  </button>
+  <ul class="nav-links" id="nav-links">
+    <li><a href="#sobre" data-i18n="nav.evento">Evento</a></li>
+    <li><a href="#submissao">Envio de Trabalhos</a></li>
+    <li><a href="#programacao" data-i18n="nav.programacao">Programação</a></li>
+    <li><a href="#local" data-i18n="nav.local">Local</a></li>
+    <li><a href="#restaurantes" data-i18n="nav.restaurantes">Restaurantes</a></li>
+    <li><a href="#bh" data-i18n="nav.bh">Belo Horizonte</a></li>
+    <li><a href="#hospedagem" data-i18n="nav.hospedagem">Hospedagem</a></li>
+    <li><a href="#inscricoes" class="nav-btn-inscricao" data-i18n="nav.inscricoes">Inscrições</a></li>
   </ul>
 </nav>
 
@@ -706,11 +885,12 @@
 
 <!-- SOBRE O EVENTO -->
 <section id="sobre">
+  <img src="img/logo-enpemt-horizontal3.png" class="sobre-bg-logo" alt="">
   <div class="container">
     <div class="sobre-grid">
       <div class="reveal">
-        <span class="section-label">O Encontro</span>
-        <h2 class="section-title">Um grande <em>recomeço</em> presencial</h2>
+        <span class="section-label" data-i18n="sobre.label">O Encontro</span>
+        <h2 class="section-title" data-i18n="sobre.title">Um grande <em>recomeço</em> presencial</h2>
         <div class="divider"></div>
         <p class="section-text">
           Após anos de encontros virtuais impostos pela pandemia, o ENPEMT retorna à sua essência: o encontro humano, o abraço, a escuta compartilhada. A 26ª edição acontece em Belo Horizonte, na histórica Escola de Música da UFMG — um dos celeiros mais importantes da musicoterapia no Brasil.
@@ -719,7 +899,7 @@
           Três dias de pesquisa, arte, conexão e celebração da musicoterapia brasileira. Venha fazer parte deste momento histórico!
         </p>
         <div style="margin-top: 32px;">
-          <div class="tag-retorno"> De volta ao presencial!</div>
+          <div class="tag-retorno" data-i18n="sobre.tag">De volta ao presencial!</div>
           <p class="section-text" style="margin-top: 10px; font-size:.9rem">
             Uma data especial: véspera do feriado nacional de 12 de outubro, permitindo que participantes de todo o Brasil aproveitem o fim de semana prolongado em BH.
           </p>
@@ -729,15 +909,15 @@
         <div class="sobre-card-bg">
           <div class="date-block">
             <div class="date-big">8–10</div>
-            <div class="date-month">Outubro · 2026</div>
+            <div class="date-month" data-i18n="sobre.date.month">Outubro · 2026</div>
           </div>
           <ul class="sobre-info-list">
-            <li><span class="info-icon">🏛️</span> Escola de Música da UFMG</li>
-            <li><span class="info-icon">📍</span> Pampulha, Belo Horizonte – MG</li>
-            <li><span class="info-icon"></span> Palestras, mesas e oficinas</li>
-            <li><span class="info-icon"></span> Apresentação de trabalhos</li>
-            <li><span class="info-icon"></span> Assembleia da UBAM</li>
-            <li><span class="info-icon"></span> Vivências musicais</li>
+            <li><span class="info-icon">🏛️</span> <span data-i18n="sobre.info1">Escola de Música da UFMG</span></li>
+            <li><span class="info-icon">📍</span> <span data-i18n="sobre.info2">Pampulha, Belo Horizonte – MG</span></li>
+            <li><span class="info-icon">🎵</span> <span data-i18n="sobre.info3">Palestras, mesas e oficinas</span></li>
+            <li><span class="info-icon">📄</span> <span data-i18n="sobre.info4">Apresentação de trabalhos</span></li>
+            <li><span class="info-icon">🤝</span> <span data-i18n="sobre.info5">Assembleia da UBAM</span></li>
+            <li><span class="info-icon">🎶</span> <span data-i18n="sobre.info6">Vivências musicais</span></li>
           </ul>
         </div>
       </div>
@@ -745,47 +925,136 @@
   </div>
 </section>
 
+
+
+<!-- SUBMISSÃO DE TRABALHOS -->
+<section id="submissao">
+  <div class="container">
+    <span class="section-label reveal" data-i18n="sub.label">Apresente sua pesquisa</span>
+    <h2 class="section-title reveal" data-i18n="sub.title">Envio de <em>Trabalhos</em></h2>
+    <div class="divider reveal"></div>
+    <p class="section-text reveal" data-i18n="sub.intro">O XXVI ENPEMT recebe propostas em diferentes modalidades. Clique na modalidade desejada para acessar o formulário de submissão no Google Forms.</p>
+
+    <div class="sub-tipos reveal">
+      <div class="sub-tipo" onclick="window.open('https://forms.gle/teZ7L1jk9ygc1WrP7', '_blank')">
+        <span class="sub-tipo-icon">🎤</span>
+        <div class="sub-tipo-nome" data-i18n="sub.oral.nome">Comunicação Oral</div>
+        <div class="sub-tipo-desc" data-i18n="sub.oral.desc">Apresentação de resultados de pesquisa concluída ou em andamento. Tempo: 15 min + 5 min de perguntas.</div>
+        <span class="sub-tipo-prazo" data-i18n="sub.prazo">📅 Prazo: a confirmar</span>
+      </div>
+      <div class="sub-tipo" onclick="window.open('URL_GOOGLE_FORM_POSTER', '_blank')">
+        <span class="sub-tipo-icon">📋</span>
+        <div class="sub-tipo-nome" data-i18n="sub.poster.nome">Pôster</div>
+        <div class="sub-tipo-desc" data-i18n="sub.poster.desc">Apresentação visual de pesquisa. Formato A1 impresso. Sessão de apresentação com interação direta com participantes.</div>
+        <span class="sub-tipo-prazo" data-i18n="sub.prazo">📅 Prazo: a confirmar</span>
+      </div>
+      <div class="sub-tipo" onclick="window.open('URL_GOOGLE_FORM_MESA', '_blank')">
+        <span class="sub-tipo-icon">🗣️</span>
+        <div class="sub-tipo-nome" data-i18n="sub.mesa.nome">Mesa Redonda</div>
+        <div class="sub-tipo-desc" data-i18n="sub.mesa.desc">Proposta de sessão temática com 3 a 4 apresentadores articulados em torno de um eixo comum. 90 minutos.</div>
+        <span class="sub-tipo-prazo" data-i18n="sub.prazo">📅 Prazo: a confirmar</span>
+      </div>
+      <div class="sub-tipo" onclick="window.open('URL_GOOGLE_FORM_WORKSHOP', '_blank')">
+        <span class="sub-tipo-icon">🎸</span>
+        <div class="sub-tipo-nome" data-i18n="sub.workshop.nome">Workshop / Oficina</div>
+        <div class="sub-tipo-desc" data-i18n="sub.workshop.desc">Proposta de vivência prática, metodologia clínica ou comunitária. Duração de 2 horas. Vagas limitadas por oficina.</div>
+        <span class="sub-tipo-prazo" data-i18n="sub.prazo">📅 Prazo: a confirmar</span>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+
+
+
+
+
 <!-- PROGRAMAÇÃO -->
 <section id="programacao">
   <div class="container">
-    <span class="section-label reveal">Agenda</span>
-    <h2 class="section-title reveal">Programação <em>preliminar</em></h2>
+    <span class="section-label reveal" data-i18n="prog.label">Agenda</span>
+    <h2 class="section-title reveal" data-i18n="prog.title">Programação <em>preliminar</em></h2>
     <div class="divider reveal"></div>
     <p class="section-text reveal">Três dias de imersão em pesquisa, prática clínica e vivência musical. Programação sujeita a atualizações.</p>
 
-    <div class="prog-tabs" style="margin-top:36px">
-
-      <button class="tab-btn active" onclick="switchTab(event,'dia1')">8/out · Quinta</button>
-      <button class="tab-btn" onclick="switchTab(event,'dia2')">9/out · Sexta</button>
-      <button class="tab-btn" onclick="switchTab(event,'dia3')">10/out · Sábado</button>
-      <button class="tab-btn " onclick="switchTab(event,'dia4')">11/out · Domingo </button>
+    <div class="prog-header">
+      <div class="prog-tabs">
+        <button class="tab-btn active" onclick="switchTab(event,'dia1')">8/out · Quinta</button>
+        <button class="tab-btn" onclick="switchTab(event,'dia2')">9/out · Sexta</button>
+        <button class="tab-btn" onclick="switchTab(event,'dia3')">10/out · Sábado</button>
+        <button class="tab-btn" onclick="switchTab(event,'dia4')">11/out · Domingo</button>
+        <a href="programacao-enpemt2026.pdf" download class="btn-download-pdf" title="Baixar programação em PDF">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg>
+          Baixar PDF
+        </a>
+      </div>
+      <div class="prog-filtro">
+        <label for="prog-filtro-select" class="prog-filtro-label">Filtrar:</label>
+        <select id="prog-filtro-select" onchange="filtrarProg(this.value)">
+          <option value="">Todas as atividades</option>
+          <option value="palestra">Palestras &amp; Conferências</option>
+          <option value="mesa-redonda">Mesas Redondas</option>
+          <option value="comunicacoes">Comunicações Orais</option>
+          <option value="grupo-trabalho">Grupos de Trabalho</option>
+          <option value="poster">Pôsteres</option>
+          <option value="curso">Cursos Pré-Congresso</option>
+          <option value="assembleia">Assembleia UBAM</option>
+          <option value="cultural">Atividades Culturais</option>
+          <option value="abertura">Abertura &amp; Encerramento</option>
+          <option value="livre">Intervalos &amp; Alimentação</option>
+          <option value="social">Social &amp; Turismo</option>
+        </select>
+      </div>
     </div>
 
     <div id="dia1" class="tab-content active">
       <div class="timeline">
-        <div class="tl-item">
+
+       <div class="tl-item" data-tipo="curso">
+          <div class="tl-time">09:00 – 12:00</div>
+          <div class="tl-title">Curso Pré-Congresso</div>
+          <div class="tl-desc">Curso, autor</div>
+          <span class="tl-badge badge-abertura">Cursos Pré-congresso</span>
+        </div>
+
+
+
+       <div class="tl-item" data-tipo="curso">
+          <div class="tl-time">14:00 – 17:00</div>
+          <div class="tl-title">Curso Pré-Congresso</div>
+          <div class="tl-desc">Curso, autor</div>
+          <span class="tl-badge badge-abertura">Cursos Pré-congresso</span>
+        </div>
+
+
+
+
+
+
+        <div class="tl-item" data-tipo="abertura">
           <div class="tl-time">18:30 – 19:00</div>
           <div class="tl-title">Credenciamento e recepção</div>
           <div class="tl-desc">Boas-vindas, retirada de materiais e confraternização inicial.</div>
           <span class="tl-badge badge-abertura">Recepção</span>
         </div>
-        <div class="tl-item">
+        <div class="tl-item" data-tipo="abertura">
           <div class="tl-time">19:00 – 19:15</div>
           <div class="tl-title">Cerimônia de Abertura</div>
           <div class="tl-desc">Abertura oficial do XXVI ENPEMT com a fala das comissões organizadoras.</div>
           <span class="tl-badge badge-abertura">Abertura</span>
         </div>
-        <div class="tl-item">
+        <div class="tl-item" data-tipo="palestra">
           <div class="tl-time">19:15 – 20:15</div>
           <div class="tl-title">Palestra de Abertura</div>
           <div class="tl-desc">Palestra magna com pesquisadora convidada nacional. Tema central do encontro.</div>
           <span class="tl-badge badge-palestra">Palestra Magna</span>
         </div>
-        <div class="tl-item">
+        <div class="tl-item" data-tipo="cultural">
           <div class="tl-time">20:30 – 22:00</div>
           <div class="tl-title">Atividade Cultural aberta: Show Inclusivo com a banda Rock'n Colors</div>
           <div class="tl-desc">APRESENTAÇÃO DO GRUPO E PROPOSTA.</div>
-          <span class="tl-badge badge-palestra">Palestra Magna</span>
+          <span class="tl-badge badge-social">Atividade Cultural</span>
         </div>
 
       </div>
@@ -793,14 +1062,14 @@
 
     <div id="dia2" class="tab-content">
       <div class="timeline">
-        <div class="tl-item">
+        <div class="tl-item" data-tipo="mesa-redonda">
           <div class="tl-time">09:00 – 10:30</div>
           <div class="tl-title">Mesa Redonda: Sistematização e Prática Baseada em Evidências</div>
-          <div class="tl-desc">Participantes:</div>
+          <div class="tl-desc">Participantes: Camila A. Acosta (UFRJ) e Frederico Pedrosa (UFMG). Mariana Arruda (UNESPAR)? </div>
             <span class="tl-badge badge-palestra">Mesa Redonda</span>
         </div>
 
-        <div class="tl-item">
+        <div class="tl-item" data-tipo="comunicacoes">
           <div class="tl-time">10:30 – 12:30</div>
             <div class="tl-title">Sessão de Comunicações Orais — Bloco I</div>
           <div class="tl-desc">Apresentações de pôsteres e comunicações curtas.</div>
@@ -808,7 +1077,7 @@
         </div>
 
 
-        <div class="tl-item">
+        <div class="tl-item" data-tipo="livre">
           <div class="tl-time">12:30 – 14:00</div>
           <div class="tl-title">🍽️ Almoço </div>
           <div class="tl-desc">Restaurantes universitários disponíveis no campus: Praça de Serviços (perto do RU central), Restaurante da FAE e Restaurante da Faculdade de Letras. Veja a seção Restaurantes para detalhes.</div>
@@ -816,30 +1085,22 @@
    
           <span class="tl-badge badge-oficina">Almoço livre</span>
         </div>
-        <div class="tl-item">
+        <div class="tl-item" data-tipo="palestra">
           <div class="tl-time">14:00 – 15:00</div>
           <div class="tl-title">Conferência Internacional</div>
           <div class="tl-desc">Palestra com pesquisadora convidada internacional. Perspectivas globais da musicoterapia.</div>
           <span class="tl-badge badge-palestra">Internacional</span>
         </div>
 
-        <div class="tl-item">
+        <div class="tl-item" data-tipo="comunicacoes">
           <div class="tl-time">15:00 – 17:00</div>
           <div class="tl-title">Sessão de Comunicações Orais — Bloco II</div>
           <div class="tl-desc">Apresentações de pôsteres e comunicações curtas.</div>
           <span class="tl-badge badge-palestra">Comunicações</span>
         </div>
 
-        <div class="tl-item">
-          <div class="tl-time">17:00 – 18:30</div>
-          <div class="tl-title">Mesa Redonda: Conexões entre Neurociência e Reabilitação</div>
-          <div class="tl-desc">Participantes:</div>
-            <span class="tl-badge badge-palestra">Mesa Redonda</span>
-        </div>
 
-
-
-        <div class="tl-item">
+        <div class="tl-item" data-tipo="livre">
           <div class="tl-time">18:30 – 19:00</div>
           <div class="tl-title">Coffee Break e apresentação artística</div>
           <div class="tl-desc">Artistas, cardápio;</div>
@@ -848,10 +1109,10 @@
 
 
 
-       <div class="tl-item">
+       <div class="tl-item" data-tipo="mesa-redonda">
           <div class="tl-time">19:00 – 20:30</div>
           <div class="tl-title">Mesa Redonda: Acessibilidade e Diversidade Metodológica</div>
-          <div class="tl-desc">Participantes:</div>
+          <div class="tl-desc">Participantes: Queila Oliveira (SP), Noemi Ansay (UNESPAR) e Aline André (UFMG)</div>
             <span class="tl-badge badge-palestra">Mesa Redonda</span>
         </div>
 
@@ -860,7 +1121,7 @@
 
 
 
-        <div class="tl-item">
+        <div class="tl-item" data-tipo="assembleia">
           <div class="tl-time">20:30 – 22:00</div>
           <div class="tl-title">Assembleia Geral da UBAM</div>
           <div class="tl-desc">Reunião anual da União Brasileira das Associações de Musicoterapia.</div>
@@ -875,10 +1136,10 @@
 
 
 
-       <div class="tl-item">
+       <div class="tl-item" data-tipo="mesa-redonda">
           <div class="tl-time">09:00 – 10:30</div>
           <div class="tl-title">Mesa Redonda: Fortalecimento da Cooperação Sul-Sul</div>
-          <div class="tl-desc">Participantes:</div>
+          <div class="tl-desc">Participantes: Renato Sampaio (UFMG) e Andressa Arndt (UNESPAR)</div>
             <span class="tl-badge badge-palestra">Mesa Redonda</span>
         </div>
 
@@ -886,7 +1147,7 @@
 
 
 
-        <div class="tl-item">
+        <div class="tl-item" data-tipo="grupo-trabalho">
           <div class="tl-time">10:30 – 12:30</div>
           <div class="tl-title">Grupos de Trabalho</div>
           <div class="tl-desc">DESCRIÇÃO</div>
@@ -895,7 +1156,7 @@
 
 
 
-        <div class="tl-item">
+        <div class="tl-item" data-tipo="livre">
           <div class="tl-time">12:30 – 14:00</div>
           <div class="tl-title">🍽️ Almoço</div>
               <div class="tl-desc">Os restaurantes universitários estão fechados no sábado. Veja a seção Restaurantes para sugestões de lugares abertos na Pampulha e região do campus.</div>
@@ -904,33 +1165,21 @@
 
 
 
-   <div class="tl-item">
+   <div class="tl-item" data-tipo="palestra">
           <div class="tl-time">14:00 – 15:00</div>
           <div class="tl-title">Conferência Internacional</div>
           <div class="tl-desc">Palestra com pesquisadora convidada internacional. Perspectivas globais da musicoterapia.</div>
           <span class="tl-badge badge-palestra">Internacional</span>
         </div>
 
-              <div class="tl-item">
+              <div class="tl-item" data-tipo="poster">
           <div class="tl-time">15:00 – 17:00</div>
           <div class="tl-title">Sessão de Pôsteres</div>
           <div class="tl-desc">DESCRIÇÃO</div>
           <span class="tl-badge badge-palestra">Pôsteres</span>
         </div>
 
-
-       <div class="tl-item">
-          <div class="tl-time">17:00 – 18:30</div>
-          <div class="tl-title">Mesa Redonda: Pesquisas em Musicoterapia Comunitária</div>
-          <div class="tl-desc">Participantes:</div>
-            <span class="tl-badge badge-palestra">Mesa Redonda</span>
-        </div>
-
-
-
-
-
-        <div class="tl-item">
+        <div class="tl-item" data-tipo="livre">
           <div class="tl-time">18:30 – 19:00</div>
           <div class="tl-title">Coffee Break e apresentação artística</div>
           <div class="tl-desc">Artistas, cardápio;</div>
@@ -939,7 +1188,7 @@
 
 
 
-        <div class="tl-item">
+        <div class="tl-item" data-tipo="abertura">
           <div class="tl-time">19:00 – 20:00</div>
           <div class="tl-title">Cerimônia de Encerramento</div>
           <div class="tl-desc">Premiações, agradecimentos e vivência musical de encerramento. Até o XXVII ENPEMT!</div>
@@ -950,468 +1199,36 @@
 
     <div id="dia4" class="tab-content">
       <div class="timeline">
-        <div class="tl-item">
+        <div class="tl-item" data-tipo="social">
           <div class="tl-time">Dia livre</div>
           <div class="tl-title">🌿 Exploração de Belo Horizonte</div>
           <div class="tl-desc">Véspera do feriado de 12 de outubro — aproveite para conhecer a cidade! Sugestões: Lagoa da Pampulha, Igreja de São Francisco, Museu de Arte da Pampulha, Av. Flemming, Savassi, Mangabeiras. Feira Hippie (Av. Afonso Pena, à partir de 6h)</div>
           <span class="tl-badge badge-social">Turismo livre</span>
         </div>
-        <div class="tl-item">
+        <div class="tl-item" data-tipo="social">
           <div class="tl-time">🍽️ Almoço e Jantar</div>
           <div class="tl-title">Restaurantes no Domingo</div>
           <div class="tl-desc">DESCRIÇÃO</div>
           <span class="tl-badge badge-social">Fora do campus</span>
         </div>
-        <div class="tl-item">
+        <div class="tl-item" data-tipo="social">
           <div class="tl-time">Próximo ao evento</div>
           <div class="tl-title">✈️ Retorno dos participantes</div>
           <div class="tl-desc">Com o feriado de 12/10 (domingo), muitos participantes aproveitarão para retornar na segunda ou terça. Programe suas passagens com antecedência!</div>
-          <span class="tl-badge badge-abertura">Info</span>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- SUBMISSÃO DE TRABALHOS -->
-<section id="submissao">
-  <div class="container">
-    <span class="section-label reveal">Apresente sua pesquisa</span>
-    <h2 class="section-title reveal">Envio de <em>Trabalhos</em></h2>
-    <div class="divider reveal"></div>
-    <p class="section-text reveal">O XXVI ENPEMT recebe propostas em diferentes modalidades. Clique na modalidade desejada para preencher o formulário de submissão.</p>
-
-    <div class="sub-tipos reveal">
-      <div class="sub-tipo" onclick="abrirSubmissao('oral')">
-        <span class="sub-tipo-icon">🎤</span>
-        <div class="sub-tipo-nome">Comunicação Oral</div>
-        <div class="sub-tipo-desc">Apresentação de resultados de pesquisa concluída ou em andamento. Tempo: 15 min + 5 min de perguntas.</div>
-        <span class="sub-tipo-prazo">📅 Prazo: a confirmar</span>
-      </div>
-      <div class="sub-tipo" onclick="abrirSubmissao('poster')">
-        <span class="sub-tipo-icon">📋</span>
-        <div class="sub-tipo-nome">Pôster</div>
-        <div class="sub-tipo-desc">Apresentação visual de pesquisa. Formato A1 impresso. Sessão de apresentação com interação direta com participantes.</div>
-        <span class="sub-tipo-prazo">📅 Prazo: a confirmar</span>
-      </div>
-      <div class="sub-tipo" onclick="abrirSubmissao('mesa')">
-        <span class="sub-tipo-icon">🗣️</span>
-        <div class="sub-tipo-nome">Mesa Redonda</div>
-        <div class="sub-tipo-desc">Proposta de sessão temática com 3 a 4 apresentadores articulados em torno de um eixo comum. 90 minutos.</div>
-        <span class="sub-tipo-prazo">📅 Prazo: a confirmar</span>
-      </div>
-      <div class="sub-tipo" onclick="abrirSubmissao('workshop')">
-        <span class="sub-tipo-icon">🎸</span>
-        <div class="sub-tipo-nome">Workshop / Oficina</div>
-        <div class="sub-tipo-desc">Proposta de vivência prática, metodologia clínica ou comunitária. Duração de 2 horas. Vagas limitadas por oficina.</div>
-        <span class="sub-tipo-prazo">📅 Prazo: a confirmar</span>
-      </div>
-    </div>
-
-    <!-- Formulário dinâmico -->
-    <div id="form-oral" class="sub-form-area">
-      <div class="sub-form-title">🎤 Submissão — Comunicação Oral</div>
-      <div class="form-normas">
-        <h6>Normas para comunicação oral</h6>
-        <ul>
-          <li>Resumo de até 300 palavras, incluindo objetivos, metodologia e resultados</li>
-          <li>Até 5 palavras-chave</li>
-          <li>Máximo de 4 autores</li>
-          <li>Apresentação de 15 minutos + 5 minutos de perguntas</li>
-          <li>Envio de arquivo de apresentação (PDF ou PPTX) até 5 dias antes do evento</li>
-        </ul>
-      </div>
-      <form onsubmit="enviarSubmissao(event,'Comunicação Oral')">
-        <div class="form-grid" style="margin-top:20px">
-          <div class="form-group">
-            <label>Título do trabalho *</label>
-            <input type="text" placeholder="Título completo do trabalho" required>
-          </div>
-          <div class="form-group">
-            <label>Área temática *</label>
-            <select required>
-              <option value="">Selecione...</option>
-              <option>Musicoterapia clínica</option>
-              <option>Musicoterapia social/comunitária</option>
-              <option>Formação em musicoterapia</option>
-              <option>Pesquisa e metodologia</option>
-              <option>Neurociências e musicoterapia</option>
-              <option>Musicoterapia e saúde mental</option>
-              <option>Outro</option>
-            </select>
-          </div>
-          <div class="form-group">
-            <label>Autor(a) principal *</label>
-            <input type="text" placeholder="Nome completo" required>
-          </div>
-          <div class="form-group">
-            <label>Instituição / Vínculo</label>
-            <input type="text" placeholder="Universidade, clínica, etc.">
-          </div>
-          <div class="form-group">
-            <label>E-mail de contato *</label>
-            <input type="email" placeholder="email@exemplo.com" required>
-          </div>
-          <div class="form-group">
-            <label>Co-autores (opcional)</label>
-            <input type="text" placeholder="Nomes separados por vírgula">
-          </div>
-          <div class="form-group full">
-            <label>Resumo (até 300 palavras) *</label>
-            <textarea placeholder="Objetivos, metodologia, resultados e conclusões..." required></textarea>
-          </div>
-          <div class="form-group full">
-            <label>Palavras-chave (até 5)</label>
-            <input type="text" placeholder="Ex: musicoterapia, saúde mental, intervenção clínica...">
-          </div>
-        </div>
-        <button type="submit" class="btn-form">Enviar proposta →</button>
-      </form>
-    </div>
-
-    <div id="form-poster" class="sub-form-area">
-      <div class="sub-form-title">📋 Submissão — Pôster</div>
-      <div class="form-normas">
-        <h6>Normas para pôster</h6>
-        <ul>
-          <li>Resumo de até 200 palavras</li>
-          <li>Pôster impresso no formato A1 (594 × 841 mm), orientação retrato</li>
-          <li>Envio de versão digital (PDF) para revisão até 15 dias antes do evento</li>
-          <li>Sessão de apresentação com tempo de 10 minutos por pôster</li>
-        </ul>
-      </div>
-      <form onsubmit="enviarSubmissao(event,'Pôster')">
-        <div class="form-grid" style="margin-top:20px">
-          <div class="form-group">
-            <label>Título do trabalho *</label>
-            <input type="text" placeholder="Título completo" required>
-          </div>
-          <div class="form-group">
-            <label>Área temática *</label>
-            <select required>
-              <option value="">Selecione...</option>
-              <option>Musicoterapia clínica</option>
-              <option>Musicoterapia social/comunitária</option>
-              <option>Formação em musicoterapia</option>
-              <option>Pesquisa e metodologia</option>
-              <option>Neurociências e musicoterapia</option>
-              <option>Musicoterapia e saúde mental</option>
-              <option>Outro</option>
-            </select>
-          </div>
-          <div class="form-group">
-            <label>Autor(a) principal *</label>
-            <input type="text" placeholder="Nome completo" required>
-          </div>
-          <div class="form-group">
-            <label>E-mail de contato *</label>
-            <input type="email" placeholder="email@exemplo.com" required>
-          </div>
-          <div class="form-group full">
-            <label>Resumo (até 200 palavras) *</label>
-            <textarea placeholder="Breve descrição do trabalho..." required></textarea>
-          </div>
-          <div class="form-group full">
-            <label>Palavras-chave</label>
-            <input type="text" placeholder="Ex: musicoterapia, pôster, pesquisa...">
-          </div>
-        </div>
-        <button type="submit" class="btn-form">Enviar proposta →</button>
-      </form>
-    </div>
-
-    <div id="form-mesa" class="sub-form-area">
-      <div class="sub-form-title">🗣️ Submissão — Mesa Redonda</div>
-      <div class="form-normas">
-        <h6>Normas para mesa redonda</h6>
-        <ul>
-          <li>Proposta articulada com 3 a 4 apresentadores em torno de um eixo temático comum</li>
-          <li>Resumo geral da mesa de até 400 palavras + resumo individual de cada apresentação (até 150 palavras)</li>
-          <li>Duração total: 90 minutos, incluindo discussão</li>
-          <li>Indicar mediador(a) da mesa</li>
-        </ul>
-      </div>
-      <form onsubmit="enviarSubmissao(event,'Mesa Redonda')">
-        <div class="form-grid" style="margin-top:20px">
-          <div class="form-group full">
-            <label>Título da mesa *</label>
-            <input type="text" placeholder="Título temático da mesa redonda" required>
-          </div>
-          <div class="form-group">
-            <label>Coordenador(a) / Mediador(a) *</label>
-            <input type="text" placeholder="Nome completo" required>
-          </div>
-          <div class="form-group">
-            <label>E-mail do coordenador *</label>
-            <input type="email" placeholder="email@exemplo.com" required>
-          </div>
-          <div class="form-group full">
-            <label>Apresentadores (nomes e instituições)</label>
-            <input type="text" placeholder="Ex: João Silva (UFRJ), Maria Costa (UFMG)...">
-          </div>
-          <div class="form-group full">
-            <label>Resumo geral da mesa (até 400 palavras) *</label>
-            <textarea placeholder="Justificativa, eixo temático e articulação entre as apresentações..." style="min-height:150px" required></textarea>
-          </div>
-        </div>
-        <button type="submit" class="btn-form">Enviar proposta →</button>
-      </form>
-    </div>
-
-    <div id="form-workshop" class="sub-form-area">
-      <div class="sub-form-title">🎸 Submissão — Workshop / Oficina</div>
-      <div class="form-normas">
-        <h6>Normas para workshop/oficina</h6>
-        <ul>
-          <li>Proposta de vivência prática com duração de 2 horas</li>
-          <li>Vagas limitadas: entre 15 e 30 participantes por oficina</li>
-          <li>Indicar materiais necessários (instrumentos, recursos sonoros, etc.)</li>
-          <li>Resumo de até 300 palavras com objetivos, metodologia e público-alvo</li>
-        </ul>
-      </div>
-      <form onsubmit="enviarSubmissao(event,'Workshop')">
-        <div class="form-grid" style="margin-top:20px">
-          <div class="form-group">
-            <label>Título do workshop *</label>
-            <input type="text" placeholder="Título da oficina" required>
-          </div>
-          <div class="form-group">
-            <label>Facilitador(a) principal *</label>
-            <input type="text" placeholder="Nome completo" required>
-          </div>
-          <div class="form-group">
-            <label>E-mail *</label>
-            <input type="email" placeholder="email@exemplo.com" required>
-          </div>
-          <div class="form-group">
-            <label>Público-alvo</label>
-            <select>
-              <option value="">Selecione...</option>
-              <option>Estudantes de graduação</option>
-              <option>Pós-graduandos</option>
-              <option>Musicoterapeutas graduados</option>
-              <option>Todos os públicos</option>
-            </select>
-          </div>
-          <div class="form-group full">
-            <label>Materiais necessários</label>
-            <input type="text" placeholder="Ex: instrumentos de percussão, caixinhas de som...">
-          </div>
-          <div class="form-group full">
-            <label>Resumo (até 300 palavras) *</label>
-            <textarea placeholder="Objetivos, metodologia e descrição da vivência..." required></textarea>
-          </div>
-        </div>
-        <button type="submit" class="btn-form">Enviar proposta →</button>
-      </form>
-    </div>
-  </div>
-</section>
-
-<!-- BELO HORIZONTE -->
-<section id="bh">
-  <div class="container">
-    <span class="section-label reveal">A Cidade</span>
-    <h2 class="section-title reveal">Bem-vindo a <em>Belo Horizonte</em></h2>
-    <div class="divider reveal"></div>
-    <p class="section-text reveal">A capital mineira é vibrante, acolhedora e repleta de arte, cultura e gastronomia. Chegando antes do feriado, vale explorar tudo que BH tem a oferecer!</p>
-
-    <div class="bh-grid" style="margin-top:48px">
-      <div class="bh-card reveal">
-        <div class="bh-card-img">
-          <!--
-            ==== IMAGEM: LAGOA DA PAMPULHA ====
-            Usando imagem pública do Wikimedia Commons.
-            Para substituir por imagem própria: <img src="img/lagoa-pampulha.jpg" alt="Lagoa da Pampulha">
-          -->
-          <img
-            src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/96/Lagoa_da_Pampulha_-_Belo_Horizonte.jpg/640px-Lagoa_da_Pampulha_-_Belo_Horizonte.jpg"
-            alt="Lagoa da Pampulha"
-            onerror="this.parentElement.innerHTML='<div class=bh-card-img-fallback style=background:linear-gradient(135deg,#74C69D22,#2D6A4F22)>🌊</div>'"
-          >
-        </div>
-        <div class="bh-card-body">
-          <div class="bh-card-title">Lagoa da Pampulha</div>
-          <div class="bh-card-text">A poucos minutos da UFMG, a Lagoa da Pampulha é Patrimônio da Humanidade pela UNESCO. Passeio obrigatório com a Igreja São Francisco de Assis, obra de Niemeyer e Portinari.</div>
-        </div>
-      </div>
-      <div class="bh-card reveal">
-        <div class="bh-card-img">
-          <!--
-            ==== IMAGEM: IGREJA DA PAMPULHA (São Francisco de Assis) ====
-          -->
-          <img
-            src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/0f/Belo_Horizonte_-_Igreja_de_S%C3%A3o_Francisco_de_Assis_-_panoramio.jpg/640px-Belo_Horizonte_-_Igreja_de_S%C3%A3o_Francisco_de_Assis_-_panoramio.jpg"
-            alt="Igreja São Francisco de Assis - Pampulha"
-            onerror="this.parentElement.innerHTML='<div class=bh-card-img-fallback style=background:linear-gradient(135deg,#C9943A22,#E8B86D22)>⛪</div>'"
-          >
-        </div>
-        <div class="bh-card-body">
-          <div class="bh-card-title">Igreja da Pampulha</div>
-          <div class="bh-card-text">A Igreja de São Francisco de Assis, projetada por Oscar Niemeyer com painéis de Portinari, é um dos ícones máximos da arquitetura modernista brasileira. Está a poucos minutos do campus.</div>
-        </div>
-      </div>
-      <div class="bh-card reveal">
-        <div class="bh-card-img">
-          <!--
-            ==== IMAGEM: MERCADO MUNICIPAL ====
-          -->
-          <img
-            src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/1f/Mercado_Central_de_Belo_Horizonte.jpg/640px-Mercado_Central_de_Belo_Horizonte.jpg"
-            alt="Mercado Central de Belo Horizonte"
-            onerror="this.parentElement.innerHTML='<div class=bh-card-img-fallback style=background:linear-gradient(135deg,#B5534A22,#E8765022)>🏪</div>'"
-          >
-        </div>
-        <div class="bh-card-body">
-          <div class="bh-card-title">Mercado Central</div>
-          <div class="bh-card-text">O Mercado Central de BH é um dos maiores do Brasil — mais de 400 boxes com queijos, cachaças, doces de Minas e artesanato. Parada obrigatória para quem quer levar lembrança mineira para casa!</div>
-        </div>
-      </div>
-      <div class="bh-card reveal">
-        <div class="bh-card-img">
-          <div class="bh-card-img-fallback" style="background: linear-gradient(135deg, #2D6A4F22, #52B78822)">🎭</div>
-        </div>
-        <div class="bh-card-body">
-          <div class="bh-card-title">Circuito Cultural</div>
-          <div class="bh-card-text">Museu de Arte da Pampulha, Palácio das Artes, Centro Cultural UFMG. BH tem uma agenda cultural intensa durante outubro — aproveite os intervalos do evento!</div>
-        </div>
-      </div>
-      <div class="bh-card reveal">
-        <div class="bh-card-img">
-          <div class="bh-card-img-fallback" style="background: linear-gradient(135deg, #9B59B622, #D7BDE222)">🌆</div>
-        </div>
-        <div class="bh-card-body">
-          <div class="bh-card-title">Mirante do Mangabeiras</div>
-          <div class="bh-card-text">Vista panorâmica de tirar o fôlego da cidade, especialmente ao entardecer. Uma das atrações mais fotogênicas de Belo Horizonte — imperdível!</div>
-        </div>
-      </div>
-      <div class="bh-card reveal">
-        <div class="bh-card-img">
-          <div class="bh-card-img-fallback" style="background: linear-gradient(135deg, #E67E2222, #F0B27A22)">🎵</div>
-        </div>
-        <div class="bh-card-body">
-          <div class="bh-card-title">Cena Musical de BH</div>
-          <div class="bh-card-text">BH é berço de grandes nomes da MPB. Clubes de jazz, shows de música ao vivo e festivais acontecem durante outubro — combine a visita com a agenda cultural!</div>
+          <span class="tl-badge badge-social">Logística</span>
         </div>
       </div>
     </div>
 
-    <!-- FEIRA HIPPIE -->
-    <div class="hippie-box reveal" style="margin-top:48px">
-      <div class="hippie-icon">🎨</div>
-      <div>
-        <div class="hippie-title">Feira Hippie — Todo Domingo na Av. Afonso Pena</div>
-        <div class="hippie-text">
-          No domingo, não deixe de visitar a tradicional <strong>Feira Hippie de Belo Horizonte</strong>! Funciona aos domingos, das 8h às 18h, na <strong>Av. Afonso Pena</strong>, nas proximidades da <strong>Praça 7 de Setembro</strong> (Centro). Artesanato, roupas, acessórios, antiguidades, comidas típicas e muita cultura popular mineira. É uma das feiras de artesanato mais tradicionais e queridas do Brasil — em funcionamento há mais de 50 anos.
-          <br><br>
-          <strong>📍 Como chegar:</strong> Av. Afonso Pena, entre a Praça 7 de Setembro e a Praça Raul Soares, Centro de BH. Metrô até a estação Central ou ônibus para o Centro.
-        </div>
-      </div>
-    </div>
-
-    <!-- COMIDAS -->
-    <div style="margin-top: 72px;">
-      <span class="section-label reveal">Gastronomia</span>
-      <h2 class="section-title reveal">Sabores de <em>Minas Gerais</em></h2>
-      <div class="divider reveal"></div>
-      <p class="section-text reveal">A culinária mineira é patrimônio imaterial do Brasil. Prepare o apetite — a experiência gastronômica faz parte do congresso!</p>
-
-      <div class="comida-grid" style="margin-top:36px">
-        <div class="comida-item reveal"><span class="comida-emoji">🫕</span><div class="comida-nome">Feijão Tropeiro</div><div class="comida-desc">Feijão com farinha, bacon, linguiça e ovo. O prato mais emblemático da culinária mineira.</div></div>
-        <div class="comida-item reveal"><span class="comida-emoji">🧀</span><div class="comida-nome">Pão de Queijo</div><div class="comida-desc">Ícone absoluto de Minas. Com queijo meia-cura, crocante por fora e macio por dentro.</div></div>
-        <div class="comida-item reveal"><span class="comida-emoji">🍖</span><div class="comida-nome">Costelinha ao Forno</div><div class="comida-desc">Lentamente assada com temperos mineiros. Uma das grandes atrações dos almoços em BH.</div></div>
-        <div class="comida-item reveal"><span class="comida-emoji">🥘</span><div class="comida-nome">Tutu à Mineira</div><div class="comida-desc">Creme espesso de feijão com torresmo. Acompanhamento clássico nos restaurantes tradicionais.</div></div>
-        <div class="comida-item reveal"><span class="comida-emoji">🌽</span><div class="comida-nome">Angu com Quiabo</div><div class="comida-desc">Comida de domingo e de festa junina, servida com carinho em toda Belo Horizonte.</div></div>
-        <div class="comida-item reveal"><span class="comida-emoji">🍮</span><div class="comida-nome">Doce de Leite</div><div class="comida-desc">O doce que define Minas. Artesanal, cremoso, de colher. Perfeito com queijo coalho.</div></div>
-        <div class="comida-item reveal"><span class="comida-emoji">🥗</span><div class="comida-nome">Frango ao Molho Pardo</div><div class="comida-desc">Receita ancestral mineira. Frango caipira com molho escuro — prato de domingo.</div></div>
-        <div class="comida-item reveal"><span class="comida-emoji">☕</span><div class="comida-nome">Café com Pão de Queijo</div><div class="comida-desc">O café da manhã mineiro por excelência. Café forte com pão de queijo quentinho.</div></div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- RESTAURANTES -->
-<section id="restaurantes">
-  <div class="container">
-    <span class="section-label reveal">Onde Comer</span>
-    <h2 class="section-title reveal">Restaurantes <em>durante o evento</em></h2>
-    <div class="divider reveal"></div>
-    <p class="section-text reveal">Dicas práticas por dia do evento — desde os restaurantes universitários do campus até opções abertas no sábado.</p>
-
-    <div class="rest-tabs reveal">
-      <button class="rest-tab active" onclick="switchRest(event,'rest-quinta')">Qui e Sex · 8/10 e 9/10</button>
-
-      <button class="rest-tab" onclick="switchRest(event,'rest-sabado')">Sáb · 10/out</button>
-    </div>
-
-    <div id="rest-quinta" class="rest-content active">
-
-
-
-      <p style="font-size:.9rem;color:#666;margin-bottom:20px">Na quinta (dia 1) e sexta (dia 2), os restaurantes do campus estão em pleno funcionamento.</p>
-
-      <div class="rest-grid">
-        <div class="rest-card">
-          <div class="rest-name">Praça de Serviços da UFMG</div>
-          <div class="rest-local">📍 Campus UFMG, Pampulha</div>
-          <div class="rest-desc">O principal polo de alimentação do campus, com diversas lanchonetes, restaurantes self-service e opções variadas. Fica próximo ao centro do campus, de fácil acesso a pé da Escola de Música.</div>
-          <span class="rest-badge">✓ Aberto qui/sex · Almoço e lanche</span>
-        </div>
-        <div class="rest-card">
-          <div class="rest-name">Restaurante da FAE (Faculdade de Educação)</div>
-          <div class="rest-local">📍 Fac. de Educação, UFMG</div>
-          <div class="rest-desc">Restaurante universitário da Faculdade de Educação. Cardápio com opções self-service, preços acessíveis. Muito utilizado por participantes de eventos no campus.</div>
-          <span class="rest-badge">✓ Aberto qui/sex · Almoço</span>
-        </div>
-        <div class="rest-card">
-          <div class="rest-name">Restaurante da Faculdade de Letras</div>
-          <div class="rest-local">📍 Fac. de Letras, UFMG</div>
-          <div class="rest-desc">Outro restaurante universitário de boa estrutura, próximo ao setor das humanidades. Cardápio variado com opções vegetarianas.</div>
-          <span class="rest-badge">✓ Aberto qui/sex · Almoço</span>
-        </div>
-        <div class="rest-card">
-          <div class="rest-name">Lanchonete e café </div>
-          <div class="rest-local">📍 Escola de Belas Artes, UFMG </div>
-          <div class="rest-desc">Pão de queijo, salgados, café e lanches rápidos disponíveis em um prédio bem próximo a Escola de Música (5 min à pé).</div>
-          <span class="rest-badge">✓ Aberto dias úteis · Lanche</span>
-        </div>
-      </div>
-    </div>
-
-    <div id="rest-sabado" class="rest-content">
-      <div class="rest-note" style="margin-bottom:20px">
-        ⚠️ <strong>Atenção:</strong> No sábado, os restaurantes universitários do campus estão fechados. Abaixo, sugestões de restaurantes abertos na região da Pampulha e arredores da UFMG. Confirme o funcionamento antes de ir, pois horários podem variar.
-      </div>
-      <div class="rest-grid">
-        <div class="rest-card">
-          <div class="rest-name">Restaurantes no entorno da Lagoa da Pampulha</div>
-          <div class="rest-local">📍 Orla da Lagoa — ~5 min do campus</div>
-          <div class="rest-desc">A orla da Lagoa da Pampulha tem bares e restaurantes abertos no sábado. Uma excelente opção para combinar almoço ou jantar com um passeio pela lagoa e pelo Conjunto Arquitetônico da UNESCO.</div>
-          <span class="rest-badge">✓ Aberto sábado · Almoço e jantar</span>
-        </div>
-        <div class="rest-card">
-          <div class="rest-name">Bairro Bandeirantes / Pampulha</div>
-          <div class="rest-local">📍 Próximo à UFMG</div>
-          <div class="rest-desc">O bairro ao redor do campus tem padarias, lanchonetes e pequenos restaurantes que funcionam aos sábados. Consulte Google Maps por "restaurantes perto de mim" na região da UFMG Pampulha.</div>
-          <span class="rest-badge">✓ Verificar horários</span>
-        </div>
-
-        <div class="rest-card">
-          <div class="rest-name">Delivery e aplicativos</div>
-          <div class="rest-local">📱 iFood, Rappi etc.</div>
-          <div class="rest-desc">Boa cobertura de delivery na região da Pampulha no sábado. Opção prática para quem prefere refeições no alojamento ou hospedagem.</div>
-          <span class="rest-badge">✓ Disponível sábado</span>
-        </div>
-      </div>
-    </div>
+    <div id="prog-resultado" hidden></div>
   </div>
 </section>
 
 <!-- LOCAL / UFMG -->
 <section id="local">
   <div class="container">
-    <span class="section-label reveal">O Local</span>
-    <h2 class="section-title reveal">Escola de Música da <em>UFMG</em></h2>
+    <span class="section-label reveal" data-i18n="local.label">O Local</span>
+    <h2 class="section-title reveal" data-i18n="local.title">Escola de Música da <em>UFMG</em></h2>
     <div class="divider reveal"></div>
 
     <div class="local-hero reveal">
@@ -1427,6 +1244,26 @@
         <div class="local-fact"><strong>Campus</strong>Patrimônio Mundial UNESCO (Conjunto Moderno da Pampulha)</div>
       </div>
     </div>
+
+    <div class="local-fotos reveal">
+      <figure class="local-foto">
+        <img src="img/escola.jpeg" alt="Fachada da Escola de Música da UFMG">
+        <figcaption>Fachada · Escola de Música da UFMG</figcaption>
+      </figure>
+      <figure class="local-foto">
+        <img src="img/auditorio.webp" alt="Auditório da Escola de Música da UFMG">
+        <figcaption>Auditório Principal</figcaption>
+      </figure>
+    </div>
+
+    <figure class="local-foto-wide reveal">
+      <img src="img/conservatorio.jpg" alt="Conservatório UFMG — Centro de Belo Horizonte">
+      <figcaption>Conservatório UFMG</figcaption>
+
+      <div class="local-foto-nota">
+        <strong>Atenção:</strong> Esta é a fachada do Conservatório UFMG, localizado no centro de Belo Horizonte — um patrimônio histórico da música mineira. O <strong>XXVI ENPEMT acontece na Escola de Música da UFMG</strong>, no Campus Pampulha.
+      </div>
+    </figure>
 
     <div class="mapa-section reveal">
       <h4>🗺️ Como chegar</h4>
@@ -1499,11 +1336,243 @@ Os aplicativos de corrida, como Uber e 99 funcionam bem, além dos taxis tradici
   </div>
 </section>
 
+<!-- RESTAURANTES -->
+<section id="restaurantes">
+  <div class="container">
+    <span class="section-label reveal" data-i18n="rest.label">Onde Comer</span>
+    <h2 class="section-title reveal" data-i18n="rest.title">Restaurantes <em>durante o evento</em></h2>
+    <div class="divider reveal"></div>
+    <p class="section-text reveal">Dicas práticas por dia do evento — desde os restaurantes universitários do campus até opções abertas no sábado.</p>
+
+    <div class="rest-tabs reveal">
+      <button class="rest-tab active" onclick="switchRest(event,'rest-quinta')">Qui e Sex · 8/10 e 9/10</button>
+
+      <button class="rest-tab" onclick="switchRest(event,'rest-sabado')">Sáb · 10/out</button>
+    </div>
+
+    <div id="rest-quinta" class="rest-content active">
+
+
+
+      <p style="font-size:.9rem;color:#666;margin-bottom:20px">Na quinta (dia 1) e sexta (dia 2), os restaurantes do campus estão em pleno funcionamento.</p>
+
+      <div class="rest-grid">
+
+        <div class="rest-card">
+          <div class="rest-name">ASSUFEMG</div>
+          <div class="rest-local">📍 Campus UFMG, Pampulha</div>
+          <div class="rest-desc"> Fica próximo à escola, atrás do prédio de Belas Artes. 4 min à pé da Escola de Música.</div>
+          <span class="rest-badge">✓ Aberto qui/sex · Almoço e lanche</span>
+        </div>
+
+
+        <div class="rest-card">
+          <div class="rest-name">Praça de Serviços da UFMG</div>
+          <div class="rest-local">📍 Campus UFMG, Pampulha</div>
+          <div class="rest-desc">O principal polo de alimentação do campus, com diversas lanchonetes, restaurantes self-service e opções variadas. Fica próximo ao centro do campus, de fácil acesso a pé da Escola de Música.</div>
+          <span class="rest-badge">✓ Aberto qui/sex · Almoço e lanche</span>
+        </div>
+        <div class="rest-card">
+          <div class="rest-name">Restaurante da FAE (Faculdade de Educação)</div>
+          <div class="rest-local">📍 Fac. de Educação, UFMG</div>
+          <div class="rest-desc">Restaurante universitário da Faculdade de Educação. Cardápio com opções self-service, preços acessíveis. Muito utilizado por participantes de eventos no campus.</div>
+          <span class="rest-badge">✓ Aberto qui/sex · Almoço</span>
+        </div>
+        <div class="rest-card">
+          <div class="rest-name">Restaurante da Faculdade de Letras</div>
+          <div class="rest-local">📍 Fac. de Letras, UFMG</div>
+          <div class="rest-desc">Outro restaurante universitário de boa estrutura, próximo ao setor das humanidades. Cardápio variado com opções vegetarianas.</div>
+          <span class="rest-badge">✓ Aberto qui/sex · Almoço</span>
+        </div>
+        <div class="rest-card">
+          <div class="rest-name">Lanchonete e café </div>
+          <div class="rest-local">📍 Escola de Belas Artes, UFMG </div>
+          <div class="rest-desc">Pão de queijo, salgados, café e lanches rápidos disponíveis em um prédio bem próximo a Escola de Música (5 min à pé).</div>
+          <span class="rest-badge">✓ Aberto dias úteis · Lanche</span>
+        </div>
+      </div>
+    </div>
+
+    <div id="rest-sabado" class="rest-content">
+      <div class="rest-note" style="margin-bottom:20px">
+        ⚠️ <strong>Atenção:</strong> No sábado, os restaurantes universitários do campus estão fechados. Abaixo, sugestões de restaurantes abertos na região da Pampulha e arredores da UFMG. Confirme o funcionamento antes de ir, pois horários podem variar.
+      </div>
+      <div class="rest-grid">
+
+
+        <div class="rest-card">
+          <div class="rest-name">ASSUFEMG</div>
+          <div class="rest-local">📍 Campus UFMG, Pampulha</div>
+          <div class="rest-desc"> VERIFICAR! Fica próximo à escola, atrás do prédio de Belas Artes. 4 min à pé da Escola de Música.</div>
+          <span class="rest-badge">✓ Aberto qui/sex · Almoço e lanche</span>
+        </div>
+
+
+
+        <div class="rest-card">
+          <div class="rest-name">Restaurantes no entorno da Lagoa da Pampulha</div>
+          <div class="rest-local">📍 Orla da Lagoa — ~5 min do campus</div>
+          <div class="rest-desc">A orla da Lagoa da Pampulha tem bares e restaurantes abertos no sábado. Uma excelente opção para combinar almoço ou jantar com um passeio pela lagoa e pelo Conjunto Arquitetônico da UNESCO.</div>
+          <span class="rest-badge">✓ Aberto sábado · Almoço e jantar</span>
+        </div>
+        <div class="rest-card">
+          <div class="rest-name">Bairro Bandeirantes / Pampulha</div>
+          <div class="rest-local">📍 Próximo à UFMG</div>
+          <div class="rest-desc">O bairro ao redor do campus tem padarias, lanchonetes e pequenos restaurantes que funcionam aos sábados. Consulte Google Maps por "restaurantes perto de mim" na região da UFMG Pampulha.</div>
+          <span class="rest-badge">✓ Verificar horários</span>
+        </div>
+
+        <div class="rest-card">
+          <div class="rest-name">Delivery e aplicativos</div>
+          <div class="rest-local">📱 iFood, Rappi etc.</div>
+          <div class="rest-desc">Boa cobertura de delivery na região da Pampulha no sábado. Opção prática para quem prefere refeições no alojamento ou hospedagem.</div>
+          <span class="rest-badge">✓ Disponível sábado</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- BELO HORIZONTE -->
+<section id="bh">
+  <div class="container">
+    <span class="section-label reveal" data-i18n="bh.label">A Cidade</span>
+    <h2 class="section-title reveal" data-i18n="bh.title">Bem-vindo a <em>Belo Horizonte</em></h2>
+    <div class="divider reveal"></div>
+    <p class="section-text reveal">A capital mineira é vibrante, acolhedora e repleta de arte, cultura e gastronomia. Chegando antes do feriado, vale explorar tudo que BH tem a oferecer!</p>
+
+    <div class="bh-grid" style="margin-top:48px">
+
+
+
+
+ <div class="bh-card reveal">
+        <div class="bh-card-img">
+          <!--
+            ==== IMAGEM: MERCADO MUNICIPAL ====
+          --> 
+          <img
+            src="img/lagoa.webp"
+            alt="Mercado Central de Belo Horizonte"
+            onerror="this.parentElement.innerHTML='<div class=bh-card-img-fallback style=background:linear-gradient(135deg,#B5534A22,#E8765022)>🏪</div>'"
+          >
+        </div>
+        <div class="bh-card-body">
+          <div class="bh-card-title">Lagoa da Pampulha</div>
+          <div class="bh-card-text">A poucos minutos da UFMG está a Lagoa da Pampulha, o local onde se localiza a Igreja São Francisco de Assis, obra de Niemeyer e Portinari. </div>
+        </div>
+      </div>
+
+
+
+
+
+      <div class="bh-card reveal">
+        <div class="bh-card-img">
+          <!--
+            ==== IMAGEM: MERCADO MUNICIPAL ====
+          --> 
+          <img
+            src="img/mercado.jpg"
+            alt="Mercado Central de Belo Horizonte"
+            onerror="this.parentElement.innerHTML='<div class=bh-card-img-fallback style=background:linear-gradient(135deg,#B5534A22,#E8765022)>🏪</div>'"
+          >
+        </div>
+        <div class="bh-card-body">
+          <div class="bh-card-title">Mercado Central</div>
+          <div class="bh-card-text">O Mercado Central de BH é um dos maiores do Brasil — mais de 400 boxes com queijos, cachaças, doces de Minas e artesanato. Parada obrigatória para quem quer levar lembrança mineira para casa!</div>
+        </div>
+      </div>
+      <div class="bh-card reveal">
+        <div class="bh-card-img">    <img src="img/raul.jpg" alt="Praça Raul Soares">
+          <div class="bh-card-img-fallback" style="background: linear-gradient(135deg, #2D6A4F22, #52B78822)">🎭</div>
+        </div>
+        <div class="bh-card-body">
+          <div class="bh-card-title">Circuito Cultural</div>
+          <div class="bh-card-text">Museu de Arte da Pampulha, Palácio das Artes, Praça da Liberdade... BH tem uma agenda cultural intensa durante outubro.</div>
+        </div>
+      </div>
+      <div class="bh-card reveal">
+        <div class="bh-card-img">        <img src="img/mirante.webp" alt="Mirante do Mangabeiras">
+          <div class="bh-card-img-fallback" style="background: linear-gradient(135deg, #9B59B622, #D7BDE222)">🌆</div>
+        </div>
+        <div class="bh-card-body">
+          <div class="bh-card-title">Mirante do Mangabeiras</div>
+          <div class="bh-card-text">Vista panorâmica de tirar o fôlego da cidade, especialmente ao entardecer. Uma das atrações mais fotogênicas de Belo Horizonte — imperdível!</div>
+        </div>
+      </div>
+      <div class="bh-card reveal">
+        <div class="bh-card-img"> <img src="img/milton.webp" alt="Milton Nascimento">
+          <div class="bh-card-img-fallback" style="background: linear-gradient(135deg, #E67E2222, #F0B27A22)">🎵</div>
+        </div>
+        <div class="bh-card-body">
+          <div class="bh-card-title">Cena Musical de BH</div>
+          <div class="bh-card-text">BH é berço de grandes nomes da MPB. Clubes de jazz, shows de música ao vivo e festivais acontecem durante outubro — combine a visita com a agenda cultural!</div>
+        </div>
+      </div>
+
+
+
+ <div class="bh-card reveal">
+        <div class="bh-card-img">
+          <!--
+            ==== IMAGEM: MERCADO MUNICIPAL ====
+          --> 
+          <img
+            src="img/feira.jpeg"
+            alt="Mercado Central de Belo Horizonte"
+            onerror="this.parentElement.innerHTML='<div class=bh-card-img-fallback style=background:linear-gradient(135deg,#B5534A22,#E8765022)>🏪</div>'"
+          >
+        </div>
+        <div class="bh-card-body">
+          <div class="bh-card-title">Feira Hippie</div>
+          <div class="bh-card-text">A tradicional Feira Hippie de BH acontece todos os domingos na Avenida Afonso Pena e reúne centenas de artistas, artesãos, músicos e produtores locais. É um dos maiores espaços de cultura e artesanato do Brasil.</div>
+        </div>
+      </div>
+
+
+    </div>
+
+    
+    <!-- FEIRA HIPPIE -->
+    <div class="hippie-box reveal" style="margin-top:48px">
+      <div class="hippie-icon">🎨</div>
+      <div>
+        <div class="hippie-title">Sugestão de atividades</div>
+        <div class="hippie-text">
+         Links ou portais para acesso.
+        </div>
+      </div>
+    </div>
+
+    
+
+    <!-- COMIDAS -->
+    <div style="margin-top: 72px;">
+      <span class="section-label reveal" data-i18n="gastro.label">Gastronomia</span>
+      <h2 class="section-title reveal" data-i18n="gastro.title">Sabores de <em>Minas Gerais</em></h2>
+      <div class="divider reveal"></div>
+      <p class="section-text reveal">A culinária mineira é patrimônio imaterial do Brasil. Prepare o apetite — a experiência gastronômica faz parte do congresso!</p>
+
+      <div class="comida-grid" style="margin-top:36px">
+        <div class="comida-item reveal"><span class="comida-emoji">🫕</span><div class="comida-nome">Feijão Tropeiro</div><div class="comida-desc">Feijão com farinha, bacon, linguiça e ovo. O prato mais emblemático da culinária mineira.</div></div>
+        <div class="comida-item reveal"><span class="comida-emoji">🧀</span><div class="comida-nome">Queijo Minas</div><div class="comida-desc">Ícone absoluto de Minas Gerais.</div></div>
+
+        <div class="comida-item reveal"><span class="comida-emoji">🥘</span><div class="comida-nome">Tutu à Mineira</div><div class="comida-desc">Creme espesso de feijão com torresmo. Acompanhamento clássico nos restaurantes tradicionais.</div></div>
+
+        <div class="comida-item reveal"><span class="comida-emoji">🍮</span><div class="comida-nome">Doce de Leite</div><div class="comida-desc">O doce que define Minas. Artesanal, cremoso, de colher. Perfeito com queijo coalho.</div></div>
+
+        <div class="comida-item reveal"><span class="comida-emoji">☕</span><div class="comida-nome">Café com Pão de Queijo</div><div class="comida-desc">O café da manhã mineiro por excelência. Café forte com pão de queijo quentinho.</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
 <!-- HOSPEDAGEM -->
 <section id="hospedagem">
   <div class="container">
-    <span class="section-label reveal">Onde Ficar</span>
-    <h2 class="section-title reveal">Hospedagem <em>recomendada</em></h2>
+    <span class="section-label reveal" data-i18n="hosp.label">Onde Ficar</span>
+    <h2 class="section-title reveal" data-i18n="hosp.title">Hospedagem <em>recomendada</em></h2>
     <div class="divider reveal"></div>
     <p class="section-text reveal">Sugestões de hotéis próximos ao campus da UFMG ou bem conectados por transporte. BH tem ótimas opções para todos os orçamentos!</p>
 
@@ -1527,72 +1596,74 @@ Os aplicativos de corrida, como Uber e 99 funcionam bem, além dos taxis tradici
 <!-- INSCRIÇÕES -->
 <section id="inscricoes">
   <div class="container inscricoes-content">
-    <span class="section-label reveal">Participe</span>
-    <h2 class="section-title reveal">Inscrições <em>abertas</em></h2>
+    <span class="section-label reveal" data-i18n="insc.label">Participe</span>
+    <h2 class="section-title reveal" data-i18n="insc.title">Inscrições <em>abertas</em></h2>
     <div class="divider reveal"></div>
-    <p class="section-text reveal">Garanta sua vaga no maior encontro de pesquisa em musicoterapia do Brasil. Clique na categoria que melhor se aplica a você:</p>
+    <p class="section-text reveal">Garanta sua vaga no maior encontro de pesquisa em musicoterapia do Brasil. Clique na categoria que melhor se aplica a você para acessar o formulário de inscrição:</p>
 
     <div class="preco-grid">
-      <div class="preco-card reveal" onclick="selecionarInscricao(this, 'Estudante de Graduação', 180)">
-        <div class="preco-categoria">Estudante de Graduação</div>
+      <div class="preco-card reveal" onclick="window.open('https://forms.gle/LAqSjPbVBcZMFd6HA', '_blank')">
+        <div class="preco-categoria" data-i18n="insc.cat1">Estudante de Graduação</div>
         <div class="preco-valor"><span>R$</span>180</div>
-        <div class="preco-periodo">Lote antecipado</div>
+        <div class="preco-periodo" data-i18n="insc.lote">Lote antecipado</div>
         <ul class="preco-features">
-          <li>Acesso a todas as palestras</li>
-          <li>Certificado de participação</li>
-          <li>Material do evento</li>
-          <li>Coffee breaks</li>
+          <li data-i18n="insc.f1">Acesso a todas as palestras</li>
+          <li data-i18n="insc.f2">Certificado de participação</li>
+          <li data-i18n="insc.f3">Material do evento</li>
+          <li data-i18n="insc.f4">Coffee breaks</li>
         </ul>
       </div>
-      <div class="preco-card reveal" onclick="selecionarInscricao(this, 'Pós-Graduação / Pesquisador', 280)">
-        <div class="preco-categoria">Pós-Graduação / Pesquisador</div>
+      <div class="preco-card reveal" onclick="window.open('https://forms.gle/LAqSjPbVBcZMFd6HA', '_blank')">
+        <div class="preco-categoria" data-i18n="insc.cat2">Pós-Graduação / Pesquisador</div>
         <div class="preco-valor"><span>R$</span>280</div>
-        <div class="preco-periodo">Lote antecipado</div>
+        <div class="preco-periodo" data-i18n="insc.lote">Lote antecipado</div>
         <ul class="preco-features">
-          <li>Acesso a todas as palestras</li>
-          <li>Submissão de trabalhos</li>
-          <li>Certificado de participação</li>
-          <li>Coffee breaks</li>
+          <li data-i18n="insc.f1">Acesso a todas as palestras</li>
+          <li data-i18n="insc.f2">Certificado de participação</li>
+          <li data-i18n="insc.f4">Coffee breaks</li>
         </ul>
       </div>
-      <div class="preco-card destaque reveal" onclick="selecionarInscricao(this, 'Musicoterapeuta', 320)">
-        <div class="preco-badge">+ Popular</div>
-        <div class="preco-categoria">Musicoterapeuta</div>
+      <div class="preco-card destaque reveal" onclick="window.open('https://forms.gle/LAqSjPbVBcZMFd6HA', '_blank')">
+        <div class="preco-badge" data-i18n="insc.popular">+ Popular</div>
+        <div class="preco-categoria" data-i18n="insc.cat3">Musicoterapeuta</div>
         <div class="preco-valor"><span>R$</span>320</div>
-        <div class="preco-periodo">Lote antecipado</div>
+        <div class="preco-periodo" data-i18n="insc.lote">Lote antecipado</div>
         <ul class="preco-features">
-          <li>Acesso completo ao evento</li>
-          <li>Oficinas incluídas</li>
-          <li>Direito a voto na Assembleia</li>
-          <li>Janta de abertura inclusa</li>
+          <li data-i18n="insc.f5">Acesso completo ao evento</li>
+          <li data-i18n="insc.f6">Oficinas incluídas</li>
+          <li data-i18n="insc.f7">Direito a voto na Assembleia</li>
+          <li data-i18n="insc.f8">Janta de abertura inclusa</li>
         </ul>
       </div>
-      <div class="preco-card reveal" onclick="selecionarInscricao(this, 'Profissional de Outras Áreas', 350)">
-        <div class="preco-categoria">Profissional de Outras Áreas</div>
+      <div class="preco-card reveal" onclick="window.open('https://forms.gle/LAqSjPbVBcZMFd6HA', '_blank')">
+        <div class="preco-categoria" data-i18n="insc.cat4">Profissional de Outras Áreas</div>
         <div class="preco-valor"><span>R$</span>350</div>
-        <div class="preco-periodo">Lote antecipado</div>
+        <div class="preco-periodo" data-i18n="insc.lote">Lote antecipado</div>
         <ul class="preco-features">
-          <li>Acesso a todas as palestras</li>
-          <li>Mesas e painéis</li>
-          <li>Certificado de participação</li>
-          <li>Coffee breaks</li>
+          <li data-i18n="insc.f1">Acesso a todas as palestras</li>
+          <li data-i18n="insc.f9">Mesas e painéis</li>
+          <li data-i18n="insc.f2">Certificado de participação</li>
+          <li data-i18n="insc.f4">Coffee breaks</li>
         </ul>
       </div>
     </div>
 
-    <div class="inscricao-cta reveal" style="margin-top:40px">
-      <div class="inscricao-selecionada" id="inscricao-info">
-        <strong id="inscricao-tipo"></strong> · <span id="inscricao-valor"></span>
-        <br><span style="font-size:.8rem;opacity:.8">Clique em "Finalizar inscrição" para prosseguir ao formulário.</span>
+    <div class="inscricao-cta reveal" style="margin-top:44px">
+      <div class="inscricao-como">
+        <div class="inscricao-passo"><span class="inscricao-num">1</span><p>Clique na sua categoria acima e preencha o formulário de inscrição com seus dados</p></div>
+        <div class="inscricao-passo"><span class="inscricao-num">2</span><p>Realize o pagamento via <strong>PIX</strong> e envie o comprovante diretamente no formulário</p></div>
+        <div class="inscricao-passo"><span class="inscricao-num">3</span><p>Aguarde a confirmação da inscrição por e-mail</p></div>
       </div>
-      <div style="margin-top:24px">
-        <button class="btn-inscricao-finalizar" id="btn-finalizar" onclick="finalizarInscricao()">
-          Finalizar inscrição →
-        </button>
+      <div class="inscricao-aviso-trabalhos">
+        <strong>Envio de trabalhos científicos:</strong> feito em formulário separado — acesse a seção <a href="#submissao">Envio de Trabalhos</a> neste site.
       </div>
-      <p style="margin-top:16px; font-size:.85rem; color:rgba(255,255,255,.6)">
-        📧 Dúvidas? Entre em contato: <strong style="color:var(--ouro-claro)">enpemt2026@ufmg.br</strong>
-      </p>
+<p style="margin-top:20px; font-size:.85rem; color:rgba(255,255,255,.55)">
+  📧 Dúvidas? 
+  <a href="mailto:ubam.gtpesquisa@gmail.com" 
+     style="color:var(--ouro-claro); text-decoration:none;">
+     Entrar em contato via e-mail
+  </a>
+</p>
     </div>
   </div>
 </section>
@@ -1615,29 +1686,29 @@ Os aplicativos de corrida, como Uber e 99 funcionam bem, além dos taxis tradici
           O Encontro Nacional de Pesquisa em Musicoterapia reúne pesquisadores, clínicos e estudantes para compartilhar produção científica e promover o desenvolvimento da musicoterapia no Brasil.
         </p>
         <div class="footer-social">
-          <a href="#" class="social-btn" title="Instagram">📸</a>
-          <a href="#" class="social-btn" title="Facebook">📘</a>
-          <a href="#" class="social-btn" title="Email">✉️</a>
+          <a href="https://www.instagram.com/ubam.musicoterapia/" class="social-btn" title="Instagram UBAM">📸</a>
+          <a href="https://ubammusicoterapia.com.br" class="social-btn" title="Website UBAM">📘</a>
+          <a href="mailto:ubam.gtpesquisa@gmail.com" class="social-btn" title="Email">✉️</a>
         </div>
       </div>
       <div>
-        <div class="footer-h">Links rápidos</div>
+        <div class="footer-h" data-i18n="footer.links">Links rápidos</div>
         <ul class="footer-links">
           <li><a href="#sobre">Sobre o evento</a></li>
-          <li><a href="#programacao">Programação</a></li>
+          <li><a href="#programacao" data-i18n="nav.programacao">Programação</a></li>
           <li><a href="#submissao">Submissão de trabalhos</a></li>
-          <li><a href="#bh">Belo Horizonte</a></li>
-          <li><a href="#restaurantes">Restaurantes</a></li>
+          <li><a href="#bh" data-i18n="nav.bh">Belo Horizonte</a></li>
+          <li><a href="#restaurantes" data-i18n="nav.restaurantes">Restaurantes</a></li>
           <li><a href="#local">Local &amp; Mapa</a></li>
-          <li><a href="#hospedagem">Hospedagem</a></li>
+          <li><a href="#hospedagem" data-i18n="nav.hospedagem">Hospedagem</a></li>
           <li><a href="#inscricoes">Inscrições</a></li>
         </ul>
       </div>
       <div>
-        <div class="footer-h">Realização</div>
+        <div class="footer-h" data-i18n="footer.realizacao">Realização</div>
         <ul class="footer-links">
-          <li><a href="#">UBAM</a></li>
-          <li><a href="#">Escola de Música UFMG</a></li>
+          <li><a href="https://ubammusicoterapia.com.br">UBAM</a></li>
+          <li><a href="https://musica.ufmg.br">Escola de Música UFMG</a></li>
           <li><a href="#">Comissão Organizadora</a></li>
           <li><a href="#">Apoio &amp; Patrocínio</a></li>
         </ul>
@@ -1675,12 +1746,111 @@ Os aplicativos de corrida, como Uber e 99 funcionam bem, além dos taxis tradici
   }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
   reveals.forEach(el => observer.observe(el));
 
+  // Scrollspy — marca link ativo no sidebar e atualiza URL
+  (function () {
+    const sections = Array.from(document.querySelectorAll('section[id]'));
+    const navLinks = document.querySelectorAll('.nav-links a[href^="#"]');
+
+    function setActive(id) {
+      navLinks.forEach(a => {
+        const match = a.getAttribute('href') === '#' + id;
+        a.classList.toggle('nav-active', match);
+      });
+      history.replaceState(null, '', '#' + id);
+    }
+
+    const spy = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) setActive(entry.target.id);
+      });
+    }, { rootMargin: '-40% 0px -55% 0px', threshold: 0 });
+
+    sections.forEach(s => spy.observe(s));
+  })();
+
+  // Hamburger menu
+  (function () {
+    const btn     = document.getElementById('nav-menu-btn');
+    const links   = document.getElementById('nav-links');
+    const overlay = document.getElementById('nav-overlay');
+    function close() {
+      btn.classList.remove('open');
+      links.classList.remove('mobile-open');
+      overlay.classList.remove('active');
+    }
+    btn.addEventListener('click', () => {
+      const isOpen = links.classList.toggle('mobile-open');
+      btn.classList.toggle('open', isOpen);
+      overlay.classList.toggle('active', isOpen);
+    });
+    overlay.addEventListener('click', close);
+    links.querySelectorAll('a').forEach(a => a.addEventListener('click', close));
+  })();
+
   // Tabs programação
   function switchTab(e, id) {
+    const select = document.getElementById('prog-filtro-select');
+    select.value = '';
+    filtrarProg('');
     document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
     document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
     e.currentTarget.classList.add('active');
     document.getElementById(id).classList.add('active');
+  }
+
+  function filtrarProg(tipo) {
+    const tabBtns     = document.querySelectorAll('.tab-btn');
+    const tabContents = document.querySelectorAll('.tab-content');
+    const resultado   = document.getElementById('prog-resultado');
+
+    if (!tipo) {
+      // Volta à vista por dias
+      tabContents.forEach(c => c.style.display = '');
+      // Reativa a aba que estava ativa
+      const active = document.querySelector('.tab-btn.active');
+      tabContents.forEach(c => c.classList.remove('active'));
+      if (active) {
+        const id = active.getAttribute('onclick').match(/'([^']+)'/)[1];
+        document.getElementById(id).classList.add('active');
+      } else {
+        document.getElementById('dia1').classList.add('active');
+      }
+      resultado.hidden = true;
+      return;
+    }
+
+    // Modo filtro: mantém botões de dia visíveis mas sem seleção; mostra lista unificada
+    tabBtns.forEach(b => b.classList.remove('active'));
+    tabContents.forEach(c => c.style.display = 'none');
+    resultado.hidden = false;
+    resultado.innerHTML = '';
+
+    const dias = [
+      { id: 'dia1', label: '8/out · Quinta-feira' },
+      { id: 'dia2', label: '9/out · Sexta-feira' },
+      { id: 'dia3', label: '10/out · Sábado' },
+      { id: 'dia4', label: '11/out · Domingo' },
+    ];
+
+    let encontrou = false;
+    dias.forEach(({ id, label }) => {
+      const items = document.querySelectorAll('#' + id + ' .tl-item[data-tipo="' + tipo + '"]');
+      if (!items.length) return;
+      encontrou = true;
+
+      const grupo = document.createElement('div');
+      grupo.className = 'prog-dia-grupo';
+      grupo.innerHTML = '<div class="prog-dia-header">' + label + '</div>';
+      const tl = document.createElement('div');
+      tl.className = 'timeline';
+      items.forEach(item => tl.appendChild(item.cloneNode(true)));
+      grupo.appendChild(tl);
+      resultado.appendChild(grupo);
+    });
+
+    if (!encontrou) {
+      resultado.innerHTML = '<p class="prog-vazio">Nenhuma atividade encontrada para este filtro.</p>';
+    }
   }
 
   // Tabs mapa
@@ -1699,65 +1869,392 @@ Os aplicativos de corrida, como Uber e 99 funcionam bem, além dos taxis tradici
     document.getElementById(id).classList.add('active');
   }
 
-  // Seleção de inscrição
-  let tipoSelecionado = null;
-  let valorSelecionado = null;
+  // ─── I18N ──────────────────────────────────────────────────────────────────
+  var currentLang = localStorage.getItem('enpemt-lang') || 'pt';
+  var TTS_LANGS   = { pt: 'pt-BR', en: 'en-US', es: 'es-ES' };
+  var LANG_EMOJIS = { pt: '🇧🇷', en: '🇿🇦', es: '🇨🇴' };
+  var LANG_ORDER  = ['pt', 'en', 'es'];
 
-  function selecionarInscricao(el, tipo, valor) {
-    document.querySelectorAll('.preco-card').forEach(c => c.classList.remove('selected'));
-    el.classList.add('selected');
-    tipoSelecionado = tipo;
-    valorSelecionado = valor;
+  var TRANSLATIONS = {
+    pt: {
+      'nav.evento':'Evento','nav.trabalhos':'Trabalhos','nav.programacao':'Programação',
+      'nav.local':'Local','nav.restaurantes':'Restaurantes','nav.bh':'Belo Horizonte',
+      'nav.hospedagem':'Hospedagem','nav.inscricoes':'Inscrições',
+      'sobre.label':'O Encontro',
+      'sobre.title':'Um grande <em>recomeço</em> presencial',
+      'sobre.tag':'De volta ao presencial!',
+      'sobre.date.month':'Outubro · 2026',
+      'sobre.info1':'Escola de Música da UFMG','sobre.info2':'Pampulha, Belo Horizonte – MG',
+      'sobre.info3':'Palestras, mesas e oficinas','sobre.info4':'Apresentação de trabalhos',
+      'sobre.info5':'Assembleia da UBAM','sobre.info6':'Vivências musicais',
+      'sub.intro':'O XXVI ENPEMT recebe propostas em diferentes modalidades. Clique na modalidade desejada para acessar o formulário de submissão no Google Forms.',
+      'sub.label':'Apresente sua pesquisa','sub.title':'Envio de <em>Trabalhos</em>',
+      'sub.oral.nome':'Comunicação Oral',
+      'sub.oral.desc':'Apresentação de resultados de pesquisa concluída ou em andamento. Tempo: 15 min + 5 min de perguntas.',
+      'sub.poster.nome':'Pôster',
+      'sub.poster.desc':'Apresentação visual de pesquisa. Formato A1 impresso. Sessão de apresentação com interação direta com participantes.',
+      'sub.mesa.nome':'Mesa Redonda',
+      'sub.mesa.desc':'Proposta de sessão temática com 3 a 4 apresentadores articulados em torno de um eixo comum. 90 minutos.',
+      'sub.workshop.nome':'Workshop / Oficina',
+      'sub.workshop.desc':'Proposta de vivência prática, metodologia clínica ou comunitária. Duração de 2 horas. Vagas limitadas por oficina.',
+      'sub.prazo':'📅 Prazo: a confirmar',
+      'prog.label':'Agenda','prog.title':'Programação <em>preliminar</em>',
+      'local.label':'O Local','local.title':'Escola de Música da <em>UFMG</em>',
+      'rest.label':'Onde Comer','rest.title':'Restaurantes <em>durante o evento</em>',
+      'gastro.label':'Gastronomia','gastro.title':'Sabores de <em>Minas Gerais</em>',
+      'bh.label':'A Cidade','bh.title':'Bem-vindo a <em>Belo Horizonte</em>',
+      'hosp.label':'Onde Ficar','hosp.title':'Hospedagem <em>recomendada</em>',
+      'insc.label':'Participe','insc.title':'Inscrições <em>abertas</em>',
+      'insc.cat1':'Estudante de Graduação','insc.cat2':'Pós-Graduação / Pesquisador',
+      'insc.cat3':'Musicoterapeuta','insc.cat4':'Profissional de Outras Áreas',
+      'insc.lote':'Lote antecipado','insc.popular':'+ Popular',
+      'insc.f1':'Acesso a todas as palestras','insc.f2':'Certificado de participação',
+      'insc.f3':'Material do evento','insc.f4':'Coffee breaks',
+      'insc.f5':'Acesso completo ao evento','insc.f6':'Oficinas incluídas',
+      'insc.f7':'Direito a voto na Assembleia','insc.f8':'Janta de abertura inclusa',
+      'insc.f9':'Mesas e painéis',
+      'footer.links':'Links rápidos','footer.realizacao':'Realização',
+      'tts.label':'Leitor de tela',
+    },
+    en: {
+      'nav.evento':'Event','nav.trabalhos':'Papers','nav.programacao':'Schedule',
+      'nav.local':'Venue','nav.restaurantes':'Restaurants','nav.bh':'Belo Horizonte',
+      'nav.hospedagem':'Accommodation','nav.inscricoes':'Registration',
+      'sobre.label':'The Meeting',
+      'sobre.title':'A great <em>in-person</em> reunion',
+      'sobre.tag':'Back in person!',
+      'sobre.date.month':'October · 2026',
+      'sobre.info1':'School of Music — UFMG','sobre.info2':'Pampulha, Belo Horizonte – MG',
+      'sobre.info3':'Lectures, panels and workshops','sobre.info4':'Paper presentations',
+      'sobre.info5':'UBAM Assembly','sobre.info6':'Musical experiences',
+      'sub.intro':'The XXVI ENPEMT accepts proposals in different formats. Click the desired format to access the submission form on Google Forms.',
+      'sub.label':'Present your research','sub.title':'Paper <em>Submission</em>',
+      'sub.oral.nome':'Oral Presentation',
+      'sub.oral.desc':'Presentation of completed or ongoing research. Time: 15 min + 5 min for questions.',
+      'sub.poster.nome':'Poster',
+      'sub.poster.desc':'Visual research presentation. A1 printed format. Session with direct interaction with participants.',
+      'sub.mesa.nome':'Round Table',
+      'sub.mesa.desc':'Thematic session proposal with 3 to 4 presenters organized around a common theme. 90 minutes.',
+      'sub.workshop.nome':'Workshop',
+      'sub.workshop.desc':'Proposal for a hands-on experience, clinical or community methodology. Duration: 2 hours. Limited spots per workshop.',
+      'sub.prazo':'📅 Deadline: to be confirmed',
+      'prog.label':'Schedule','prog.title':'<em>Preliminary</em> Schedule',
+      'local.label':'The Venue','local.title':'School of Music — <em>UFMG</em>',
+      'rest.label':'Where to Eat','rest.title':'Restaurants <em>during the event</em>',
+      'gastro.label':'Gastronomy','gastro.title':'Flavors of <em>Minas Gerais</em>',
+      'bh.label':'The City','bh.title':'Welcome to <em>Belo Horizonte</em>',
+      'hosp.label':'Where to Stay','hosp.title':'<em>Recommended</em> Accommodation',
+      'insc.label':'Join Us','insc.title':'Registration <em>open</em>',
+      'insc.cat1':'Undergraduate Student','insc.cat2':'Postgraduate / Researcher',
+      'insc.cat3':'Music Therapist','insc.cat4':'Other Professional',
+      'insc.lote':'Early bird','insc.popular':'Most Popular',
+      'insc.f1':'Access to all lectures','insc.f2':'Certificate of participation',
+      'insc.f3':'Event materials','insc.f4':'Coffee breaks',
+      'insc.f5':'Full event access','insc.f6':'Workshops included',
+      'insc.f7':'Assembly voting rights','insc.f8':'Opening dinner included',
+      'insc.f9':'Panels and roundtables',
+      'footer.links':'Quick links','footer.realizacao':'Organized by',
+      'tts.label':'Screen reader',
+    },
+    es: {
+      'nav.evento':'Evento','nav.trabalhos':'Trabajos','nav.programacao':'Programa',
+      'nav.local':'Local','nav.restaurantes':'Restaurantes','nav.bh':'Belo Horizonte',
+      'nav.hospedagem':'Alojamiento','nav.inscricoes':'Inscripciones',
+      'sobre.label':'El Encuentro',
+      'sobre.title':'Un gran <em>regreso</em> presencial',
+      'sobre.tag':'¡De vuelta al presencial!',
+      'sobre.date.month':'Octubre · 2026',
+      'sobre.info1':'Escuela de Música — UFMG','sobre.info2':'Pampulha, Belo Horizonte – MG',
+      'sobre.info3':'Conferencias, mesas y talleres','sobre.info4':'Presentación de trabajos',
+      'sobre.info5':'Asamblea de la UBAM','sobre.info6':'Vivencias musicales',
+      'sub.intro':'El XXVI ENPEMT recibe propuestas en diferentes modalidades. Haga clic en la modalidad deseada para acceder al formulario de envío en Google Forms.',
+      'sub.label':'Presente su investigación','sub.title':'Envío de <em>Trabajos</em>',
+      'sub.oral.nome':'Comunicación Oral',
+      'sub.oral.desc':'Presentación de resultados de investigación concluida o en curso. Tiempo: 15 min + 5 min de preguntas.',
+      'sub.poster.nome':'Póster',
+      'sub.poster.desc':'Presentación visual de investigación. Formato A1 impreso. Sesión con interacción directa con los participantes.',
+      'sub.mesa.nome':'Mesa Redonda',
+      'sub.mesa.desc':'Propuesta de sesión temática con 3 a 4 presentadores articulados en torno a un eje común. 90 minutos.',
+      'sub.workshop.nome':'Taller / Oficina',
+      'sub.workshop.desc':'Propuesta de vivencia práctica, metodología clínica o comunitaria. Duración de 2 horas. Cupos limitados por taller.',
+      'sub.prazo':'📅 Plazo: a confirmar',
+      'prog.label':'Agenda','prog.title':'Programa <em>preliminar</em>',
+      'local.label':'El Local','local.title':'Escuela de Música — <em>UFMG</em>',
+      'rest.label':'Dónde Comer','rest.title':'Restaurantes <em>durante el evento</em>',
+      'gastro.label':'Gastronomía','gastro.title':'Sabores de <em>Minas Gerais</em>',
+      'bh.label':'La Ciudad','bh.title':'Bienvenido a <em>Belo Horizonte</em>',
+      'hosp.label':'Dónde Quedarse','hosp.title':'Alojamiento <em>recomendado</em>',
+      'insc.label':'Participa','insc.title':'Inscripciones <em>abiertas</em>',
+      'insc.cat1':'Estudiante de Grado','insc.cat2':'Posgrado / Investigador',
+      'insc.cat3':'Musicoterapeuta','insc.cat4':'Profesional de Otras Áreas',
+      'insc.lote':'Lote anticipado','insc.popular':'Más Popular',
+      'insc.f1':'Acceso a todas las conferencias','insc.f2':'Certificado de participación',
+      'insc.f3':'Material del evento','insc.f4':'Coffee breaks',
+      'insc.f5':'Acceso completo al evento','insc.f6':'Talleres incluidos',
+      'insc.f7':'Derecho a voto en la Asamblea','insc.f8':'Cena de apertura incluida',
+      'insc.f9':'Mesas y paneles',
+      'footer.links':'Enlaces rápidos','footer.realizacao':'Organizado por',
+      'tts.label':'Lector de pantalla',
+    }
+  };
 
-    const info = document.getElementById('inscricao-info');
-    const btnFinalizar = document.getElementById('btn-finalizar');
-    document.getElementById('inscricao-tipo').textContent = tipo;
-    document.getElementById('inscricao-valor').textContent = 'R$ ' + valor + ',00 (lote antecipado)';
-    info.classList.add('visible');
-    btnFinalizar.classList.add('ativo');
+  function setLang(lang) {
+    currentLang = lang;
+    var t = TRANSLATIONS[lang] || TRANSLATIONS['pt'];
+    document.querySelectorAll('[data-i18n]').forEach(function(el) {
+      var v = t[el.dataset.i18n];
+      if (v !== undefined) el.innerHTML = v;
+    });
+    document.querySelectorAll('.lang-flag').forEach(function(btn) {
+      btn.classList.toggle('lang-active', btn.dataset.lang === lang);
+    });
+    var lbl = document.getElementById('tts-label');
+    if (lbl) lbl.textContent = t['tts.label'] || 'Leitor de tela';
+    var toggle = document.getElementById('tts-lang-btn');
+    if (toggle) toggle.textContent = LANG_EMOJIS[lang] || '🌐';
+    localStorage.setItem('enpemt-lang', lang);
   }
 
-  function finalizarInscricao() {
-    if (!tipoSelecionado) return;
-    alert('Inscrição selecionada: ' + tipoSelecionado + ' — R$ ' + valorSelecionado + ',00\n\nVocê será redirecionado ao formulário de inscrição.\n(Configure o link de destino no HTML conforme o sistema de inscrições do evento.)');
-    // Substitua o alert() acima por: window.open('URL_DO_FORMULARIO', '_blank');
-  }
+  // Aplica idioma salvo
+  setLang(currentLang);
+  // ─────────────────────────────────────────────────────────────────────────
 
-  // Submissão de trabalhos — abre formulário da modalidade
-  let formAberto = null;
-  function abrirSubmissao(tipo) {
-    const forms = ['oral', 'poster', 'mesa', 'workshop'];
-    const tipos = document.querySelectorAll('.sub-tipo');
+  // ─── TTS READER ──────────────────────────────────────────────────────────
+  (function () {
+    var synth = window.speechSynthesis;
+    if (!synth) return;
 
-    // Fecha se já aberto
-    if (formAberto === tipo) {
-      document.getElementById('form-' + tipo).classList.remove('active');
-      tipos.forEach(t => t.classList.remove('aberto'));
-      formAberto = null;
-      return;
+    // Todos os elementos de texto legíveis
+    var BLOCK_SEL = [
+      'h2','h3','h4','h5','p',
+      '.sub-tipo-nome','.sub-tipo-desc',
+      '.tl-time','.tl-title','.tl-desc',
+      '.local-fact',
+      '.rest-name','.rest-local','.rest-desc',
+      '.bh-card-title','.bh-card-text',
+      '.hotel-name','.hotel-dist','.hotel-desc',
+      '.preco-categoria','.preco-valor','.preco-periodo',
+      'li','figcaption','.date-big','.date-month','blockquote'
+    ].join(',');
+
+    // Containers que recebem o glow de card quando o filho está sendo lido
+    var CARD_PARTS = [
+      '.sobre-card-bg','.sub-tipo','.tl-item','.local-hero',
+      '.rest-card','.bh-card','.hotel-card','.preco-card','.inscricao-passo'
+    ];
+
+    function cleanTTS(text) {
+      return (text || '')
+        .replace(/[\u{1F000}-\u{1FFFF}]/gu, '')
+        .replace(/[\u{2600}-\u{27BF}]/gu,   '')
+        .replace(/[\u{FE00}-\u{FE0F}]/gu,   '')
+        .replace(/[\u{1F1E0}-\u{1F1FF}]/gu, '')
+        .replace(/\s+/g, ' ').trim();
     }
 
-    forms.forEach(f => document.getElementById('form-' + f).classList.remove('active'));
-    tipos.forEach(t => t.classList.remove('aberto'));
+    // Ignora conteúdo de tabs ocultos (programação/restaurantes)
+    function isVisible(el) {
+      var p = el;
+      while (p && p !== document.body) {
+        if (window.getComputedStyle(p).display === 'none') return false;
+        p = p.parentElement;
+      }
+      return true;
+    }
 
-    document.getElementById('form-' + tipo).classList.add('active');
-    event.currentTarget.classList.add('aberto');
-    formAberto = tipo;
+    // Sobe na árvore até encontrar um card container
+    function findCard(el) {
+      var p = el ? el.parentElement : null;
+      while (p && p !== document.body) {
+        for (var i = 0; i < CARD_PARTS.length; i++) {
+          try { if (p.matches(CARD_PARTS[i])) return p; } catch(e) {}
+        }
+        p = p.parentElement;
+      }
+      return null;
+    }
 
-    // Scroll suave ao formulário
-    setTimeout(() => {
-      document.getElementById('form-' + tipo).scrollIntoView({ behavior: 'smooth', block: 'start' });
-    }, 100);
-  }
+    function buildList() {
+      var result = [];
+      document.querySelectorAll('section[id]:not(#hero)').forEach(function(sec) {
+        var all = Array.from(sec.querySelectorAll(BLOCK_SEL));
+        var set = new Set(all);
+        var deduped = all.filter(function(el) {
+          if (el.closest('#prog-resultado')) return false;
+          if (!isVisible(el)) return false;
+          var p = el.parentElement;
+          while (p && p !== sec) { if (set.has(p)) return false; p = p.parentElement; }
+          return true;
+        });
+        deduped.forEach(function(el) {
+          var txt = cleanTTS(el.innerText || '');
+          if (txt.length > 1) result.push({ el: el, sec: sec, txt: txt });
+        });
+        sec.querySelectorAll('img[alt]').forEach(function(img) {
+          var alt = cleanTTS(img.alt);
+          if (alt && !img.closest('#prog-resultado') && isVisible(img))
+            result.push({ el: img, sec: sec, txt: 'Imagem: ' + alt });
+        });
+      });
+      return result;
+    }
 
-  function enviarSubmissao(e, modalidade) {
-    e.preventDefault();
-    alert('Proposta de ' + modalidade + ' recebida!\n\nEm breve você receberá uma confirmação por e-mail.\n\n(Configure o envio real do formulário conforme o sistema do evento.)');
-    e.target.reset();
-    e.target.closest('.sub-form-area').classList.remove('active');
-    document.querySelectorAll('.sub-tipo').forEach(t => t.classList.remove('aberto'));
-    formAberto = null;
-  }
+    function getBestVoice(langCode) {
+      var vs = synth.getVoices();
+      return vs.find(function(v) { return v.lang === langCode; }) ||
+             vs.find(function(v) { return v.lang.startsWith(langCode.split('-')[0]); }) || null;
+    }
+
+    var items = [], idx = 0, playing = false, rate = 1, started = false, gen = 0;
+
+    function clearHL() {
+      document.querySelectorAll('.tts-el-active').forEach(function(e) { e.classList.remove('tts-el-active'); });
+      document.querySelectorAll('.tts-card-active').forEach(function(e) { e.classList.remove('tts-card-active'); });
+    }
+
+    function setActive(i) {
+      clearHL();
+      if (i < 0 || i >= items.length) return;
+      var item = items[i];
+      item.el.classList.add('tts-el-active');
+      var card = findCard(item.el);
+      if (card) card.classList.add('tts-card-active');
+      var lbl = document.getElementById('tts-label');
+      if (lbl) lbl.textContent = cleanTTS((item.sec.querySelector('h2,h3') || {}).textContent || '') ||
+                                 (TRANSLATIONS[currentLang] || {})['tts.label'] || 'Lendo\u2026';
+      var rect = item.el.getBoundingClientRect();
+      if (rect.top < 120 || rect.bottom > window.innerHeight - 80)
+        item.el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+
+    function speakAt(i) {
+      synth.cancel();
+      idx = i;
+      var myGen = ++gen;
+
+      if (idx >= items.length) { stopAll(); return; }
+      setActive(idx);
+
+      var item = items[idx];
+      var txt  = item.txt;
+      if (!txt) {
+        if (playing) setTimeout(function() { if (gen === myGen) speakAt(idx + 1); }, 0);
+        return;
+      }
+
+      var utt  = new SpeechSynthesisUtterance(txt);
+      utt.lang = TTS_LANGS[currentLang] || 'pt-BR';
+      utt.rate = rate;
+      var voice = getBestVoice(utt.lang);
+      if (voice) utt.voice = voice;
+
+      utt.onend = function() {
+        if (gen !== myGen) return;
+        if (playing) speakAt(idx + 1);
+      };
+      utt.onerror = function(e) {
+        if (gen !== myGen) return;
+        if (e.error !== 'interrupted' && playing) speakAt(idx + 1);
+      };
+
+      synth.speak(utt);
+    }
+
+    function updateBtn() {
+      var btn = document.getElementById('tts-play-btn');
+      if (btn) btn.innerHTML = playing ? '\u23f8' : '\u25b6';
+      var bar = document.getElementById('tts-bar');
+      if (bar) bar.classList.toggle('tts-playing', playing);
+    }
+
+    function stopAll() {
+      playing = false; idx = 0; gen++;
+      synth.cancel(); clearHL();
+      items = []; started = false;
+      updateBtn();
+      var lbl = document.getElementById('tts-label');
+      if (lbl) lbl.textContent = (TRANSLATIONS[currentLang] || {})['tts.label'] || 'Leitor de tela';
+    }
+
+    function ensureStarted() {
+      if (started) return;
+      started = true;
+      items = buildList();
+      setupClicks();
+    }
+
+    function setupClicks() {
+      items.forEach(function(item, i) {
+        if (item.el._ttsReady) return;
+        item.el._ttsReady = true;
+        item.el.classList.add('tts-clickable');
+        item.el.addEventListener('click', function(e) {
+          e.stopPropagation();
+          ensureStarted();
+          playing = true;
+          updateBtn();
+          speakAt(i);
+        });
+      });
+    }
+
+    // ── UI ──
+    var bar = document.createElement('div');
+    bar.id = 'tts-bar';
+    bar.innerHTML =
+      '<span id="tts-label" data-i18n="tts.label">Leitor de tela</span>' +
+      '<div class="tts-controls">' +
+        '<button id="tts-play-btn" title="Play / Pause" aria-label="Play">\u25b6</button>' +
+        '<button id="tts-stop-btn" title="Parar" aria-label="Parar">\u23f9</button>' +
+        '<select id="tts-speed" aria-label="Velocidade">' +
+          '<option value="0.75">0.75\xd7</option>' +
+          '<option value="1" selected>1\xd7</option>' +
+          '<option value="1.25">1.25\xd7</option>' +
+          '<option value="1.5">1.5\xd7</option>' +
+          '<option value="2">2\xd7</option>' +
+        '</select>' +
+        '<span class="tts-sep">|</span>' +
+        '<div class="lang-flags">' +
+          '<button class="lang-flag lang-active" data-lang="pt" title="Portugu\u00eas">\ud83c\udde7\ud83c\uddf7</button>' +
+          '<button class="lang-flag" data-lang="en" title="English">\ud83c\uddff\ud83c\udde6</button>' +
+          '<button class="lang-flag" data-lang="es" title="Espa\u00f1ol">\ud83c\udde8\ud83c\uddf4</button>' +
+        '</div>' +
+        '<button id="tts-lang-btn" title="Trocar idioma">\ud83c\udde7\ud83c\uddf7</button>' +
+      '</div>';
+    document.body.appendChild(bar);
+
+    document.getElementById('tts-play-btn').addEventListener('click', function() {
+      if (playing) {
+        playing = false; gen++; synth.cancel(); clearHL(); updateBtn();
+      } else {
+        ensureStarted(); playing = true; updateBtn(); speakAt(idx);
+      }
+    });
+    document.getElementById('tts-stop-btn').addEventListener('click', stopAll);
+    document.getElementById('tts-speed').addEventListener('change', function(e) {
+      rate = parseFloat(e.target.value);
+      if (playing) speakAt(idx);
+    });
+    document.querySelectorAll('.lang-flag').forEach(function(btn) {
+      btn.addEventListener('click', function() {
+        if (started) stopAll();
+        setLang(btn.dataset.lang);
+      });
+    });
+    var langToggleBtn = document.getElementById('tts-lang-btn');
+    if (langToggleBtn) {
+      langToggleBtn.addEventListener('click', function() {
+        var next = LANG_ORDER[(LANG_ORDER.indexOf(currentLang) + 1) % LANG_ORDER.length];
+        if (started) stopAll();
+        setLang(next);
+      });
+    }
+
+    if (typeof synth.onvoiceschanged !== 'undefined') synth.onvoiceschanged = function() {};
+    window.addEventListener('beforeunload', function() { synth.cancel(); });
+  })();
+  // ─────────────────────────────────────────────────────────────────────────
+
 </script>
 </body>
 </html>

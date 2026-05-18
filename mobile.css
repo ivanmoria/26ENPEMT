@@ -1,0 +1,382 @@
+/* ─── MOBILE.CSS — XXVI ENPEMT 2026 ─── */
+
+/* ═══════════════════════════════════════
+   NAV — HAMBURGER MOBILE
+═══════════════════════════════════════ */
+.nav-menu-btn {
+  display: none;
+  flex-direction: column;
+  gap: 5px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 8px;
+  z-index: 200;
+}
+.nav-menu-btn span {
+  width: 24px;
+  height: 2px;
+  background: var(--verde);
+  transition: all .3s;
+  display: block;
+  border-radius: 2px;
+}
+.nav-menu-btn.open span:nth-child(1) { transform: rotate(45deg) translate(5px, 5px); }
+.nav-menu-btn.open span:nth-child(2) { opacity: 0; transform: scaleX(0); }
+.nav-menu-btn.open span:nth-child(3) { transform: rotate(-45deg) translate(5px, -5px); }
+
+.nav-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,.45);
+  z-index: 140;
+}
+.nav-overlay.active { display: block; }
+
+@media (max-width: 1024px) {
+  /* Reset sidebar → top bar */
+  body { padding-left: 0 !important; }
+  #progress-bar { left: 0 !important; }
+
+  nav {
+    width: 100% !important; height: auto !important;
+    flex-direction: row-reverse !important;
+    align-items: center !important; justify-content: space-between !important;
+    padding: 12px 20px !important;
+    border-right: none !important;
+    border-bottom: 1px solid var(--creme-escuro) !important;
+    overflow-y: visible !important;
+    box-shadow: none !important;
+  }
+
+  .nav-brand {
+    flex-direction: row !important; align-items: center !important;
+    padding: 0 !important; border-bottom: none !important;
+    margin-bottom: 0 !important; gap: 10px !important;
+  }
+
+  .nav-logo { height: 32px !important; }
+
+  .nav-menu-btn { display: flex; }
+
+  .nav-links {
+    display: flex !important;
+    flex-direction: column;
+    position: fixed;
+    top: 0; right: 0;
+    height: 100dvh;
+    width: min(280px, 85vw);
+    background: var(--branco);
+    padding: 72px 28px 40px;
+    box-shadow: -4px 0 40px rgba(0,0,0,.15);
+    transform: translateX(110%);
+    transition: transform .32s cubic-bezier(.4,0,.2,1);
+    z-index: 150;
+    gap: 0;
+    overflow-y: auto;
+  }
+  .nav-links.mobile-open { transform: translateX(0); }
+
+  .nav-links li { width: 100%; }
+  .nav-links a {
+    font-size: .95rem;
+    padding: 14px 0;
+    border-bottom: 1px solid var(--creme-escuro);
+    display: block;
+    width: 100%;
+    letter-spacing: .5px;
+  }
+  .nav-links li:last-child a {
+    margin-top: 20px;
+    border-bottom: none;
+    text-align: center;
+    padding: 13px 0;
+    border-radius: 50px;
+  }
+}
+
+/* ═══════════════════════════════════════
+   HERO — IMAGEM SEM CORTE NO MOBILE
+═══════════════════════════════════════ */
+@media (max-width: 768px) {
+  /*
+   * SOLUÇÃO TEMPORÁRIA: mostra o lado esquerdo da imagem (onde está o texto)
+   * sem barras pretas. Quando tiver a versão portrait/quadrada da imagem,
+   * salve como img/hero-mobile.png e descomente o bloco abaixo.
+   */
+
+   .hero-bg {
+      background-image: url('img/hero-mobile.png') !important;
+      background-size: cover !important;
+     background-position: -520px center !important;
+    }
+  
+}
+
+/* ═══════════════════════════════════════
+   HERO — CONTEÚDO (TEXTO/PILLS)
+═══════════════════════════════════════ */
+@media (max-width: 768px) {
+  .hero-content { padding: 88px 20px 48px; }
+  .hero-meta { gap: 10px; margin-bottom: 32px; }
+  .hero-pill { font-size: .82rem; padding: 9px 16px; }
+}
+@media (max-width: 480px) {
+  .hero-content { padding: 76px 16px 36px; }
+  .hero-meta { flex-direction: column; align-items: center; }
+  .hero-pill { width: 100%; justify-content: center; }
+  .hero-eyebrow { font-size: .68rem; }
+}
+
+/* ═══════════════════════════════════════
+   SECTIONS GERAIS
+═══════════════════════════════════════ */
+@media (max-width: 768px) {
+  section { padding: 56px 20px; }
+  .section-title { font-size: clamp(1.6rem, 6vw, 2.4rem); }
+}
+@media (max-width: 480px) {
+  section { padding: 44px 16px; }
+}
+
+/* ═══════════════════════════════════════
+   PROGRAMAÇÃO — TABS HORIZONTAIS SCROLLÁVEIS
+   Correções críticas:
+   1. Remover margin negativo (rompe overflow-x)
+   2. Remover position:sticky (conflita com overflow em alguns browsers)
+   3. margin-left:auto no btn-download quebra scroll → zeramos aqui
+═══════════════════════════════════════ */
+@media (max-width: 768px) {
+  /* Limpar o wrapper — sem margem negativa nem sticky */
+  .prog-header {
+    position: static;
+    margin: 0;
+    padding: 0;
+    background: none;
+  }
+
+  /* Linha 1: abas de dias */
+  .prog-tabs {
+    display: flex;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    flex-wrap: nowrap !important;
+    gap: 6px;
+    padding-bottom: 4px;
+    margin-bottom: 10px !important;
+    width: 100%;
+    /* padding lateral para o último botão não ficar colado na borda */
+    padding-right: 4px;
+  }
+  .prog-tabs::-webkit-scrollbar { display: none; }
+
+  /* Filtro de atividades */
+  .prog-filtro { flex-wrap: wrap; gap: 8px; margin-bottom: 20px; }
+  .prog-filtro select { min-width: 0; width: 100%; border-radius: 12px; }
+
+  /* Botões de dias */
+  .tab-btn {
+    white-space: nowrap;
+    flex-shrink: 0;
+    padding: 9px 16px;
+    font-size: .82rem;
+    min-height: 42px;
+  }
+
+  /* FIX CRÍTICO: margin-left:auto em flex com overflow-x:auto
+     empurra o botão para o infinito. Substituímos por margem fixa. */
+  .prog-tabs .btn-download-pdf {
+    margin-left: 8px !important;
+    flex-shrink: 0;
+  }
+
+  .btn-download-pdf {
+    font-size: .78rem;
+    padding: 8px 14px;
+  }
+
+  /* Timeline */
+  .timeline {
+    padding-left: 22px;
+    gap: 22px;
+  }
+  .tl-item::before { left: -28px; }
+}
+
+/* ═══════════════════════════════════════
+   RESTAURANTES — TABS SCROLLÁVEIS
+═══════════════════════════════════════ */
+@media (max-width: 768px) {
+  .rest-tabs {
+    display: flex;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    white-space: nowrap;
+    flex-wrap: nowrap;
+    gap: 6px;
+    width: 100%;
+  }
+  .rest-tabs::-webkit-scrollbar { display: none; }
+  .rest-tab { white-space: nowrap; flex-shrink: 0; }
+}
+
+/* ═══════════════════════════════════════
+   MAPA TABS
+═══════════════════════════════════════ */
+@media (max-width: 768px) {
+  .mapa-frame iframe { height: 260px; }
+  .mapa-tabs {
+    display: flex;
+    overflow-x: auto;
+    scrollbar-width: none;
+    white-space: nowrap;
+    flex-wrap: nowrap;
+    width: 100%;
+  }
+  .mapa-tabs::-webkit-scrollbar { display: none; }
+  .mapa-tab { white-space: nowrap; flex-shrink: 0; }
+}
+
+/* ═══════════════════════════════════════
+   SOBRE
+═══════════════════════════════════════ */
+@media (max-width: 768px) {
+  .sobre-card-bg { padding: 32px 24px; }
+  .card-brasil-bg { width: 75%; right: -20px; opacity: .18; }
+  .date-big { font-size: 2.8rem; }
+  .sobre-logo-grande { display: none; }
+}
+
+/* ═══════════════════════════════════════
+   BH
+═══════════════════════════════════════ */
+@media (max-width: 600px) {
+  .bh-grid { grid-template-columns: 1fr !important; }
+  .bh-card-img { height: 160px; }
+}
+
+/* ═══════════════════════════════════════
+   HIPPIE BOX
+═══════════════════════════════════════ */
+@media (max-width: 600px) {
+  .hippie-box { flex-direction: column; gap: 10px; padding: 20px 18px; }
+}
+
+/* ═══════════════════════════════════════
+   GASTRONOMIA GRID
+═══════════════════════════════════════ */
+@media (max-width: 480px) {
+  .comida-grid { grid-template-columns: 1fr 1fr; gap: 12px; }
+  .comida-item { padding: 20px 14px; }
+  .comida-emoji { font-size: 2.2rem; }
+}
+
+/* ═══════════════════════════════════════
+   LOCAL
+═══════════════════════════════════════ */
+@media (max-width: 768px) {
+  .local-hero { padding: 28px 22px; gap: 24px; }
+  .local-hero h3 { font-size: 1.35rem; }
+  .local-fotos { grid-template-columns: 1fr; gap: 12px; margin: 24px 0; }
+  .local-foto { aspect-ratio: 16/9; }
+}
+
+/* ═══════════════════════════════════════
+   INSCRIÇÕES — PREÇO CARDS
+═══════════════════════════════════════ */
+@media (max-width: 600px) {
+  .preco-grid { grid-template-columns: 1fr; }
+  .preco-card { padding: 24px 20px; }
+  .preco-valor { font-size: 2.4rem; }
+  .inscricao-como { flex-direction: column; }
+  .inscricao-passo { border-right: none; border-bottom: 1px solid rgba(255,255,255,.1); flex-direction: row; text-align: left; }
+  .inscricao-passo:last-child { border-bottom: none; }
+}
+
+/* ═══════════════════════════════════════
+   SUBMISSÃO — TIPOS
+═══════════════════════════════════════ */
+@media (max-width: 600px) {
+  .sub-tipos { grid-template-columns: 1fr; }
+  .sub-form-area.active { padding: 22px 16px; }
+  .form-normas { padding: 14px 16px; }
+}
+
+/* ═══════════════════════════════════════
+   HOSPEDAGEM
+═══════════════════════════════════════ */
+@media (max-width: 600px) {
+  .hotel-grid { grid-template-columns: 1fr; }
+}
+
+/* ═══════════════════════════════════════
+   BOTÕES — touch targets mínimos (44px)
+═══════════════════════════════════════ */
+@media (max-width: 768px) {
+  .btn-primary, .btn-secondary {
+    min-height: 50px;
+    padding: 14px 28px;
+    font-size: .95rem;
+  }
+  .btn-form {
+    min-height: 48px;
+    width: 100%;
+    text-align: center;
+  }
+  .btn-inscricao-finalizar {
+    padding: 15px 40px;
+    min-height: 52px;
+    font-size: .95rem;
+  }
+  .hero-cta { gap: 12px; }
+}
+
+/* ═══════════════════════════════════════
+   TTS BAR — MOBILE (bottom center)
+═══════════════════════════════════════ */
+@media (max-width: 1024px) {
+  #tts-bar {
+    top: auto !important;
+    bottom: 20px; right: auto;
+    left: 50%; transform: translateX(-50%);
+    padding: 10px 16px;
+    gap: 10px;
+  }
+  #tts-label { display: none; }
+  #tts-play-btn, #tts-stop-btn {
+    width: 44px !important; height: 44px !important;
+    font-size: 1.05rem !important;
+  }
+  #tts-speed {
+    font-size: .8rem !important;
+    padding: 6px 10px !important;
+  }
+  .tts-sep { display: none; }
+  .lang-flags { display: none !important; }
+  #tts-lang-btn { display: flex !important; align-items: center; justify-content: center; }
+}
+
+/* ═══════════════════════════════════════
+   FOOTER
+═══════════════════════════════════════ */
+@media (max-width: 768px) {
+  footer { padding: 44px 20px 24px; }
+  .footer-bottom {
+    flex-direction: column;
+    text-align: center;
+    gap: 6px;
+    font-size: .75rem;
+  }
+}
+
+
+/* ═══════════════════════════════════════
+   UTILITÁRIOS MOBILE
+═══════════════════════════════════════ */
+@media (max-width: 768px) {
+  .hero-wave { bottom: -2px; }
+}
+
