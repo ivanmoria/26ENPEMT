@@ -38,7 +38,7 @@
     position: fixed; left: 0; top: 0; z-index: 100;
     width: 220px; height: 100vh;
     display: flex; flex-direction: column;
-    padding: 28px 0;
+    padding: 28px 0 80px;
     background: rgba(253,250,245,.97);
     backdrop-filter: blur(12px);
     border-right: 1px solid var(--creme-escuro);
@@ -93,6 +93,53 @@
     transition: background .2s !important;
   }
   .nav-btn-inscricao:hover { background: var(--ouro-claro) !important; color: #fff !important; }
+
+  /* ─── NAV MENU BUTTON ─── */
+  .nav-menu-btn {
+    display: none; position: relative;
+    background: none; border: none; cursor: pointer;
+    flex-direction: column; gap: 5px; padding: 8px;
+    z-index: 101;
+  }
+  .nav-menu-btn span {
+    display: block; width: 24px; height: 2px;
+    background: var(--marrom); border-radius: 2px;
+    transition: all .3s;
+  }
+  .nav-menu-btn.open span:nth-child(1) {
+    transform: rotate(45deg) translate(8px, 8px);
+  }
+  .nav-menu-btn.open span:nth-child(2) {
+    opacity: 0;
+  }
+  .nav-menu-btn.open span:nth-child(3) {
+    transform: rotate(-45deg) translate(8px, -8px);
+  }
+
+  /* ─── NAV LANGUAGE SELECTOR ─── */
+  .nav-lang-selector {
+    padding: 16px 0; border-top: 1px solid var(--creme-escuro);
+    display: flex; flex-direction: column; align-items: flex-start;
+    margin-top: 8px;
+    position: relative;
+  }
+  .nav-lang-label {
+    font-size: .7rem; font-weight: 700; letter-spacing: 1px;
+    text-transform: uppercase; color: var(--marrom); opacity: .7;
+    margin-bottom: 8px; padding: 0 12px;
+  }
+  .nav-lang-flags {
+    display: flex; gap: 6px; padding: 0 12px; width: 100%;
+  }
+  .nav-lang-flag {
+    background: transparent; border: none; cursor: pointer;
+    font-size: 1.1rem; padding: 6px 8px; border-radius: 8px;
+    transition: all .2s; opacity: .5; flex: 1; text-align: center;
+  }
+  .nav-lang-flag:hover { opacity: .8; background: var(--creme-escuro); }
+  .nav-lang-flag.lang-active { opacity: 1; background: var(--verde-agua); color: #fff; }
+  .nav-lang-selector-mobile { display: none; }
+  .nav-sidebar-brand { display: none; }
 
   /* ─── HERO ─── */
   #hero {
@@ -633,20 +680,13 @@
   /* ==== LOGOMARCA NO FOOTER ==== */
   /* INSTRUÇÃO: Substitua o src do img.footer-logo pelo caminho da sua imagem */
   .footer-logo {
-    height: 44px; width: auto;
-    filter: brightness(0) invert(1); opacity: .8;
-    /* src ajustado via <img> — altere o src da tag img.footer-logo */
-  }
-  .footer-logo-placeholder {
-    height: 44px; width: 44px; border-radius: 8px;
-    background: rgba(255,255,255,.12);
-    display: flex; align-items: center; justify-content: center;
-    font-size: .65rem; color: rgba(255,255,255,.7); font-weight: 700; text-align: center;
+    height: 40px; width: auto;
+    filter: brightness(0) invert(1); opacity: .85;
   }
   .footer-brand-name {
-    font-family: 'Playfair Display', serif; font-size: 1.3rem; font-weight: 700; color: #fff;
+    font-family: 'Playfair Display', serif; font-size: 1rem; font-weight: 700; color: rgba(255,255,255,.9);
+    letter-spacing: .5px;
   }
-  .footer-brand-name span { color: var(--ouro-claro); }
   .footer-desc { font-size: .88rem; line-height: 1.7; margin-bottom: 20px; }
   .footer-h { font-size: .75rem; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--ouro-claro); margin-bottom: 16px; }
   .footer-links { list-style: none; display: flex; flex-direction: column; gap: 10px; }
@@ -749,58 +789,140 @@
     .footer-grid { grid-template-columns: 1fr 1fr; }
     .footer-grid > div:first-child { grid-column: 1/-1; }
   }
-  @media (max-width: 768px) {
-    nav { padding: 14px 20px; }
-    .nav-links { display: none; }
-    section { padding: 60px 20px; }
-    .sobre-grid { grid-template-columns: 1fr; }
-    .bh-grid { grid-template-columns: 1fr 1fr; }
-    .footer-grid { grid-template-columns: 1fr; }
-    .local-hero { grid-template-columns: 1fr; }
-    .hero-content { padding: 100px 20px 40px; }
-
-  }
   @media (max-width: 480px) {
     .bh-grid { grid-template-columns: 1fr; }
     .hero-cta { flex-direction: column; align-items: center; }
   }
 
   /* ─── TTS BAR ─── */
+  /* ─── TTS BAR ─── */
   #tts-bar {
-    position: fixed; top: 14px; right: 20px; z-index: 500;
-    display: flex; align-items: center; gap: 12px;
-    background: rgba(18,18,18,.92); backdrop-filter: blur(14px);
-    color: #fff; border-radius: 50px; padding: 8px 8px 8px 16px;
-    box-shadow: 0 4px 24px rgba(0,0,0,.28);
+    position: fixed; left: 50%; bottom: 24px; z-index: 500;
+    transform: translateX(-50%);
+    background: rgba(20,40,30,.92);
+    backdrop-filter: blur(20px);
+    color: #fff; border-radius: 50px; padding: 0;
+    box-shadow: 0 8px 32px rgba(0,0,0,.3), inset 0 1px 0 rgba(255,255,255,.08);
     font-family: 'DM Sans', sans-serif;
-    transition: background .3s;
+    transition: all .3s;
+    border: 1px solid rgba(255,255,255,.1);
+    white-space: nowrap;
   }
-  #tts-bar.tts-playing { background: rgba(0,60,30,.96); }
-  #tts-label {
-    font-size: .68rem; color: rgba(255,255,255,.5);
-    letter-spacing: .6px; text-transform: uppercase;
-    max-width: 130px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+  #tts-bar.tts-playing {
+    background: rgba(10,30,20,.95);
+    box-shadow: 0 8px 32px rgba(45,106,79,.35), inset 0 1px 0 rgba(255,255,255,.1);
+    border-color: rgba(116,198,157,.25);
   }
-  .tts-controls { display: flex; align-items: center; gap: 6px; }
-  #tts-play-btn, #tts-stop-btn {
-    background: rgba(255,255,255,.12); border: none; color: #fff;
-    width: 32px; height: 32px; border-radius: 50%; font-size: .88rem;
+  .tts-controls {
+    display: flex; align-items: center; gap: 2px; padding: 6px 8px;
+  }
+  #tts-play-btn, #tts-stop-btn, #tts-prev-btn, #tts-next-btn, #tts-minimize-btn {
+    background: none; border: none; color: #fff;
+    width: 36px; height: 36px; border-radius: 50%; font-size: .7rem;
     cursor: pointer; display: flex; align-items: center; justify-content: center;
-    transition: background .2s;
+    transition: background .15s; flex-shrink: 0;
   }
-  #tts-play-btn:hover, #tts-stop-btn:hover { background: rgba(255,255,255,.25); }
-  #tts-bar.tts-playing #tts-play-btn { background: var(--verde); }
+  #tts-play-btn:hover, #tts-stop-btn:hover, #tts-prev-btn:hover, #tts-next-btn:hover, #tts-minimize-btn:hover {
+    background: rgba(255,255,255,.12);
+  }
+  #tts-play-btn {
+    background: rgba(255,255,255,.15);
+    width: 40px; height: 40px; font-size: .85rem;
+  }
+  #tts-play-btn:hover { background: rgba(255,255,255,.25); }
+  #tts-bar.tts-playing #tts-play-btn {
+    background: rgba(116,198,157,.35);
+    color: #74c69d;
+  }
+  .tts-divider {
+    width: 1px; height: 20px; background: rgba(255,255,255,.15); margin: 0 4px; flex-shrink: 0;
+  }
   #tts-speed {
-    background: rgba(255,255,255,.1); border: 1px solid rgba(255,255,255,.18);
-    color: #fff; font-family: 'DM Sans', sans-serif; font-size: .74rem;
-    padding: 5px 10px; border-radius: 20px; cursor: pointer; outline: none;
+    background: none; border: none;
+    color: rgba(255,255,255,.8); font-family: 'DM Sans', sans-serif; font-size: .7rem;
+    cursor: pointer; outline: none; padding: 4px 2px; max-width: 52px;
+    -webkit-appearance: none; appearance: none; text-align: center;
   }
-  #tts-speed option { background: #1a1a1a; color: #fff; }
+  #tts-speed option { background: #0d2010; color: #fff; }
+  #tts-minimize-btn {
+    display: none; font-size: 1rem; opacity: .6; width: 28px; height: 28px;
+  }
+  #tts-minimize-btn:hover { opacity: 1; }
+  #tts-current-word { display: none; }
+
+  /* ─── TTS DESKTOP — dentro da sidebar ─── */
+  @media (min-width: 1026px) {
+    #tts-bar {
+      position: fixed;
+      left: 0; bottom: 0;
+      width: 220px;
+      transform: none;
+      border-radius: 0;
+      background: rgba(253,250,245,.97);
+      backdrop-filter: none;
+      border: none;
+      border-top: 1px solid var(--creme-escuro);
+      box-shadow: none;
+      color: var(--marrom);
+      padding: 0;
+    }
+    #tts-bar.tts-playing {
+      background: rgba(245,250,247,.98);
+      box-shadow: none;
+      border-color: rgba(45,106,79,.2);
+    }
+    .tts-controls {
+      padding: 10px 12px;
+      gap: 2px;
+      justify-content: center;
+    }
+    #tts-play-btn, #tts-stop-btn, #tts-prev-btn, #tts-next-btn {
+      color: var(--verde);
+      width: 32px; height: 32px;
+    }
+    #tts-play-btn:hover, #tts-stop-btn:hover, #tts-prev-btn:hover, #tts-next-btn:hover {
+      background: var(--creme-escuro);
+    }
+    #tts-play-btn {
+      background: var(--verde);
+      color: #fff;
+      width: 36px; height: 36px;
+    }
+    #tts-play-btn:hover { background: var(--verde-agua); }
+    #tts-bar.tts-playing #tts-play-btn {
+      background: var(--verde);
+      color: #fff;
+    }
+    .tts-divider {
+      background: var(--creme-escuro);
+    }
+    #tts-speed {
+      color: var(--marrom);
+      font-size: .68rem;
+    }
+    #tts-speed option { background: #fff; color: var(--marrom); }
+  }
+
+  /* ─── TTS MOBILE / TABLET ─── */
+  @media (max-width: 1025px) {
+    #tts-bar { bottom: 16px; }
+    #tts-minimize-btn { display: flex; }
+    #tts-bar.tts-minimized .tts-divider,
+    #tts-bar.tts-minimized #tts-prev-btn,
+    #tts-bar.tts-minimized #tts-stop-btn,
+    #tts-bar.tts-minimized #tts-next-btn,
+    #tts-bar.tts-minimized #tts-speed { display: none; }
+  }
 
   /* ─── TTS DESTAQUES ─── */
   @keyframes tts-pulse {
     0%, 100% { background: rgba(45,106,79,.05) !important; }
     50%       { background: rgba(45,106,79,.13) !important; }
+  }
+  @keyframes tts-word-highlight {
+    0% { background: rgba(45,106,79,.15); text-shadow: 0 0 10px rgba(45,106,79,.4); }
+    50% { background: rgba(45,106,79,.25); text-shadow: 0 0 15px rgba(45,106,79,.6); }
+    100% { background: rgba(45,106,79,.15); text-shadow: 0 0 10px rgba(45,106,79,.4); }
   }
   .tts-el-active {
     border-radius: 4px;
@@ -811,6 +933,15 @@
     outline: 2px solid rgba(45,106,79,.28) !important;
     box-shadow: 0 0 0 5px rgba(45,106,79,.06), 0 4px 24px rgba(45,106,79,.1) !important;
     transition: outline .2s, box-shadow .2s;
+  }
+  .tts-word-active {
+    background: rgba(45,106,79,.2);
+    padding: 2px 4px;
+    border-radius: 3px;
+    font-weight: 600;
+    color: var(--verde);
+    animation: tts-word-highlight .6s ease-in-out;
+    box-shadow: 0 0 8px rgba(45,106,79,.4);
   }
   .tts-clickable { cursor: pointer; }
   .tts-clickable:hover { background: rgba(45,106,79,.04); border-radius: 4px; }
@@ -856,15 +987,35 @@
     <span></span><span></span><span></span>
   </button>
   <ul class="nav-links" id="nav-links">
+    <li class="nav-sidebar-brand">
+      <img src="img/logo-enpemt-horizontal.png" alt="ENPEMT">
+      <span>XXVI ENPEMT</span>
+    </li>
     <li><a href="#sobre" data-i18n="nav.evento">Evento</a></li>
-    <li><a href="#submissao">Envio de Trabalhos</a></li>
+    <li><a href="#submissao" data-i18n="nav.trabalhos">Envio de Trabalhos</a></li>
     <li><a href="#programacao" data-i18n="nav.programacao">Programação</a></li>
     <li><a href="#local" data-i18n="nav.local">Local</a></li>
     <li><a href="#restaurantes" data-i18n="nav.restaurantes">Restaurantes</a></li>
     <li><a href="#bh" data-i18n="nav.bh">Belo Horizonte</a></li>
     <li><a href="#hospedagem" data-i18n="nav.hospedagem">Hospedagem</a></li>
     <li><a href="#inscricoes" class="nav-btn-inscricao" data-i18n="nav.inscricoes">Inscrições</a></li>
+    <li class="nav-lang-selector-mobile">
+      <div class="nav-lang-label">Idioma</div>
+      <div class="nav-lang-flags">
+        <button class="nav-lang-flag lang-active" data-lang="pt" title="Português">🇧🇷</button>
+        <button class="nav-lang-flag" data-lang="en" title="English">🇿🇦</button>
+        <button class="nav-lang-flag" data-lang="es" title="Español">🇨🇴</button>
+      </div>
+    </li>
   </ul>
+  <div class="nav-lang-selector">
+    <div class="nav-lang-label">Idioma</div>
+    <div class="nav-lang-flags">
+      <button class="nav-lang-flag lang-active" data-lang="pt" title="Português">🇧🇷</button>
+      <button class="nav-lang-flag" data-lang="en" title="English">🇿🇦</button>
+      <button class="nav-lang-flag" data-lang="es" title="Español">🇨🇴</button>
+    </div>
+  </div>
 </nav>
 
 <!-- HERO -->
@@ -892,15 +1043,15 @@
         <span class="section-label" data-i18n="sobre.label">O Encontro</span>
         <h2 class="section-title" data-i18n="sobre.title">Um grande <em>recomeço</em> presencial</h2>
         <div class="divider"></div>
-        <p class="section-text">
+        <p class="section-text" data-i18n="sobre.text1">
           Após anos de encontros virtuais impostos pela pandemia, o ENPEMT retorna à sua essência: o encontro humano, o abraço, a escuta compartilhada. A 26ª edição acontece em Belo Horizonte, na histórica Escola de Música da UFMG — um dos celeiros mais importantes da musicoterapia no Brasil.
         </p>
-        <p class="section-text" style="margin-top:16px">
+        <p class="section-text" style="margin-top:16px" data-i18n="sobre.text2">
           Três dias de pesquisa, arte, conexão e celebração da musicoterapia brasileira. Venha fazer parte deste momento histórico!
         </p>
         <div style="margin-top: 32px;">
           <div class="tag-retorno" data-i18n="sobre.tag">De volta ao presencial!</div>
-          <p class="section-text" style="margin-top: 10px; font-size:.9rem">
+          <p class="section-text" style="margin-top: 10px; font-size:.9rem" data-i18n="sobre.text3">
             Uma data especial: véspera do feriado nacional de 12 de outubro, permitindo que participantes de todo o Brasil aproveitem o fim de semana prolongado em BH.
           </p>
         </div>
@@ -976,34 +1127,34 @@
     <span class="section-label reveal" data-i18n="prog.label">Agenda</span>
     <h2 class="section-title reveal" data-i18n="prog.title">Programação <em>preliminar</em></h2>
     <div class="divider reveal"></div>
-    <p class="section-text reveal">Três dias de imersão em pesquisa, prática clínica e vivência musical. Programação sujeita a atualizações.</p>
+    <p class="section-text reveal" data-i18n="prog.aviso">Três dias de imersão em pesquisa, prática clínica e vivência musical. Programação sujeita a atualizações.</p>
 
     <div class="prog-header">
       <div class="prog-tabs">
-        <button class="tab-btn active" onclick="switchTab(event,'dia1')">8/out · Quinta</button>
-        <button class="tab-btn" onclick="switchTab(event,'dia2')">9/out · Sexta</button>
-        <button class="tab-btn" onclick="switchTab(event,'dia3')">10/out · Sábado</button>
-        <button class="tab-btn" onclick="switchTab(event,'dia4')">11/out · Domingo</button>
+        <button class="tab-btn active" onclick="switchTab(event,'dia1')">8/out <span class="tab-dia" data-i18n="prog.dia1.label">· Quinta</span></button>
+        <button class="tab-btn" onclick="switchTab(event,'dia2')">9/out <span class="tab-dia" data-i18n="prog.dia2.label">· Sexta</span></button>
+        <button class="tab-btn" onclick="switchTab(event,'dia3')">10/out <span class="tab-dia" data-i18n="prog.dia3.label">· Sábado</span></button>
+        <button class="tab-btn" onclick="switchTab(event,'dia4')">11/out <span class="tab-dia" data-i18n="prog.dia4.label">· Domingo</span></button>
         <a href="programacao-enpemt2026.pdf" download class="btn-download-pdf" title="Baixar programação em PDF">
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg>
-          Baixar PDF
+          <span data-i18n="prog.pdf">Baixar PDF</span>
         </a>
       </div>
       <div class="prog-filtro">
-        <label for="prog-filtro-select" class="prog-filtro-label">Filtrar:</label>
+        <label for="prog-filtro-select" class="prog-filtro-label" data-i18n="prog.filtrar">Filtrar:</label>
         <select id="prog-filtro-select" onchange="filtrarProg(this.value)">
-          <option value="">Todas as atividades</option>
-          <option value="palestra">Palestras &amp; Conferências</option>
-          <option value="mesa-redonda">Mesas Redondas</option>
-          <option value="comunicacoes">Comunicações Orais</option>
-          <option value="grupo-trabalho">Grupos de Trabalho</option>
-          <option value="poster">Pôsteres</option>
-          <option value="curso">Cursos Pré-Congresso</option>
-          <option value="assembleia">Assembleia UBAM</option>
-          <option value="cultural">Atividades Culturais</option>
-          <option value="abertura">Abertura &amp; Encerramento</option>
-          <option value="livre">Intervalos &amp; Alimentação</option>
-          <option value="social">Social &amp; Turismo</option>
+          <option value="" data-i18n="prog.f.todas">Todas as atividades</option>
+          <option value="palestra" data-i18n="prog.f.palestra">Palestras &amp; Conferências</option>
+          <option value="mesa-redonda" data-i18n="prog.f.mesa">Mesas Redondas</option>
+          <option value="comunicacoes" data-i18n="prog.f.comunicacoes">Comunicações Orais</option>
+          <option value="grupo-trabalho" data-i18n="prog.f.grupo">Grupos de Trabalho</option>
+          <option value="poster" data-i18n="prog.f.poster">Pôsteres</option>
+          <option value="curso" data-i18n="prog.f.curso">Cursos Pré-Congresso</option>
+          <option value="assembleia" data-i18n="prog.f.assembleia">Assembleia UBAM</option>
+          <option value="cultural" data-i18n="prog.f.cultural">Atividades Culturais</option>
+          <option value="abertura" data-i18n="prog.f.abertura">Abertura &amp; Encerramento</option>
+          <option value="livre" data-i18n="prog.f.livre">Intervalos &amp; Alimentação</option>
+          <option value="social" data-i18n="prog.f.social">Social &amp; Turismo</option>
         </select>
       </div>
     </div>
@@ -1013,18 +1164,18 @@
 
        <div class="tl-item" data-tipo="curso">
           <div class="tl-time">09:00 – 12:00</div>
-          <div class="tl-title">Curso Pré-Congresso</div>
-          <div class="tl-desc">Curso, autor</div>
-          <span class="tl-badge badge-abertura">Cursos Pré-congresso</span>
+          <div class="tl-title" data-i18n="tl.curso.title">Curso Pré-Congresso</div>
+          <div class="tl-desc" data-i18n="tl.curso.desc">Curso, autor</div>
+          <span class="tl-badge badge-abertura" data-i18n="tl.badge.curso">Cursos Pré-congresso</span>
         </div>
 
 
 
        <div class="tl-item" data-tipo="curso">
           <div class="tl-time">14:00 – 17:00</div>
-          <div class="tl-title">Curso Pré-Congresso</div>
-          <div class="tl-desc">Curso, autor</div>
-          <span class="tl-badge badge-abertura">Cursos Pré-congresso</span>
+          <div class="tl-title" data-i18n="tl.curso.title">Curso Pré-Congresso</div>
+          <div class="tl-desc" data-i18n="tl.curso.desc">Curso, autor</div>
+          <span class="tl-badge badge-abertura" data-i18n="tl.badge.curso">Cursos Pré-congresso</span>
         </div>
 
 
@@ -1034,27 +1185,27 @@
 
         <div class="tl-item" data-tipo="abertura">
           <div class="tl-time">18:30 – 19:00</div>
-          <div class="tl-title">Credenciamento e recepção</div>
-          <div class="tl-desc">Boas-vindas, retirada de materiais e confraternização inicial.</div>
-          <span class="tl-badge badge-abertura">Recepção</span>
+          <div class="tl-title" data-i18n="tl.credenciamento.title">Credenciamento e recepção</div>
+          <div class="tl-desc" data-i18n="tl.credenciamento.desc">Boas-vindas, retirada de materiais e confraternização inicial.</div>
+          <span class="tl-badge badge-abertura" data-i18n="tl.badge.recepcao">Recepção</span>
         </div>
         <div class="tl-item" data-tipo="abertura">
           <div class="tl-time">19:00 – 19:15</div>
-          <div class="tl-title">Cerimônia de Abertura</div>
-          <div class="tl-desc">Abertura oficial do XXVI ENPEMT com a fala das comissões organizadoras.</div>
-          <span class="tl-badge badge-abertura">Abertura</span>
+          <div class="tl-title" data-i18n="tl.cerimonia.abertura.title">Cerimônia de Abertura</div>
+          <div class="tl-desc" data-i18n="tl.cerimonia.abertura.desc">Abertura oficial do XXVI ENPEMT com a fala das comissões organizadoras.</div>
+          <span class="tl-badge badge-abertura" data-i18n="tl.badge.abertura">Abertura</span>
         </div>
         <div class="tl-item" data-tipo="palestra">
           <div class="tl-time">19:15 – 20:15</div>
-          <div class="tl-title">Palestra de Abertura</div>
-          <div class="tl-desc">Palestra magna com pesquisadora convidada nacional. Tema central do encontro.</div>
-          <span class="tl-badge badge-palestra">Palestra Magna</span>
+          <div class="tl-title" data-i18n="tl.palestra.abertura.title">Palestra de Abertura</div>
+          <div class="tl-desc" data-i18n="tl.palestra.abertura.desc">Palestra magna com pesquisadora convidada nacional. Tema central do encontro.</div>
+          <span class="tl-badge badge-palestra" data-i18n="tl.badge.palestra.magna">Palestra Magna</span>
         </div>
         <div class="tl-item" data-tipo="cultural">
           <div class="tl-time">20:30 – 22:00</div>
-          <div class="tl-title">Atividade Cultural aberta: Show Inclusivo com a banda Rock'n Colors</div>
-          <div class="tl-desc">APRESENTAÇÃO DO GRUPO E PROPOSTA.</div>
-          <span class="tl-badge badge-social">Atividade Cultural</span>
+          <div class="tl-title" data-i18n="tl.cultural.title">Atividade Cultural aberta: Show Inclusivo com a banda Rock'n Colors</div>
+          <div class="tl-desc" data-i18n="tl.cultural.desc">APRESENTAÇÃO DO GRUPO E PROPOSTA.</div>
+          <span class="tl-badge badge-social" data-i18n="tl.badge.cultural">Atividade Cultural</span>
         </div>
 
       </div>
@@ -1064,56 +1215,56 @@
       <div class="timeline">
         <div class="tl-item" data-tipo="mesa-redonda">
           <div class="tl-time">09:00 – 10:30</div>
-          <div class="tl-title">Mesa Redonda: Sistematização e Prática Baseada em Evidências</div>
-          <div class="tl-desc">Participantes: Camila A. Acosta (UFRJ) e Frederico Pedrosa (UFMG). Mariana Arruda (UNESPAR)? </div>
-            <span class="tl-badge badge-palestra">Mesa Redonda</span>
+          <div class="tl-title" data-i18n="tl.mesa1.title">Mesa Redonda: Sistematização e Prática Baseada em Evidências</div>
+          <div class="tl-desc" data-i18n="tl.mesa1.desc">Participantes: Camila A. Acosta (UFRJ) e Frederico Pedrosa (UFMG). Mariana Arruda (UNESPAR)? </div>
+            <span class="tl-badge badge-palestra" data-i18n="tl.badge.mesa">Mesa Redonda</span>
         </div>
 
         <div class="tl-item" data-tipo="comunicacoes">
           <div class="tl-time">10:30 – 12:30</div>
-            <div class="tl-title">Sessão de Comunicações Orais — Bloco I</div>
-          <div class="tl-desc">Apresentações de pôsteres e comunicações curtas.</div>
-          <span class="tl-badge badge-palestra">Comunicações</span>
+            <div class="tl-title" data-i18n="tl.comunicacoes1.title">Sessão de Comunicações Orais — Bloco I</div>
+          <div class="tl-desc" data-i18n="tl.comunicacoes.desc">Apresentações de pôsteres e comunicações curtas.</div>
+          <span class="tl-badge badge-palestra" data-i18n="tl.badge.comunicacoes">Comunicações</span>
         </div>
 
 
         <div class="tl-item" data-tipo="livre">
           <div class="tl-time">12:30 – 14:00</div>
-          <div class="tl-title">🍽️ Almoço </div>
-          <div class="tl-desc">Restaurantes universitários disponíveis no campus: Praça de Serviços (perto do RU central), Restaurante da FAE e Restaurante da Faculdade de Letras. Veja a seção Restaurantes para detalhes.</div>
+          <div class="tl-title" data-i18n="tl.almoco.title">🍽️ Almoço </div>
+          <div class="tl-desc" data-i18n="tl.almoco.desc">Restaurantes universitários disponíveis no campus: Praça de Serviços (perto do RU central), Restaurante da FAE e Restaurante da Faculdade de Letras. Veja a seção Restaurantes para detalhes.</div>
 
-   
-          <span class="tl-badge badge-oficina">Almoço livre</span>
+
+          <span class="tl-badge badge-oficina" data-i18n="tl.badge.almoco">Almoço livre</span>
         </div>
         <div class="tl-item" data-tipo="palestra">
           <div class="tl-time">14:00 – 15:00</div>
-          <div class="tl-title">Conferência Internacional</div>
-          <div class="tl-desc">Palestra com pesquisadora convidada internacional. Perspectivas globais da musicoterapia.</div>
-          <span class="tl-badge badge-palestra">Internacional</span>
+          <div class="tl-title" data-i18n="tl.conferencia.intl.title">Conferência Internacional</div>
+          <div class="tl-desc" data-i18n="tl.conferencia.intl.desc">Palestra com pesquisadora convidada internacional. Perspectivas globais da musicoterapia.</div>
+          <span class="tl-badge badge-palestra" data-i18n="tl.badge.internacional">Internacional</span>
         </div>
 
         <div class="tl-item" data-tipo="comunicacoes">
           <div class="tl-time">15:00 – 17:00</div>
-          <div class="tl-title">Sessão de Comunicações Orais — Bloco II</div>
-          <div class="tl-desc">Apresentações de pôsteres e comunicações curtas.</div>
-          <span class="tl-badge badge-palestra">Comunicações</span>
+          <div class="tl-title" data-i18n="tl.comunicacoes2.title">Sessão de Comunicações Orais — Bloco II</div>
+          <div class="tl-desc" data-i18n="tl.comunicacoes.desc">Apresentações de pôsteres e comunicações curtas.</div>
+          <span class="tl-badge badge-palestra" data-i18n="tl.badge.comunicacoes">Comunicações</span>
         </div>
 
 
         <div class="tl-item" data-tipo="livre">
           <div class="tl-time">18:30 – 19:00</div>
-          <div class="tl-title">Coffee Break e apresentação artística</div>
-          <div class="tl-desc">Artistas, cardápio;</div>
-          <span class="tl-badge badge-oficina">Coffeebreak</span>
+          <div class="tl-title" data-i18n="tl.coffeebreak.title">Coffee Break e apresentação artística</div>
+          <div class="tl-desc" data-i18n="tl.coffeebreak.desc">Artistas, cardápio;</div>
+          <span class="tl-badge badge-oficina" data-i18n="tl.badge.coffee">Coffeebreak</span>
         </div>
 
 
 
        <div class="tl-item" data-tipo="mesa-redonda">
           <div class="tl-time">19:00 – 20:30</div>
-          <div class="tl-title">Mesa Redonda: Acessibilidade e Diversidade Metodológica</div>
-          <div class="tl-desc">Participantes: Queila Oliveira (SP), Noemi Ansay (UNESPAR) e Aline André (UFMG)</div>
-            <span class="tl-badge badge-palestra">Mesa Redonda</span>
+          <div class="tl-title" data-i18n="tl.mesa2.title">Mesa Redonda: Acessibilidade e Diversidade Metodológica</div>
+          <div class="tl-desc" data-i18n="tl.mesa2.desc">Participantes: Queila Oliveira (SP), Noemi Ansay (UNESPAR) e Aline André (UFMG)</div>
+            <span class="tl-badge badge-palestra" data-i18n="tl.badge.mesa">Mesa Redonda</span>
         </div>
 
 
@@ -1123,9 +1274,9 @@
 
         <div class="tl-item" data-tipo="assembleia">
           <div class="tl-time">20:30 – 22:00</div>
-          <div class="tl-title">Assembleia Geral da UBAM</div>
-          <div class="tl-desc">Reunião anual da União Brasileira das Associações de Musicoterapia.</div>
-          <span class="tl-badge badge-abertura">UBAM</span>
+          <div class="tl-title" data-i18n="tl.ubam.title">Assembleia Geral da UBAM</div>
+          <div class="tl-desc" data-i18n="tl.ubam.desc">Reunião anual da União Brasileira das Associações de Musicoterapia.</div>
+          <span class="tl-badge badge-abertura" data-i18n="tl.badge.ubam">UBAM</span>
         </div>
       </div>
     </div>
@@ -1138,9 +1289,9 @@
 
        <div class="tl-item" data-tipo="mesa-redonda">
           <div class="tl-time">09:00 – 10:30</div>
-          <div class="tl-title">Mesa Redonda: Fortalecimento da Cooperação Sul-Sul</div>
-          <div class="tl-desc">Participantes: Renato Sampaio (UFMG) e Andressa Arndt (UNESPAR)</div>
-            <span class="tl-badge badge-palestra">Mesa Redonda</span>
+          <div class="tl-title" data-i18n="tl.mesa3.title">Mesa Redonda: Fortalecimento da Cooperação Sul-Sul</div>
+          <div class="tl-desc" data-i18n="tl.mesa3.desc">Participantes: Renato Sampaio (UFMG) e Andressa Arndt (UNESPAR)</div>
+            <span class="tl-badge badge-palestra" data-i18n="tl.badge.mesa">Mesa Redonda</span>
         </div>
 
 
@@ -1149,50 +1300,50 @@
 
         <div class="tl-item" data-tipo="grupo-trabalho">
           <div class="tl-time">10:30 – 12:30</div>
-          <div class="tl-title">Grupos de Trabalho</div>
-          <div class="tl-desc">DESCRIÇÃO</div>
-          <span class="tl-badge badge-palestra">Grupos de Trabalho</span>
+          <div class="tl-title" data-i18n="tl.grupos.title">Grupos de Trabalho</div>
+          <div class="tl-desc" data-i18n="tl.grupos.desc">DESCRIÇÃO</div>
+          <span class="tl-badge badge-palestra" data-i18n="tl.badge.grupos">Grupos de Trabalho</span>
         </div>
 
 
 
         <div class="tl-item" data-tipo="livre">
           <div class="tl-time">12:30 – 14:00</div>
-          <div class="tl-title">🍽️ Almoço</div>
-              <div class="tl-desc">Os restaurantes universitários estão fechados no sábado. Veja a seção Restaurantes para sugestões de lugares abertos na Pampulha e região do campus.</div>
-          <span class="tl-badge badge-social">Almoço livre</span>
+          <div class="tl-title" data-i18n="tl.almoco.title">🍽️ Almoço</div>
+              <div class="tl-desc" data-i18n="tl.almoco.sabado.desc">Os restaurantes universitários estão fechados no sábado. Veja a seção Restaurantes para sugestões de lugares abertos na Pampulha e região do campus.</div>
+          <span class="tl-badge badge-social" data-i18n="tl.badge.almoco">Almoço livre</span>
         </div>
 
 
 
    <div class="tl-item" data-tipo="palestra">
           <div class="tl-time">14:00 – 15:00</div>
-          <div class="tl-title">Conferência Internacional</div>
-          <div class="tl-desc">Palestra com pesquisadora convidada internacional. Perspectivas globais da musicoterapia.</div>
-          <span class="tl-badge badge-palestra">Internacional</span>
+          <div class="tl-title" data-i18n="tl.conferencia.intl.title">Conferência Internacional</div>
+          <div class="tl-desc" data-i18n="tl.conferencia.intl.desc">Palestra com pesquisadora convidada internacional. Perspectivas globais da musicoterapia.</div>
+          <span class="tl-badge badge-palestra" data-i18n="tl.badge.internacional">Internacional</span>
         </div>
 
               <div class="tl-item" data-tipo="poster">
           <div class="tl-time">15:00 – 17:00</div>
-          <div class="tl-title">Sessão de Pôsteres</div>
-          <div class="tl-desc">DESCRIÇÃO</div>
-          <span class="tl-badge badge-palestra">Pôsteres</span>
+          <div class="tl-title" data-i18n="tl.posteres.title">Sessão de Pôsteres</div>
+          <div class="tl-desc" data-i18n="tl.posteres.desc">DESCRIÇÃO</div>
+          <span class="tl-badge badge-palestra" data-i18n="tl.badge.posteres">Pôsteres</span>
         </div>
 
         <div class="tl-item" data-tipo="livre">
           <div class="tl-time">18:30 – 19:00</div>
-          <div class="tl-title">Coffee Break e apresentação artística</div>
-          <div class="tl-desc">Artistas, cardápio;</div>
-          <span class="tl-badge badge-oficina">Coffeebreak</span>
+          <div class="tl-title" data-i18n="tl.coffeebreak.title">Coffee Break e apresentação artística</div>
+          <div class="tl-desc" data-i18n="tl.coffeebreak.desc">Artistas, cardápio;</div>
+          <span class="tl-badge badge-oficina" data-i18n="tl.badge.coffee">Coffeebreak</span>
         </div>
 
 
 
         <div class="tl-item" data-tipo="abertura">
           <div class="tl-time">19:00 – 20:00</div>
-          <div class="tl-title">Cerimônia de Encerramento</div>
-          <div class="tl-desc">Premiações, agradecimentos e vivência musical de encerramento. Até o XXVII ENPEMT!</div>
-          <span class="tl-badge badge-abertura">Encerramento</span>
+          <div class="tl-title" data-i18n="tl.encerramento.title">Cerimônia de Encerramento</div>
+          <div class="tl-desc" data-i18n="tl.encerramento.desc">Premiações, agradecimentos e vivência musical de encerramento. Até o XXVII ENPEMT!</div>
+          <span class="tl-badge badge-abertura" data-i18n="tl.badge.encerramento">Encerramento</span>
         </div>
       </div>
     </div>
@@ -1201,21 +1352,21 @@
       <div class="timeline">
         <div class="tl-item" data-tipo="social">
           <div class="tl-time">Dia livre</div>
-          <div class="tl-title">🌿 Exploração de Belo Horizonte</div>
-          <div class="tl-desc">Véspera do feriado de 12 de outubro — aproveite para conhecer a cidade! Sugestões: Lagoa da Pampulha, Igreja de São Francisco, Museu de Arte da Pampulha, Av. Flemming, Savassi, Mangabeiras. Feira Hippie (Av. Afonso Pena, à partir de 6h)</div>
-          <span class="tl-badge badge-social">Turismo livre</span>
+          <div class="tl-title" data-i18n="tl.exploracao.title">🌿 Exploração de Belo Horizonte</div>
+          <div class="tl-desc" data-i18n="tl.exploracao.desc">Véspera do feriado de 12 de outubro — aproveite para conhecer a cidade! Sugestões: Lagoa da Pampulha, Igreja de São Francisco, Museu de Arte da Pampulha, Av. Flemming, Savassi, Mangabeiras. Feira Hippie (Av. Afonso Pena, à partir de 6h)</div>
+          <span class="tl-badge badge-social" data-i18n="tl.badge.turismo">Turismo livre</span>
         </div>
         <div class="tl-item" data-tipo="social">
           <div class="tl-time">🍽️ Almoço e Jantar</div>
-          <div class="tl-title">Restaurantes no Domingo</div>
-          <div class="tl-desc">DESCRIÇÃO</div>
-          <span class="tl-badge badge-social">Fora do campus</span>
+          <div class="tl-title" data-i18n="tl.rest.domingo.title">Restaurantes no Domingo</div>
+          <div class="tl-desc" data-i18n="tl.rest.domingo.desc">DESCRIÇÃO</div>
+          <span class="tl-badge badge-social" data-i18n="tl.badge.foracampus">Fora do campus</span>
         </div>
         <div class="tl-item" data-tipo="social">
           <div class="tl-time">Próximo ao evento</div>
-          <div class="tl-title">✈️ Retorno dos participantes</div>
-          <div class="tl-desc">Com o feriado de 12/10 (domingo), muitos participantes aproveitarão para retornar na segunda ou terça. Programe suas passagens com antecedência!</div>
-          <span class="tl-badge badge-social">Logística</span>
+          <div class="tl-title" data-i18n="tl.retorno.title">✈️ Retorno dos participantes</div>
+          <div class="tl-desc" data-i18n="tl.retorno.desc">Com o feriado de 12/10 (domingo), muitos participantes aproveitarão para retornar na segunda ou terça. Programe suas passagens com antecedência!</div>
+          <span class="tl-badge badge-social" data-i18n="tl.badge.logistica">Logística</span>
         </div>
       </div>
     </div>
@@ -1233,43 +1384,43 @@
 
     <div class="local-hero reveal">
       <div>
-        <h3>Um centenário palco da música brasileira</h3>
-        <p>Fundada em 1925, a Escola de Música da UFMG é uma das mais tradicionais do país. Localizada no Campus Pampulha — projeto urbanístico Patrimônio Mundial da UNESCO — a escola reúne salas de concerto, estúdios de gravação e espaços de pesquisa de excelência.</p>
-        <p style="margin-top:12px">O campus da UFMG foi projetado por Oscar Niemeyer com paisagismo de Burle Marx, em uma das mais belas realizações da arquitetura modernista brasileira.</p>
+        <h3 data-i18n="local.h3">Um centenário palco da música brasileira</h3>
+        <p data-i18n="local.p1">Fundada em 1925, a Escola de Música da UFMG é uma das mais tradicionais do país. Localizada no Campus Pampulha — projeto urbanístico Patrimônio Mundial da UNESCO — a escola reúne salas de concerto, estúdios de gravação e espaços de pesquisa de excelência.</p>
+        <p style="margin-top:12px" data-i18n="local.p2">O campus da UFMG foi projetado por Oscar Niemeyer com paisagismo de Burle Marx, em uma das mais belas realizações da arquitetura modernista brasileira.</p>
       </div>
       <div class="local-facts">
-        <div class="local-fact"><strong>Endereço</strong>Av. Pres. Antônio Carlos, 6627 — Pampulha, BH/MG</div>
-        <div class="local-fact"><strong>Telefone</strong>+55 31 3409-4700</div>
-        <div class="local-fact"><strong>Fundação</strong>1925 · 100 anos de música e pesquisa</div>
-        <div class="local-fact"><strong>Campus</strong>Patrimônio Mundial UNESCO (Conjunto Moderno da Pampulha)</div>
+        <div class="local-fact"><strong data-i18n="local.fact.endereco.label">Endereço</strong><span data-i18n="local.fact.endereco">Av. Pres. Antônio Carlos, 6627 — Pampulha, BH/MG</span></div>
+        <div class="local-fact"><strong data-i18n="local.fact.telefone.label">Telefone</strong>+55 31 3409-4700</div>
+        <div class="local-fact"><strong data-i18n="local.fact.fundacao.label">Fundação</strong><span data-i18n="local.fact.fundacao">1925 · 100 anos de música e pesquisa</span></div>
+        <div class="local-fact"><strong data-i18n="local.fact.campus.label">Campus</strong><span data-i18n="local.fact.campus">Patrimônio Mundial UNESCO (Conjunto Moderno da Pampulha)</span></div>
       </div>
     </div>
 
     <div class="local-fotos reveal">
       <figure class="local-foto">
         <img src="img/escola.jpeg" alt="Fachada da Escola de Música da UFMG">
-        <figcaption>Fachada · Escola de Música da UFMG</figcaption>
+        <figcaption data-i18n="local.foto1.caption">Fachada · Escola de Música da UFMG</figcaption>
       </figure>
       <figure class="local-foto">
         <img src="img/auditorio.webp" alt="Auditório da Escola de Música da UFMG">
-        <figcaption>Auditório Principal</figcaption>
+        <figcaption data-i18n="local.foto2.caption">Auditório Principal</figcaption>
       </figure>
     </div>
 
     <figure class="local-foto-wide reveal">
       <img src="img/conservatorio.jpg" alt="Conservatório UFMG — Centro de Belo Horizonte">
-      <figcaption>Conservatório UFMG</figcaption>
+      <figcaption data-i18n="local.foto3.caption">Conservatório UFMG</figcaption>
 
-      <div class="local-foto-nota">
+      <div class="local-foto-nota" data-i18n="local.foto3.nota">
         <strong>Atenção:</strong> Esta é a fachada do Conservatório UFMG, localizado no centro de Belo Horizonte — um patrimônio histórico da música mineira. O <strong>XXVI ENPEMT acontece na Escola de Música da UFMG</strong>, no Campus Pampulha.
       </div>
     </figure>
 
     <div class="mapa-section reveal">
-      <h4>🗺️ Como chegar</h4>
+      <h4 data-i18n="local.como.chegar">🗺️ Como chegar</h4>
       <div class="mapa-tabs">
-        <button class="mapa-tab active" onclick="switchMapa(event,'mapa-google')">Ver no mapa</button>
-        <button class="mapa-tab" onclick="switchMapa(event,'mapa-rotas')">Instruções por transporte</button>
+        <button class="mapa-tab active" onclick="switchMapa(event,'mapa-google')" data-i18n="local.mapa.ver">Ver no mapa</button>
+        <button class="mapa-tab" onclick="switchMapa(event,'mapa-rotas')" data-i18n="local.mapa.instrucoes">Instruções por transporte</button>
 
       </div>
 
@@ -1342,19 +1493,19 @@ Os aplicativos de corrida, como Uber e 99 funcionam bem, além dos taxis tradici
     <span class="section-label reveal" data-i18n="rest.label">Onde Comer</span>
     <h2 class="section-title reveal" data-i18n="rest.title">Restaurantes <em>durante o evento</em></h2>
     <div class="divider reveal"></div>
-    <p class="section-text reveal">Dicas práticas por dia do evento — desde os restaurantes universitários do campus até opções abertas no sábado.</p>
+    <p class="section-text reveal" data-i18n="rest.intro">Dicas práticas por dia do evento — desde os restaurantes universitários do campus até opções abertas no sábado.</p>
 
     <div class="rest-tabs reveal">
-      <button class="rest-tab active" onclick="switchRest(event,'rest-quinta')">Qui e Sex · 8/10 e 9/10</button>
+      <button class="rest-tab active" onclick="switchRest(event,'rest-quinta')" data-i18n="rest.tab.quinta">Qui e Sex · 8/10 e 9/10</button>
 
-      <button class="rest-tab" onclick="switchRest(event,'rest-sabado')">Sáb · 10/out</button>
+      <button class="rest-tab" onclick="switchRest(event,'rest-sabado')" data-i18n="rest.tab.sabado">Sáb · 10/out</button>
     </div>
 
     <div id="rest-quinta" class="rest-content active">
 
 
 
-      <p style="font-size:.9rem;color:#666;margin-bottom:20px">Na quinta (dia 1) e sexta (dia 2), os restaurantes do campus estão em pleno funcionamento.</p>
+      <p style="font-size:.9rem;color:#666;margin-bottom:20px" data-i18n="rest.quinta.aviso">Na quinta (dia 1) e sexta (dia 2), os restaurantes do campus estão em pleno funcionamento.</p>
 
       <div class="rest-grid">
 
@@ -1394,7 +1545,7 @@ Os aplicativos de corrida, como Uber e 99 funcionam bem, além dos taxis tradici
     </div>
 
     <div id="rest-sabado" class="rest-content">
-      <div class="rest-note" style="margin-bottom:20px">
+      <div class="rest-note" style="margin-bottom:20px" data-i18n="rest.sabado.aviso">
         ⚠️ <strong>Atenção:</strong> No sábado, os restaurantes universitários do campus estão fechados. Abaixo, sugestões de restaurantes abertos na região da Pampulha e arredores da UFMG. Confirme o funcionamento antes de ir, pois horários podem variar.
       </div>
       <div class="rest-grid">
@@ -1439,7 +1590,7 @@ Os aplicativos de corrida, como Uber e 99 funcionam bem, além dos taxis tradici
     <span class="section-label reveal" data-i18n="bh.label">A Cidade</span>
     <h2 class="section-title reveal" data-i18n="bh.title">Bem-vindo a <em>Belo Horizonte</em></h2>
     <div class="divider reveal"></div>
-    <p class="section-text reveal">A capital mineira é vibrante, acolhedora e repleta de arte, cultura e gastronomia. Chegando antes do feriado, vale explorar tudo que BH tem a oferecer!</p>
+    <p class="section-text reveal" data-i18n="bh.intro">A capital mineira é vibrante, acolhedora e repleta de arte, cultura e gastronomia. Chegando antes do feriado, vale explorar tudo que BH tem a oferecer!</p>
 
     <div class="bh-grid" style="margin-top:48px">
 
@@ -1458,8 +1609,8 @@ Os aplicativos de corrida, como Uber e 99 funcionam bem, além dos taxis tradici
           >
         </div>
         <div class="bh-card-body">
-          <div class="bh-card-title">Lagoa da Pampulha</div>
-          <div class="bh-card-text">A poucos minutos da UFMG está a Lagoa da Pampulha, o local onde se localiza a Igreja São Francisco de Assis, obra de Niemeyer e Portinari. </div>
+          <div class="bh-card-title" data-i18n="bh.card.lagoa.title">Lagoa da Pampulha</div>
+          <div class="bh-card-text" data-i18n="bh.card.lagoa.text">A poucos minutos da UFMG está a Lagoa da Pampulha, o local onde se localiza a Igreja São Francisco de Assis, obra de Niemeyer e Portinari. </div>
         </div>
       </div>
 
@@ -1479,8 +1630,8 @@ Os aplicativos de corrida, como Uber e 99 funcionam bem, além dos taxis tradici
           >
         </div>
         <div class="bh-card-body">
-          <div class="bh-card-title">Mercado Central</div>
-          <div class="bh-card-text">O Mercado Central de BH é um dos maiores do Brasil — mais de 400 boxes com queijos, cachaças, doces de Minas e artesanato. Parada obrigatória para quem quer levar lembrança mineira para casa!</div>
+          <div class="bh-card-title" data-i18n="bh.card.mercado.title">Mercado Central</div>
+          <div class="bh-card-text" data-i18n="bh.card.mercado.text">O Mercado Central de BH é um dos maiores do Brasil — mais de 400 boxes com queijos, cachaças, doces de Minas e artesanato. Parada obrigatória para quem quer levar lembrança mineira para casa!</div>
         </div>
       </div>
       <div class="bh-card reveal">
@@ -1488,8 +1639,8 @@ Os aplicativos de corrida, como Uber e 99 funcionam bem, além dos taxis tradici
           <div class="bh-card-img-fallback" style="background: linear-gradient(135deg, #2D6A4F22, #52B78822)">🎭</div>
         </div>
         <div class="bh-card-body">
-          <div class="bh-card-title">Circuito Cultural</div>
-          <div class="bh-card-text">Museu de Arte da Pampulha, Palácio das Artes, Praça da Liberdade... BH tem uma agenda cultural intensa durante outubro.</div>
+          <div class="bh-card-title" data-i18n="bh.card.circuito.title">Circuito Cultural</div>
+          <div class="bh-card-text" data-i18n="bh.card.circuito.text">Museu de Arte da Pampulha, Palácio das Artes, Praça da Liberdade... BH tem uma agenda cultural intensa durante outubro.</div>
         </div>
       </div>
       <div class="bh-card reveal">
@@ -1497,8 +1648,8 @@ Os aplicativos de corrida, como Uber e 99 funcionam bem, além dos taxis tradici
           <div class="bh-card-img-fallback" style="background: linear-gradient(135deg, #9B59B622, #D7BDE222)">🌆</div>
         </div>
         <div class="bh-card-body">
-          <div class="bh-card-title">Mirante do Mangabeiras</div>
-          <div class="bh-card-text">Vista panorâmica de tirar o fôlego da cidade, especialmente ao entardecer. Uma das atrações mais fotogênicas de Belo Horizonte — imperdível!</div>
+          <div class="bh-card-title" data-i18n="bh.card.mirante.title">Mirante do Mangabeiras</div>
+          <div class="bh-card-text" data-i18n="bh.card.mirante.text">Vista panorâmica de tirar o fôlego da cidade, especialmente ao entardecer. Uma das atrações mais fotogênicas de Belo Horizonte — imperdível!</div>
         </div>
       </div>
       <div class="bh-card reveal">
@@ -1506,8 +1657,8 @@ Os aplicativos de corrida, como Uber e 99 funcionam bem, além dos taxis tradici
           <div class="bh-card-img-fallback" style="background: linear-gradient(135deg, #E67E2222, #F0B27A22)">🎵</div>
         </div>
         <div class="bh-card-body">
-          <div class="bh-card-title">Cena Musical de BH</div>
-          <div class="bh-card-text">BH é berço de grandes nomes da MPB. Clubes de jazz, shows de música ao vivo e festivais acontecem durante outubro — combine a visita com a agenda cultural!</div>
+          <div class="bh-card-title" data-i18n="bh.card.musica.title">Cena Musical de BH</div>
+          <div class="bh-card-text" data-i18n="bh.card.musica.text">BH é berço de grandes nomes da MPB. Clubes de jazz, shows de música ao vivo e festivais acontecem durante outubro — combine a visita com a agenda cultural!</div>
         </div>
       </div>
 
@@ -1525,8 +1676,8 @@ Os aplicativos de corrida, como Uber e 99 funcionam bem, além dos taxis tradici
           >
         </div>
         <div class="bh-card-body">
-          <div class="bh-card-title">Feira Hippie</div>
-          <div class="bh-card-text">A tradicional Feira Hippie de BH acontece todos os domingos na Avenida Afonso Pena e reúne centenas de artistas, artesãos, músicos e produtores locais. É um dos maiores espaços de cultura e artesanato do Brasil.</div>
+          <div class="bh-card-title" data-i18n="bh.card.feira.title">Feira Hippie</div>
+          <div class="bh-card-text" data-i18n="bh.card.feira.text">A tradicional Feira Hippie de BH acontece todos os domingos na Avenida Afonso Pena e reúne centenas de artistas, artesãos, músicos e produtores locais. É um dos maiores espaços de cultura e artesanato do Brasil.</div>
         </div>
       </div>
 
@@ -1538,8 +1689,8 @@ Os aplicativos de corrida, como Uber e 99 funcionam bem, além dos taxis tradici
     <div class="hippie-box reveal" style="margin-top:48px">
       <div class="hippie-icon">🎨</div>
       <div>
-        <div class="hippie-title">Sugestão de atividades</div>
-        <div class="hippie-text">
+        <div class="hippie-title" data-i18n="bh.hippie.title">Sugestão de atividades</div>
+        <div class="hippie-text" data-i18n="bh.hippie.text">
          Links ou portais para acesso.
         </div>
       </div>
@@ -1552,17 +1703,17 @@ Os aplicativos de corrida, como Uber e 99 funcionam bem, além dos taxis tradici
       <span class="section-label reveal" data-i18n="gastro.label">Gastronomia</span>
       <h2 class="section-title reveal" data-i18n="gastro.title">Sabores de <em>Minas Gerais</em></h2>
       <div class="divider reveal"></div>
-      <p class="section-text reveal">A culinária mineira é patrimônio imaterial do Brasil. Prepare o apetite — a experiência gastronômica faz parte do congresso!</p>
+      <p class="section-text reveal" data-i18n="gastro.intro">A culinária mineira é patrimônio imaterial do Brasil. Prepare o apetite — a experiência gastronômica faz parte do congresso!</p>
 
       <div class="comida-grid" style="margin-top:36px">
-        <div class="comida-item reveal"><span class="comida-emoji">🫕</span><div class="comida-nome">Feijão Tropeiro</div><div class="comida-desc">Feijão com farinha, bacon, linguiça e ovo. O prato mais emblemático da culinária mineira.</div></div>
-        <div class="comida-item reveal"><span class="comida-emoji">🧀</span><div class="comida-nome">Queijo Minas</div><div class="comida-desc">Ícone absoluto de Minas Gerais.</div></div>
+        <div class="comida-item reveal"><span class="comida-emoji">🫕</span><div class="comida-nome" data-i18n="gastro.feijao.nome">Feijão Tropeiro</div><div class="comida-desc" data-i18n="gastro.feijao.desc">Feijão com farinha, bacon, linguiça e ovo. O prato mais emblemático da culinária mineira.</div></div>
+        <div class="comida-item reveal"><span class="comida-emoji">🧀</span><div class="comida-nome" data-i18n="gastro.queijo.nome">Queijo Minas</div><div class="comida-desc" data-i18n="gastro.queijo.desc">Ícone absoluto de Minas Gerais.</div></div>
 
-        <div class="comida-item reveal"><span class="comida-emoji">🥘</span><div class="comida-nome">Tutu à Mineira</div><div class="comida-desc">Creme espesso de feijão com torresmo. Acompanhamento clássico nos restaurantes tradicionais.</div></div>
+        <div class="comida-item reveal"><span class="comida-emoji">🥘</span><div class="comida-nome" data-i18n="gastro.tutu.nome">Tutu à Mineira</div><div class="comida-desc" data-i18n="gastro.tutu.desc">Creme espesso de feijão com torresmo. Acompanhamento clássico nos restaurantes tradicionais.</div></div>
 
-        <div class="comida-item reveal"><span class="comida-emoji">🍮</span><div class="comida-nome">Doce de Leite</div><div class="comida-desc">O doce que define Minas. Artesanal, cremoso, de colher. Perfeito com queijo coalho.</div></div>
+        <div class="comida-item reveal"><span class="comida-emoji">🍮</span><div class="comida-nome" data-i18n="gastro.doce.nome">Doce de Leite</div><div class="comida-desc" data-i18n="gastro.doce.desc">O doce que define Minas. Artesanal, cremoso, de colher. Perfeito com queijo coalho.</div></div>
 
-        <div class="comida-item reveal"><span class="comida-emoji">☕</span><div class="comida-nome">Café com Pão de Queijo</div><div class="comida-desc">O café da manhã mineiro por excelência. Café forte com pão de queijo quentinho.</div></div>
+        <div class="comida-item reveal"><span class="comida-emoji">☕</span><div class="comida-nome" data-i18n="gastro.cafe.nome">Café com Pão de Queijo</div><div class="comida-desc" data-i18n="gastro.cafe.desc">O café da manhã mineiro por excelência. Café forte com pão de queijo quentinho.</div></div>
       </div>
     </div>
   </div>
@@ -1574,19 +1725,19 @@ Os aplicativos de corrida, como Uber e 99 funcionam bem, além dos taxis tradici
     <span class="section-label reveal" data-i18n="hosp.label">Onde Ficar</span>
     <h2 class="section-title reveal" data-i18n="hosp.title">Hospedagem <em>recomendada</em></h2>
     <div class="divider reveal"></div>
-    <p class="section-text reveal">Sugestões de hotéis próximos ao campus da UFMG ou bem conectados por transporte. BH tem ótimas opções para todos os orçamentos!</p>
+    <p class="section-text reveal" data-i18n="hosp.intro">Sugestões de hotéis próximos ao campus da UFMG ou bem conectados por transporte. BH tem ótimas opções para todos os orçamentos!</p>
 
     <div class="hotel-grid">
-      <div class="hotel-card reveal"><div class="hotel-stars">★★★★★</div><div class="hotel-name">Hotel Ouro Minas Palace</div><div class="hotel-dist">📍 ~8 km da UFMG</div><div class="hotel-desc">Um dos mais tradicionais de BH, com spa, piscina e gastronomia mineira de alto nível.</div></div>
+      <div class="hotel-card reveal"><div class="hotel-stars">★★★★★</div><div class="hotel-name" data-i18n="hosp.hotel1.nome">Hotel Ouro Minas Palace</div><div class="hotel-dist" data-i18n="hosp.hotel1.dist">📍 ~8 km da UFMG</div><div class="hotel-desc" data-i18n="hosp.hotel1.desc">Um dos mais tradicionais de BH, com spa, piscina e gastronomia mineira de alto nível.</div></div>
 
-      <div class="hotel-card reveal"><div class="hotel-stars">★★★★</div><div class="hotel-name">Ibis Styles Savassi</div><div class="hotel-dist">📍 Savassi · ~20 min da UFMG</div><div class="hotel-desc">Ótimo custo-benefício no bairro mais agitado de BH. Fácil acesso por transporte público.</div></div>
-      <div class="hotel-card reveal"><div class="hotel-stars">★★★</div><div class="hotel-name">Hotel BH Plaza</div><div class="hotel-dist">📍 Centro · ~25 min da UFMG</div><div class="hotel-desc">Econômico e bem localizado no centro histórico. Acesso facilitado à linha de metrô.</div></div>
-      <div class="hotel-card reveal"><div class="hotel-stars">🏠</div><div class="hotel-name">Airbnb — Pampulha</div><div class="hotel-dist">📍 Vizinho à UFMG</div><div class="hotel-desc">Diversas opções de apartamentos e casas no bairro da Pampulha, a 5–10 minutos a pé. Ideal para grupos!</div></div>
+      <div class="hotel-card reveal"><div class="hotel-stars">★★★★</div><div class="hotel-name" data-i18n="hosp.hotel2.nome">Ibis Styles Savassi</div><div class="hotel-dist" data-i18n="hosp.hotel2.dist">📍 Savassi · ~20 min da UFMG</div><div class="hotel-desc" data-i18n="hosp.hotel2.desc">Ótimo custo-benefício no bairro mais agitado de BH. Fácil acesso por transporte público.</div></div>
+      <div class="hotel-card reveal"><div class="hotel-stars">★★★</div><div class="hotel-name" data-i18n="hosp.hotel3.nome">Hotel BH Plaza</div><div class="hotel-dist" data-i18n="hosp.hotel3.dist">📍 Centro · ~25 min da UFMG</div><div class="hotel-desc" data-i18n="hosp.hotel3.desc">Econômico e bem localizado no centro histórico. Acesso facilitado à linha de metrô.</div></div>
+      <div class="hotel-card reveal"><div class="hotel-stars">🏠</div><div class="hotel-name" data-i18n="hosp.hotel4.nome">Airbnb — Pampulha</div><div class="hotel-dist" data-i18n="hosp.hotel4.dist">📍 Vizinho à UFMG</div><div class="hotel-desc" data-i18n="hosp.hotel4.desc">Diversas opções de apartamentos e casas no bairro da Pampulha, a 5–10 minutos a pé. Ideal para grupos!</div></div>
 
     </div>
 
     <div style="margin-top: 32px; padding: 24px; background: var(--creme); border-radius: 16px; border-left: 4px solid var(--ouro);">
-      <p style="font-size:.9rem; color: var(--marrom);">
+      <p style="font-size:.9rem; color: var(--marrom);" data-i18n="hosp.dica">
         💡 <strong>Dica:</strong> O evento acontece nos dias 8–10/out, véspera do feriado de 12/10. Reserve com antecedência pois o período é muito procurado em BH! O organizador pode negociar tarifas coletivas com hotéis próximos — aguarde comunicado da comissão organizadora.
       </p>
     </div>
@@ -1599,7 +1750,7 @@ Os aplicativos de corrida, como Uber e 99 funcionam bem, além dos taxis tradici
     <span class="section-label reveal" data-i18n="insc.label">Participe</span>
     <h2 class="section-title reveal" data-i18n="insc.title">Inscrições <em>abertas</em></h2>
     <div class="divider reveal"></div>
-    <p class="section-text reveal">Garanta sua vaga no maior encontro de pesquisa em musicoterapia do Brasil. Clique na categoria que melhor se aplica a você para acessar o formulário de inscrição:</p>
+    <p class="section-text reveal" data-i18n="insc.intro">Garanta sua vaga no maior encontro de pesquisa em musicoterapia do Brasil. Clique na categoria que melhor se aplica a você para acessar o formulário de inscrição:</p>
 
     <div class="preco-grid">
       <div class="preco-card reveal" onclick="window.open('https://forms.gle/LAqSjPbVBcZMFd6HA', '_blank')">
@@ -1650,17 +1801,17 @@ Os aplicativos de corrida, como Uber e 99 funcionam bem, além dos taxis tradici
 
     <div class="inscricao-cta reveal" style="margin-top:44px">
       <div class="inscricao-como">
-        <div class="inscricao-passo"><span class="inscricao-num">1</span><p>Clique na sua categoria acima e preencha o formulário de inscrição com seus dados</p></div>
-        <div class="inscricao-passo"><span class="inscricao-num">2</span><p>Realize o pagamento via <strong>PIX</strong> e envie o comprovante diretamente no formulário</p></div>
-        <div class="inscricao-passo"><span class="inscricao-num">3</span><p>Aguarde a confirmação da inscrição por e-mail</p></div>
+        <div class="inscricao-passo"><span class="inscricao-num">1</span><p data-i18n="insc.passo1">Clique na sua categoria acima e preencha o formulário de inscrição com seus dados</p></div>
+        <div class="inscricao-passo"><span class="inscricao-num">2</span><p data-i18n="insc.passo2">Realize o pagamento via <strong>PIX</strong> e envie o comprovante diretamente no formulário</p></div>
+        <div class="inscricao-passo"><span class="inscricao-num">3</span><p data-i18n="insc.passo3">Aguarde a confirmação da inscrição por e-mail</p></div>
       </div>
-      <div class="inscricao-aviso-trabalhos">
+      <div class="inscricao-aviso-trabalhos" data-i18n="insc.aviso.trabalhos">
         <strong>Envio de trabalhos científicos:</strong> feito em formulário separado — acesse a seção <a href="#submissao">Envio de Trabalhos</a> neste site.
       </div>
 <p style="margin-top:20px; font-size:.85rem; color:rgba(255,255,255,.55)">
-  📧 Dúvidas? 
-  <a href="mailto:ubam.gtpesquisa@gmail.com" 
-     style="color:var(--ouro-claro); text-decoration:none;">
+  📧 <span data-i18n="insc.duvidas">Dúvidas?</span>
+  <a href="mailto:ubam.gtpesquisa@gmail.com"
+     style="color:var(--ouro-claro); text-decoration:none;" data-i18n="insc.contato">
      Entrar em contato via e-mail
   </a>
 </p>
@@ -1674,15 +1825,10 @@ Os aplicativos de corrida, como Uber e 99 funcionam bem, além dos taxis tradici
     <div class="footer-grid">
       <div>
         <div class="footer-brand">
-          <!--
-            ==== LOGOMARCA NO FOOTER ====
-            Para usar a imagem da logo ENPEMT no footer, substitua o div abaixo por:
-            <img src="img/logo-enpemt-branco.png" class="footer-logo" alt="ENPEMT">
-          -->
-          <div class="footer-logo-placeholder" title="[Logomarca ENPEMT]">LOGO</div>
-          <div class="footer-brand-name">EN<span>PE</span>MT <span>XXVI</span></div>
+          <img src="img/logo-enpemt-horizontal.png" class="footer-logo" alt="ENPEMT">
+          <div class="footer-brand-name">XXVI ENPEMT</div>
         </div>
-        <p class="footer-desc">
+        <p class="footer-desc" data-i18n="footer.desc">
           O Encontro Nacional de Pesquisa em Musicoterapia reúne pesquisadores, clínicos e estudantes para compartilhar produção científica e promover o desenvolvimento da musicoterapia no Brasil.
         </p>
         <div class="footer-social">
@@ -1694,14 +1840,14 @@ Os aplicativos de corrida, como Uber e 99 funcionam bem, além dos taxis tradici
       <div>
         <div class="footer-h" data-i18n="footer.links">Links rápidos</div>
         <ul class="footer-links">
-          <li><a href="#sobre">Sobre o evento</a></li>
+          <li><a href="#sobre" data-i18n="footer.link.sobre">Sobre o evento</a></li>
           <li><a href="#programacao" data-i18n="nav.programacao">Programação</a></li>
-          <li><a href="#submissao">Submissão de trabalhos</a></li>
+          <li><a href="#submissao" data-i18n="footer.link.submissao">Submissão de trabalhos</a></li>
           <li><a href="#bh" data-i18n="nav.bh">Belo Horizonte</a></li>
           <li><a href="#restaurantes" data-i18n="nav.restaurantes">Restaurantes</a></li>
-          <li><a href="#local">Local &amp; Mapa</a></li>
+          <li><a href="#local" data-i18n="footer.link.local">Local &amp; Mapa</a></li>
           <li><a href="#hospedagem" data-i18n="nav.hospedagem">Hospedagem</a></li>
-          <li><a href="#inscricoes">Inscrições</a></li>
+          <li><a href="#inscricoes" data-i18n="nav.inscricoes">Inscrições</a></li>
         </ul>
       </div>
       <div>
@@ -1709,8 +1855,8 @@ Os aplicativos de corrida, como Uber e 99 funcionam bem, além dos taxis tradici
         <ul class="footer-links">
           <li><a href="https://ubammusicoterapia.com.br">UBAM</a></li>
           <li><a href="https://musica.ufmg.br">Escola de Música UFMG</a></li>
-          <li><a href="#">Comissão Organizadora</a></li>
-          <li><a href="#">Apoio &amp; Patrocínio</a></li>
+          <li><a href="#" data-i18n="footer.comissao">Comissão Organizadora</a></li>
+          <li><a href="#" data-i18n="footer.apoio">Apoio &amp; Patrocínio</a></li>
         </ul>
       </div>
     </div>
@@ -1718,8 +1864,8 @@ Os aplicativos de corrida, como Uber e 99 funcionam bem, além dos taxis tradici
 
 
     <div class="footer-bottom">
-      <span>© Ivan Moriá Borges 2026 · Belo Horizonte, Minas Gerais</span>
-      <span> XXVI ENPEMT - 8–10 de Outubro de 2026 · Escola de Música da UFMG</span>
+      <span data-i18n="footer.copy">© Ivan Moriá Borges 2026 · Belo Horizonte, Minas Gerais</span>
+      <span data-i18n="footer.dates"> XXVI ENPEMT - 8–10 de Outubro de 2026 · Escola de Música da UFMG</span>
     </div>
   </div>
 </footer>
@@ -1766,25 +1912,6 @@ Os aplicativos de corrida, como Uber e 99 funcionam bem, além dos taxis tradici
     }, { rootMargin: '-40% 0px -55% 0px', threshold: 0 });
 
     sections.forEach(s => spy.observe(s));
-  })();
-
-  // Hamburger menu
-  (function () {
-    const btn     = document.getElementById('nav-menu-btn');
-    const links   = document.getElementById('nav-links');
-    const overlay = document.getElementById('nav-overlay');
-    function close() {
-      btn.classList.remove('open');
-      links.classList.remove('mobile-open');
-      overlay.classList.remove('active');
-    }
-    btn.addEventListener('click', () => {
-      const isOpen = links.classList.toggle('mobile-open');
-      btn.classList.toggle('open', isOpen);
-      overlay.classList.toggle('active', isOpen);
-    });
-    overlay.addEventListener('click', close);
-    links.querySelectorAll('a').forEach(a => a.addEventListener('click', close));
   })();
 
   // Tabs programação
@@ -1914,7 +2041,127 @@ Os aplicativos de corrida, como Uber e 99 funcionam bem, além dos taxis tradici
       'insc.f7':'Direito a voto na Assembleia','insc.f8':'Janta de abertura inclusa',
       'insc.f9':'Mesas e painéis',
       'footer.links':'Links rápidos','footer.realizacao':'Realização',
+      'footer.desc':'O Encontro Nacional de Pesquisa em Musicoterapia reúne pesquisadores, clínicos e estudantes para compartilhar produção científica e promover o desenvolvimento da musicoterapia no Brasil.',
+      'footer.link.sobre':'Sobre o evento','footer.link.submissao':'Submissão de trabalhos',
+      'footer.link.local':'Local & Mapa','footer.comissao':'Comissão Organizadora',
+      'footer.apoio':'Apoio & Patrocínio',
+      'footer.copy':'© Ivan Moriá Borges 2026 · Belo Horizonte, Minas Gerais',
+      'footer.dates':' XXVI ENPEMT - 8–10 de Outubro de 2026 · Escola de Música da UFMG',
       'tts.label':'Leitor de tela',
+      'sobre.text1':'Após anos de encontros virtuais impostos pela pandemia, o ENPEMT retorna à sua essência: o encontro humano, o abraço, a escuta compartilhada. A 26ª edição acontece em Belo Horizonte, na histórica Escola de Música da UFMG — um dos celeiros mais importantes da musicoterapia no Brasil.',
+      'sobre.text2':'Três dias de pesquisa, arte, conexão e celebração da musicoterapia brasileira. Venha fazer parte deste momento histórico!',
+      'sobre.text3':'Uma data especial: véspera do feriado nacional de 12 de outubro, permitindo que participantes de todo o Brasil aproveitem o fim de semana prolongado em BH.',
+      'prog.aviso':'Três dias de imersão em pesquisa, prática clínica e vivência musical. Programação sujeita a atualizações.',
+      'prog.dia1.label':'· Quinta','prog.dia2.label':'· Sexta','prog.dia3.label':'· Sábado','prog.dia4.label':'· Domingo',
+      'prog.pdf':'Baixar PDF','prog.filtrar':'Filtrar:',
+      'prog.f.todas':'Todas as atividades','prog.f.palestra':'Palestras & Conferências',
+      'prog.f.mesa':'Mesas Redondas','prog.f.comunicacoes':'Comunicações Orais',
+      'prog.f.grupo':'Grupos de Trabalho','prog.f.poster':'Pôsteres',
+      'prog.f.curso':'Cursos Pré-Congresso','prog.f.assembleia':'Assembleia UBAM',
+      'prog.f.cultural':'Atividades Culturais','prog.f.abertura':'Abertura & Encerramento',
+      'prog.f.livre':'Intervalos & Alimentação','prog.f.social':'Social & Turismo',
+      'tl.curso.title':'Curso Pré-Congresso','tl.curso.desc':'Curso, autor',
+      'tl.badge.curso':'Cursos Pré-congresso',
+      'tl.credenciamento.title':'Credenciamento e recepção',
+      'tl.credenciamento.desc':'Boas-vindas, retirada de materiais e confraternização inicial.',
+      'tl.badge.recepcao':'Recepção',
+      'tl.cerimonia.abertura.title':'Cerimônia de Abertura',
+      'tl.cerimonia.abertura.desc':'Abertura oficial do XXVI ENPEMT com a fala das comissões organizadoras.',
+      'tl.badge.abertura':'Abertura',
+      'tl.palestra.abertura.title':'Palestra de Abertura',
+      'tl.palestra.abertura.desc':'Palestra magna com pesquisadora convidada nacional. Tema central do encontro.',
+      'tl.badge.palestra.magna':'Palestra Magna',
+      'tl.cultural.title':'Atividade Cultural aberta: Show Inclusivo com a banda Rock\'n Colors',
+      'tl.cultural.desc':'APRESENTAÇÃO DO GRUPO E PROPOSTA.','tl.badge.cultural':'Atividade Cultural',
+      'tl.mesa1.title':'Mesa Redonda: Sistematização e Prática Baseada em Evidências',
+      'tl.mesa1.desc':'Participantes: Camila A. Acosta (UFRJ) e Frederico Pedrosa (UFMG). Mariana Arruda (UNESPAR)?',
+      'tl.badge.mesa':'Mesa Redonda',
+      'tl.comunicacoes1.title':'Sessão de Comunicações Orais — Bloco I',
+      'tl.comunicacoes2.title':'Sessão de Comunicações Orais — Bloco II',
+      'tl.comunicacoes.desc':'Apresentações de pôsteres e comunicações curtas.',
+      'tl.badge.comunicacoes':'Comunicações',
+      'tl.almoco.title':'🍽️ Almoço',
+      'tl.almoco.desc':'Restaurantes universitários disponíveis no campus: Praça de Serviços (perto do RU central), Restaurante da FAE e Restaurante da Faculdade de Letras. Veja a seção Restaurantes para detalhes.',
+      'tl.almoco.sabado.desc':'Os restaurantes universitários estão fechados no sábado. Veja a seção Restaurantes para sugestões de lugares abertos na Pampulha e região do campus.',
+      'tl.badge.almoco':'Almoço livre',
+      'tl.conferencia.intl.title':'Conferência Internacional',
+      'tl.conferencia.intl.desc':'Palestra com pesquisadora convidada internacional. Perspectivas globais da musicoterapia.',
+      'tl.badge.internacional':'Internacional',
+      'tl.coffeebreak.title':'Coffee Break e apresentação artística',
+      'tl.coffeebreak.desc':'Artistas, cardápio;','tl.badge.coffee':'Coffeebreak',
+      'tl.mesa2.title':'Mesa Redonda: Acessibilidade e Diversidade Metodológica',
+      'tl.mesa2.desc':'Participantes: Queila Oliveira (SP), Noemi Ansay (UNESPAR) e Aline André (UFMG)',
+      'tl.ubam.title':'Assembleia Geral da UBAM',
+      'tl.ubam.desc':'Reunião anual da União Brasileira das Associações de Musicoterapia.',
+      'tl.badge.ubam':'UBAM',
+      'tl.mesa3.title':'Mesa Redonda: Fortalecimento da Cooperação Sul-Sul',
+      'tl.mesa3.desc':'Participantes: Renato Sampaio (UFMG) e Andressa Arndt (UNESPAR)',
+      'tl.grupos.title':'Grupos de Trabalho','tl.grupos.desc':'DESCRIÇÃO','tl.badge.grupos':'Grupos de Trabalho',
+      'tl.posteres.title':'Sessão de Pôsteres','tl.posteres.desc':'DESCRIÇÃO','tl.badge.posteres':'Pôsteres',
+      'tl.encerramento.title':'Cerimônia de Encerramento',
+      'tl.encerramento.desc':'Premiações, agradecimentos e vivência musical de encerramento. Até o XXVII ENPEMT!',
+      'tl.badge.encerramento':'Encerramento',
+      'tl.exploracao.title':'🌿 Exploração de Belo Horizonte',
+      'tl.exploracao.desc':'Véspera do feriado de 12 de outubro — aproveite para conhecer a cidade! Sugestões: Lagoa da Pampulha, Igreja de São Francisco, Museu de Arte da Pampulha, Av. Flemming, Savassi, Mangabeiras. Feira Hippie (Av. Afonso Pena, à partir de 6h)',
+      'tl.badge.turismo':'Turismo livre',
+      'tl.rest.domingo.title':'Restaurantes no Domingo','tl.rest.domingo.desc':'DESCRIÇÃO',
+      'tl.badge.foracampus':'Fora do campus',
+      'tl.retorno.title':'✈️ Retorno dos participantes',
+      'tl.retorno.desc':'Com o feriado de 12/10 (domingo), muitos participantes aproveitarão para retornar na segunda ou terça. Programe suas passagens com antecedência!',
+      'tl.badge.logistica':'Logística',
+      'local.h3':'Um centenário palco da música brasileira',
+      'local.p1':'Fundada em 1925, a Escola de Música da UFMG é uma das mais tradicionais do país. Localizada no Campus Pampulha — projeto urbanístico Patrimônio Mundial da UNESCO — a escola reúne salas de concerto, estúdios de gravação e espaços de pesquisa de excelência.',
+      'local.p2':'O campus da UFMG foi projetado por Oscar Niemeyer com paisagismo de Burle Marx, em uma das mais belas realizações da arquitetura modernista brasileira.',
+      'local.fact.endereco.label':'Endereço','local.fact.endereco':'Av. Pres. Antônio Carlos, 6627 — Pampulha, BH/MG',
+      'local.fact.telefone.label':'Telefone',
+      'local.fact.fundacao.label':'Fundação','local.fact.fundacao':'1925 · 100 anos de música e pesquisa',
+      'local.fact.campus.label':'Campus','local.fact.campus':'Patrimônio Mundial UNESCO (Conjunto Moderno da Pampulha)',
+      'local.foto1.caption':'Fachada · Escola de Música da UFMG',
+      'local.foto2.caption':'Auditório Principal',
+      'local.foto3.caption':'Conservatório UFMG',
+      'local.foto3.nota':'<strong>Atenção:</strong> Esta é a fachada do Conservatório UFMG, localizado no centro de Belo Horizonte — um patrimônio histórico da música mineira. O <strong>XXVI ENPEMT acontece na Escola de Música da UFMG</strong>, no Campus Pampulha.',
+      'local.como.chegar':'🗺️ Como chegar',
+      'local.mapa.ver':'Ver no mapa','local.mapa.instrucoes':'Instruções por transporte',
+      'rest.intro':'Dicas práticas por dia do evento — desde os restaurantes universitários do campus até opções abertas no sábado.',
+      'rest.tab.quinta':'Qui e Sex · 8/10 e 9/10','rest.tab.sabado':'Sáb · 10/out',
+      'rest.quinta.aviso':'Na quinta (dia 1) e sexta (dia 2), os restaurantes do campus estão em pleno funcionamento.',
+      'rest.sabado.aviso':'⚠️ <strong>Atenção:</strong> No sábado, os restaurantes universitários do campus estão fechados. Abaixo, sugestões de restaurantes abertos na região da Pampulha e arredores da UFMG. Confirme o funcionamento antes de ir, pois horários podem variar.',
+      'bh.intro':'A capital mineira é vibrante, acolhedora e repleta de arte, cultura e gastronomia. Chegando antes do feriado, vale explorar tudo que BH tem a oferecer!',
+      'bh.card.lagoa.title':'Lagoa da Pampulha',
+      'bh.card.lagoa.text':'A poucos minutos da UFMG está a Lagoa da Pampulha, o local onde se localiza a Igreja São Francisco de Assis, obra de Niemeyer e Portinari.',
+      'bh.card.mercado.title':'Mercado Central',
+      'bh.card.mercado.text':'O Mercado Central de BH é um dos maiores do Brasil — mais de 400 boxes com queijos, cachaças, doces de Minas e artesanato. Parada obrigatória para quem quer levar lembrança mineira para casa!',
+      'bh.card.circuito.title':'Circuito Cultural',
+      'bh.card.circuito.text':'Museu de Arte da Pampulha, Palácio das Artes, Praça da Liberdade... BH tem uma agenda cultural intensa durante outubro.',
+      'bh.card.mirante.title':'Mirante do Mangabeiras',
+      'bh.card.mirante.text':'Vista panorâmica de tirar o fôlego da cidade, especialmente ao entardecer. Uma das atrações mais fotogênicas de Belo Horizonte — imperdível!',
+      'bh.card.musica.title':'Cena Musical de BH',
+      'bh.card.musica.text':'BH é berço de grandes nomes da MPB. Clubes de jazz, shows de música ao vivo e festivais acontecem durante outubro — combine a visita com a agenda cultural!',
+      'bh.card.feira.title':'Feira Hippie',
+      'bh.card.feira.text':'A tradicional Feira Hippie de BH acontece todos os domingos na Avenida Afonso Pena e reúne centenas de artistas, artesãos, músicos e produtores locais. É um dos maiores espaços de cultura e artesanato do Brasil.',
+      'bh.hippie.title':'Sugestão de atividades','bh.hippie.text':'Links ou portais para acesso.',
+      'gastro.intro':'A culinária mineira é patrimônio imaterial do Brasil. Prepare o apetite — a experiência gastronômica faz parte do congresso!',
+      'gastro.feijao.nome':'Feijão Tropeiro','gastro.feijao.desc':'Feijão com farinha, bacon, linguiça e ovo. O prato mais emblemático da culinária mineira.',
+      'gastro.queijo.nome':'Queijo Minas','gastro.queijo.desc':'Ícone absoluto de Minas Gerais.',
+      'gastro.tutu.nome':'Tutu à Mineira','gastro.tutu.desc':'Creme espesso de feijão com torresmo. Acompanhamento clássico nos restaurantes tradicionais.',
+      'gastro.doce.nome':'Doce de Leite','gastro.doce.desc':'O doce que define Minas. Artesanal, cremoso, de colher. Perfeito com queijo coalho.',
+      'gastro.cafe.nome':'Café com Pão de Queijo','gastro.cafe.desc':'O café da manhã mineiro por excelência. Café forte com pão de queijo quentinho.',
+      'hosp.intro':'Sugestões de hotéis próximos ao campus da UFMG ou bem conectados por transporte. BH tem ótimas opções para todos os orçamentos!',
+      'hosp.hotel1.nome':'Hotel Ouro Minas Palace','hosp.hotel1.dist':'📍 ~8 km da UFMG',
+      'hosp.hotel1.desc':'Um dos mais tradicionais de BH, com spa, piscina e gastronomia mineira de alto nível.',
+      'hosp.hotel2.nome':'Ibis Styles Savassi','hosp.hotel2.dist':'📍 Savassi · ~20 min da UFMG',
+      'hosp.hotel2.desc':'Ótimo custo-benefício no bairro mais agitado de BH. Fácil acesso por transporte público.',
+      'hosp.hotel3.nome':'Hotel BH Plaza','hosp.hotel3.dist':'📍 Centro · ~25 min da UFMG',
+      'hosp.hotel3.desc':'Econômico e bem localizado no centro histórico. Acesso facilitado à linha de metrô.',
+      'hosp.hotel4.nome':'Airbnb — Pampulha','hosp.hotel4.dist':'📍 Vizinho à UFMG',
+      'hosp.hotel4.desc':'Diversas opções de apartamentos e casas no bairro da Pampulha, a 5–10 minutos a pé. Ideal para grupos!',
+      'hosp.dica':'💡 <strong>Dica:</strong> O evento acontece nos dias 8–10/out, véspera do feriado de 12/10. Reserve com antecedência pois o período é muito procurado em BH! O organizador pode negociar tarifas coletivas com hotéis próximos — aguarde comunicado da comissão organizadora.',
+      'insc.intro':'Garanta sua vaga no maior encontro de pesquisa em musicoterapia do Brasil. Clique na categoria que melhor se aplica a você para acessar o formulário de inscrição:',
+      'insc.passo1':'Clique na sua categoria acima e preencha o formulário de inscrição com seus dados',
+      'insc.passo2':'Realize o pagamento via <strong>PIX</strong> e envie o comprovante diretamente no formulário',
+      'insc.passo3':'Aguarde a confirmação da inscrição por e-mail',
+      'insc.aviso.trabalhos':'<strong>Envio de trabalhos científicos:</strong> feito em formulário separado — acesse a seção <a href="#submissao">Envio de Trabalhos</a> neste site.',
+      'insc.duvidas':'Dúvidas?','insc.contato':'Entrar em contato via e-mail',
     },
     en: {
       'nav.evento':'Event','nav.trabalhos':'Papers','nav.programacao':'Schedule',
@@ -1954,7 +2201,127 @@ Os aplicativos de corrida, como Uber e 99 funcionam bem, além dos taxis tradici
       'insc.f7':'Assembly voting rights','insc.f8':'Opening dinner included',
       'insc.f9':'Panels and roundtables',
       'footer.links':'Quick links','footer.realizacao':'Organized by',
+      'footer.desc':'The National Meeting on Music Therapy Research brings together researchers, clinicians and students to share scientific production and promote the development of music therapy in Brazil.',
+      'footer.link.sobre':'About the event','footer.link.submissao':'Paper submission',
+      'footer.link.local':'Venue & Map','footer.comissao':'Organizing Committee',
+      'footer.apoio':'Support & Sponsorship',
+      'footer.copy':'© Ivan Moriá Borges 2026 · Belo Horizonte, Minas Gerais',
+      'footer.dates':' XXVI ENPEMT – 8–10 October 2026 · School of Music UFMG',
       'tts.label':'Screen reader',
+      'sobre.text1':'After years of virtual meetings imposed by the pandemic, ENPEMT returns to its essence: the human encounter, the embrace, the shared listening. The 26th edition takes place in Belo Horizonte, at the historic School of Music of UFMG — one of the most important centers of music therapy in Brazil.',
+      'sobre.text2':'Three days of research, art, connection and celebration of Brazilian music therapy. Come be part of this historic moment!',
+      'sobre.text3':'A special date: the eve of the national holiday of October 12th, allowing participants from all over Brazil to enjoy the extended weekend in BH.',
+      'prog.aviso':'Three days of immersion in research, clinical practice and musical experience. Schedule subject to updates.',
+      'prog.dia1.label':'· Thursday','prog.dia2.label':'· Friday','prog.dia3.label':'· Saturday','prog.dia4.label':'· Sunday',
+      'prog.pdf':'Download PDF','prog.filtrar':'Filter:',
+      'prog.f.todas':'All activities','prog.f.palestra':'Lectures & Conferences',
+      'prog.f.mesa':'Round Tables','prog.f.comunicacoes':'Oral Presentations',
+      'prog.f.grupo':'Working Groups','prog.f.poster':'Posters',
+      'prog.f.curso':'Pre-Congress Courses','prog.f.assembleia':'UBAM Assembly',
+      'prog.f.cultural':'Cultural Activities','prog.f.abertura':'Opening & Closing',
+      'prog.f.livre':'Breaks & Meals','prog.f.social':'Social & Tourism',
+      'tl.curso.title':'Pre-Congress Course','tl.curso.desc':'Course, author',
+      'tl.badge.curso':'Pre-Congress Courses',
+      'tl.credenciamento.title':'Registration & Welcome Reception',
+      'tl.credenciamento.desc':'Welcome, materials pick-up and initial gathering.',
+      'tl.badge.recepcao':'Reception',
+      'tl.cerimonia.abertura.title':'Opening Ceremony',
+      'tl.cerimonia.abertura.desc':'Official opening of the XXVI ENPEMT with remarks from the organizing committees.',
+      'tl.badge.abertura':'Opening',
+      'tl.palestra.abertura.title':'Opening Keynote',
+      'tl.palestra.abertura.desc':'Keynote lecture with a nationally invited researcher. Central theme of the meeting.',
+      'tl.badge.palestra.magna':'Keynote Lecture',
+      'tl.cultural.title':'Open Cultural Activity: Inclusive Show with the band Rock\'n Colors',
+      'tl.cultural.desc':'GROUP PRESENTATION AND PROPOSAL.','tl.badge.cultural':'Cultural Activity',
+      'tl.mesa1.title':'Round Table: Systematization and Evidence-Based Practice',
+      'tl.mesa1.desc':'Participants: Camila A. Acosta (UFRJ) and Frederico Pedrosa (UFMG). Mariana Arruda (UNESPAR)?',
+      'tl.badge.mesa':'Round Table',
+      'tl.comunicacoes1.title':'Oral Presentations Session — Block I',
+      'tl.comunicacoes2.title':'Oral Presentations Session — Block II',
+      'tl.comunicacoes.desc':'Poster and oral short presentations.',
+      'tl.badge.comunicacoes':'Presentations',
+      'tl.almoco.title':'🍽️ Lunch',
+      'tl.almoco.desc':'University restaurants available on campus: Praça de Serviços (near the central cafeteria), FAE Restaurant and Faculty of Letters Restaurant. See the Restaurants section for details.',
+      'tl.almoco.sabado.desc':'University restaurants are closed on Saturday. See the Restaurants section for suggestions of places open in Pampulha and the campus area.',
+      'tl.badge.almoco':'Free Lunch',
+      'tl.conferencia.intl.title':'International Conference',
+      'tl.conferencia.intl.desc':'Lecture with an internationally invited researcher. Global perspectives on music therapy.',
+      'tl.badge.internacional':'International',
+      'tl.coffeebreak.title':'Coffee Break & Artistic Showcase',
+      'tl.coffeebreak.desc':'Artists, menu;','tl.badge.coffee':'Coffee Break',
+      'tl.mesa2.title':'Round Table: Accessibility and Methodological Diversity',
+      'tl.mesa2.desc':'Participants: Queila Oliveira (SP), Noemi Ansay (UNESPAR) and Aline André (UFMG)',
+      'tl.ubam.title':'UBAM General Assembly',
+      'tl.ubam.desc':'Annual meeting of the Brazilian Union of Music Therapy Associations.',
+      'tl.badge.ubam':'UBAM',
+      'tl.mesa3.title':'Round Table: Strengthening South-South Cooperation',
+      'tl.mesa3.desc':'Participants: Renato Sampaio (UFMG) and Andressa Arndt (UNESPAR)',
+      'tl.grupos.title':'Working Groups','tl.grupos.desc':'DESCRIPTION','tl.badge.grupos':'Working Groups',
+      'tl.posteres.title':'Poster Session','tl.posteres.desc':'DESCRIPTION','tl.badge.posteres':'Posters',
+      'tl.encerramento.title':'Closing Ceremony',
+      'tl.encerramento.desc':'Awards, acknowledgements and closing musical experience. See you at the XXVII ENPEMT!',
+      'tl.badge.encerramento':'Closing',
+      'tl.exploracao.title':'🌿 Exploring Belo Horizonte',
+      'tl.exploracao.desc':'Eve of the October 12th holiday — take the opportunity to explore the city! Suggestions: Lagoa da Pampulha, São Francisco Church, Museum of Art Pampulha, Av. Flemming, Savassi, Mangabeiras. Hippie Fair (Av. Afonso Pena, from 6am)',
+      'tl.badge.turismo':'Free Tourism',
+      'tl.rest.domingo.title':'Sunday Restaurants','tl.rest.domingo.desc':'DESCRIPTION',
+      'tl.badge.foracampus':'Off campus',
+      'tl.retorno.title':'✈️ Participants Departure',
+      'tl.retorno.desc':'With the 12/10 holiday (Sunday), many participants will take the opportunity to return on Monday or Tuesday. Plan your tickets in advance!',
+      'tl.badge.logistica':'Logistics',
+      'local.h3':'A century-old stage of Brazilian music',
+      'local.p1':'Founded in 1925, the School of Music of UFMG is one of the most traditional in the country. Located on the Pampulha Campus — a UNESCO World Heritage urban project — the school brings together concert halls, recording studios and excellent research spaces.',
+      'local.p2':'The UFMG campus was designed by Oscar Niemeyer with landscaping by Burle Marx, one of the most beautiful achievements of Brazilian modernist architecture.',
+      'local.fact.endereco.label':'Address','local.fact.endereco':'Av. Pres. Antônio Carlos, 6627 — Pampulha, BH/MG',
+      'local.fact.telefone.label':'Phone',
+      'local.fact.fundacao.label':'Founded','local.fact.fundacao':'1925 · 100 years of music and research',
+      'local.fact.campus.label':'Campus','local.fact.campus':'UNESCO World Heritage Site (Modern Ensemble of Pampulha)',
+      'local.foto1.caption':'Facade · School of Music UFMG',
+      'local.foto2.caption':'Main Auditorium',
+      'local.foto3.caption':'UFMG Conservatory',
+      'local.foto3.nota':'<strong>Notice:</strong> This is the facade of the UFMG Conservatory, located in downtown Belo Horizonte — a historical landmark of Minas music. The <strong>XXVI ENPEMT takes place at the School of Music of UFMG</strong>, on the Pampulha Campus.',
+      'local.como.chegar':'🗺️ How to get there',
+      'local.mapa.ver':'View on map','local.mapa.instrucoes':'Transport directions',
+      'rest.intro':'Practical tips for each event day — from the university restaurants on campus to options open on Saturday.',
+      'rest.tab.quinta':'Thu & Fri · 8/10 and 9/10','rest.tab.sabado':'Sat · 10/Oct',
+      'rest.quinta.aviso':'On Thursday (day 1) and Friday (day 2), campus restaurants are fully operational.',
+      'rest.sabado.aviso':'⚠️ <strong>Notice:</strong> On Saturday, university restaurants on campus are closed. Below are suggestions for restaurants open in the Pampulha area and UFMG surroundings. Confirm opening hours before going as schedules may vary.',
+      'bh.intro':'The capital of Minas Gerais is vibrant, welcoming and full of art, culture and gastronomy. Arriving before the holiday, it\'s worth exploring everything BH has to offer!',
+      'bh.card.lagoa.title':'Lagoa da Pampulha',
+      'bh.card.lagoa.text':'A few minutes from UFMG is the Lagoa da Pampulha, the site of the São Francisco de Assis Church, a work by Niemeyer and Portinari.',
+      'bh.card.mercado.title':'Central Market',
+      'bh.card.mercado.text':'The Central Market of BH is one of the largest in Brazil — over 400 stalls with cheeses, cachaças, Minas sweets and crafts. A must-stop for those who want to take home Minas souvenirs!',
+      'bh.card.circuito.title':'Cultural Circuit',
+      'bh.card.circuito.text':'Museum of Art of Pampulha, Palácio das Artes, Praça da Liberdade... BH has an intense cultural calendar throughout October.',
+      'bh.card.mirante.title':'Mangabeiras Overlook',
+      'bh.card.mirante.text':'A breathtaking panoramic view of the city, especially at dusk. One of the most photogenic attractions in Belo Horizonte — not to be missed!',
+      'bh.card.musica.title':'BH Music Scene',
+      'bh.card.musica.text':'BH is the birthplace of great Brazilian MPB names. Jazz clubs, live music shows and festivals take place throughout October — combine your visit with the cultural calendar!',
+      'bh.card.feira.title':'Hippie Fair',
+      'bh.card.feira.text':'The traditional BH Hippie Fair takes place every Sunday on Avenida Afonso Pena and brings together hundreds of artists, craftspeople, musicians and local producers. It is one of the largest cultural and craft spaces in Brazil.',
+      'bh.hippie.title':'Activity suggestions','bh.hippie.text':'Links or portals for access.',
+      'gastro.intro':'Minas cuisine is an intangible heritage of Brazil. Prepare your appetite — the gastronomic experience is part of the congress!',
+      'gastro.feijao.nome':'Feijão Tropeiro','gastro.feijao.desc':'Beans with manioc flour, bacon, sausage and egg. The most iconic dish of Minas cuisine.',
+      'gastro.queijo.nome':'Minas Cheese','gastro.queijo.desc':'The absolute icon of Minas Gerais.',
+      'gastro.tutu.nome':'Tutu à Mineira','gastro.tutu.desc':'Thick bean cream with pork crackling. Classic side dish in traditional restaurants.',
+      'gastro.doce.nome':'Doce de Leite','gastro.doce.desc':'The sweet that defines Minas. Artisanal, creamy, spoon-worthy. Perfect with curd cheese.',
+      'gastro.cafe.nome':'Coffee with Pão de Queijo','gastro.cafe.desc':'The quintessential Minas breakfast. Strong coffee with warm cheese bread.',
+      'hosp.intro':'Suggestions for hotels close to the UFMG campus or well connected by public transport. BH has great options for every budget!',
+      'hosp.hotel1.nome':'Hotel Ouro Minas Palace','hosp.hotel1.dist':'📍 ~8 km from UFMG',
+      'hosp.hotel1.desc':'One of the most traditional in BH, with spa, pool and high-end Minas gastronomy.',
+      'hosp.hotel2.nome':'Ibis Styles Savassi','hosp.hotel2.dist':'📍 Savassi · ~20 min from UFMG',
+      'hosp.hotel2.desc':'Excellent value in BH\'s liveliest neighbourhood. Easy access by public transport.',
+      'hosp.hotel3.nome':'Hotel BH Plaza','hosp.hotel3.dist':'📍 Downtown · ~25 min from UFMG',
+      'hosp.hotel3.desc':'Budget-friendly and well-located in the historic centre. Easy access to the metro line.',
+      'hosp.hotel4.nome':'Airbnb — Pampulha','hosp.hotel4.dist':'📍 Next to UFMG',
+      'hosp.hotel4.desc':'Various apartment and house options in the Pampulha neighbourhood, 5–10 minutes on foot. Ideal for groups!',
+      'hosp.dica':'💡 <strong>Tip:</strong> The event takes place on 8–10/Oct, the eve of the 12/10 holiday. Book early as the period is very popular in BH! The organizer may negotiate group rates with nearby hotels — await communication from the organizing committee.',
+      'insc.intro':'Secure your spot at Brazil\'s largest music therapy research meeting. Click on the category that best applies to you to access the registration form:',
+      'insc.passo1':'Click on your category above and fill in the registration form with your details',
+      'insc.passo2':'Make the payment via <strong>PIX</strong> and send the receipt directly in the form',
+      'insc.passo3':'Wait for the registration confirmation by email',
+      'insc.aviso.trabalhos':'<strong>Scientific paper submission:</strong> done via a separate form — access the <a href="#submissao">Paper Submission</a> section on this site.',
+      'insc.duvidas':'Questions?','insc.contato':'Contact us by email',
     },
     es: {
       'nav.evento':'Evento','nav.trabalhos':'Trabajos','nav.programacao':'Programa',
@@ -1994,7 +2361,127 @@ Os aplicativos de corrida, como Uber e 99 funcionam bem, além dos taxis tradici
       'insc.f7':'Derecho a voto en la Asamblea','insc.f8':'Cena de apertura incluida',
       'insc.f9':'Mesas y paneles',
       'footer.links':'Enlaces rápidos','footer.realizacao':'Organizado por',
+      'footer.desc':'El Encuentro Nacional de Investigación en Musicoterapia reúne investigadores, clínicos y estudiantes para compartir producción científica y promover el desarrollo de la musicoterapia en Brasil.',
+      'footer.link.sobre':'Sobre el evento','footer.link.submissao':'Envío de trabajos',
+      'footer.link.local':'Local y Mapa','footer.comissao':'Comisión Organizadora',
+      'footer.apoio':'Apoyo y Patrocinio',
+      'footer.copy':'© Ivan Moriá Borges 2026 · Belo Horizonte, Minas Gerais',
+      'footer.dates':' XXVI ENPEMT – 8–10 de octubre de 2026 · Escuela de Música UFMG',
       'tts.label':'Lector de pantalla',
+      'sobre.text1':'Tras años de encuentros virtuales impuestos por la pandemia, el ENPEMT regresa a su esencia: el encuentro humano, el abrazo, la escucha compartida. La 26ª edición tiene lugar en Belo Horizonte, en la histórica Escuela de Música de la UFMG — uno de los centros más importantes de la musicoterapia en Brasil.',
+      'sobre.text2':'Tres días de investigación, arte, conexión y celebración de la musicoterapia brasileña. ¡Venga a ser parte de este momento histórico!',
+      'sobre.text3':'Una fecha especial: víspera del feriado nacional del 12 de octubre, lo que permite a participantes de todo Brasil disfrutar del fin de semana largo en BH.',
+      'prog.aviso':'Tres días de inmersión en investigación, práctica clínica y vivencia musical. Programa sujeto a actualizaciones.',
+      'prog.dia1.label':'· Jueves','prog.dia2.label':'· Viernes','prog.dia3.label':'· Sábado','prog.dia4.label':'· Domingo',
+      'prog.pdf':'Descargar PDF','prog.filtrar':'Filtrar:',
+      'prog.f.todas':'Todas las actividades','prog.f.palestra':'Conferencias',
+      'prog.f.mesa':'Mesas Redondas','prog.f.comunicacoes':'Comunicaciones Orales',
+      'prog.f.grupo':'Grupos de Trabajo','prog.f.poster':'Pósteres',
+      'prog.f.curso':'Cursos Pre-Congreso','prog.f.assembleia':'Asamblea UBAM',
+      'prog.f.cultural':'Actividades Culturales','prog.f.abertura':'Apertura y Cierre',
+      'prog.f.livre':'Pausas y Alimentación','prog.f.social':'Social y Turismo',
+      'tl.curso.title':'Curso Pre-Congreso','tl.curso.desc':'Curso, autor',
+      'tl.badge.curso':'Cursos Pre-Congreso',
+      'tl.credenciamento.title':'Acreditación y recepción',
+      'tl.credenciamento.desc':'Bienvenida, recogida de materiales y confraternización inicial.',
+      'tl.badge.recepcao':'Recepción',
+      'tl.cerimonia.abertura.title':'Ceremonia de Apertura',
+      'tl.cerimonia.abertura.desc':'Apertura oficial del XXVI ENPEMT con palabras de las comisiones organizadoras.',
+      'tl.badge.abertura':'Apertura',
+      'tl.palestra.abertura.title':'Conferencia de Apertura',
+      'tl.palestra.abertura.desc':'Conferencia magistral con investigadora invitada nacional. Tema central del encuentro.',
+      'tl.badge.palestra.magna':'Conferencia Magistral',
+      'tl.cultural.title':'Actividad Cultural abierta: Show Inclusivo con la banda Rock\'n Colors',
+      'tl.cultural.desc':'PRESENTACIÓN DEL GRUPO Y PROPUESTA.','tl.badge.cultural':'Actividad Cultural',
+      'tl.mesa1.title':'Mesa Redonda: Sistematización y Práctica Basada en Evidencias',
+      'tl.mesa1.desc':'Participantes: Camila A. Acosta (UFRJ) y Frederico Pedrosa (UFMG). Mariana Arruda (UNESPAR)?',
+      'tl.badge.mesa':'Mesa Redonda',
+      'tl.comunicacoes1.title':'Sesión de Comunicaciones Orales — Bloque I',
+      'tl.comunicacoes2.title':'Sesión de Comunicaciones Orales — Bloque II',
+      'tl.comunicacoes.desc':'Presentaciones de pósteres y comunicaciones cortas.',
+      'tl.badge.comunicacoes':'Comunicaciones',
+      'tl.almoco.title':'🍽️ Almuerzo',
+      'tl.almoco.desc':'Restaurantes universitarios disponibles en el campus: Praça de Serviços (cerca de la cafetería central), Restaurante de la FAE y Restaurante de la Facultad de Letras. Consulte la sección Restaurantes para más detalles.',
+      'tl.almoco.sabado.desc':'Los restaurantes universitarios están cerrados el sábado. Consulte la sección Restaurantes para sugerencias de lugares abiertos en Pampulha y los alrededores del campus.',
+      'tl.badge.almoco':'Almuerzo libre',
+      'tl.conferencia.intl.title':'Conferencia Internacional',
+      'tl.conferencia.intl.desc':'Conferencia con investigadora invitada internacional. Perspectivas globales de la musicoterapia.',
+      'tl.badge.internacional':'Internacional',
+      'tl.coffeebreak.title':'Coffee Break y presentación artística',
+      'tl.coffeebreak.desc':'Artistas, menú;','tl.badge.coffee':'Coffee Break',
+      'tl.mesa2.title':'Mesa Redonda: Accesibilidad y Diversidad Metodológica',
+      'tl.mesa2.desc':'Participantes: Queila Oliveira (SP), Noemi Ansay (UNESPAR) y Aline André (UFMG)',
+      'tl.ubam.title':'Asamblea General de la UBAM',
+      'tl.ubam.desc':'Reunión anual de la Unión Brasileña de Asociaciones de Musicoterapia.',
+      'tl.badge.ubam':'UBAM',
+      'tl.mesa3.title':'Mesa Redonda: Fortalecimiento de la Cooperación Sur-Sur',
+      'tl.mesa3.desc':'Participantes: Renato Sampaio (UFMG) y Andressa Arndt (UNESPAR)',
+      'tl.grupos.title':'Grupos de Trabajo','tl.grupos.desc':'DESCRIPCIÓN','tl.badge.grupos':'Grupos de Trabajo',
+      'tl.posteres.title':'Sesión de Pósteres','tl.posteres.desc':'DESCRIPCIÓN','tl.badge.posteres':'Pósteres',
+      'tl.encerramento.title':'Ceremonia de Cierre',
+      'tl.encerramento.desc':'Premios, agradecimientos y vivencia musical de cierre. ¡Hasta el XXVII ENPEMT!',
+      'tl.badge.encerramento':'Cierre',
+      'tl.exploracao.title':'🌿 Exploración de Belo Horizonte',
+      'tl.exploracao.desc':'Víspera del feriado del 12 de octubre — ¡aproveche para conocer la ciudad! Sugerencias: Lagoa da Pampulha, Iglesia de São Francisco, Museo de Arte de Pampulha, Av. Flemming, Savassi, Mangabeiras. Feira Hippie (Av. Afonso Pena, desde las 6h)',
+      'tl.badge.turismo':'Turismo libre',
+      'tl.rest.domingo.title':'Restaurantes el Domingo','tl.rest.domingo.desc':'DESCRIPCIÓN',
+      'tl.badge.foracampus':'Fuera del campus',
+      'tl.retorno.title':'✈️ Regreso de los participantes',
+      'tl.retorno.desc':'Con el feriado del 12/10 (domingo), muchos participantes aprovecharán para regresar el lunes o martes. ¡Planifique sus pasajes con anticipación!',
+      'tl.badge.logistica':'Logística',
+      'local.h3':'Un escenario centenario de la música brasileña',
+      'local.p1':'Fundada en 1925, la Escuela de Música de la UFMG es una de las más tradicionales del país. Ubicada en el Campus Pampulha — un proyecto urbanístico Patrimonio Mundial de la UNESCO — la escuela reúne salas de concierto, estudios de grabación y espacios de investigación de excelencia.',
+      'local.p2':'El campus de la UFMG fue proyectado por Oscar Niemeyer con paisajismo de Burle Marx, en una de las más bellas realizaciones de la arquitectura modernista brasileña.',
+      'local.fact.endereco.label':'Dirección','local.fact.endereco':'Av. Pres. Antônio Carlos, 6627 — Pampulha, BH/MG',
+      'local.fact.telefone.label':'Teléfono',
+      'local.fact.fundacao.label':'Fundación','local.fact.fundacao':'1925 · 100 años de música e investigación',
+      'local.fact.campus.label':'Campus','local.fact.campus':'Patrimonio Mundial UNESCO (Conjunto Moderno de Pampulha)',
+      'local.foto1.caption':'Fachada · Escuela de Música UFMG',
+      'local.foto2.caption':'Auditorio Principal',
+      'local.foto3.caption':'Conservatorio UFMG',
+      'local.foto3.nota':'<strong>Atención:</strong> Esta es la fachada del Conservatorio UFMG, ubicado en el centro de Belo Horizonte — un patrimonio histórico de la música minera. El <strong>XXVI ENPEMT se realiza en la Escuela de Música de la UFMG</strong>, en el Campus Pampulha.',
+      'local.como.chegar':'🗺️ Cómo llegar',
+      'local.mapa.ver':'Ver en el mapa','local.mapa.instrucoes':'Instrucciones de transporte',
+      'rest.intro':'Consejos prácticos por día del evento — desde los restaurantes universitarios del campus hasta opciones abiertas el sábado.',
+      'rest.tab.quinta':'Jue y Vie · 8/10 y 9/10','rest.tab.sabado':'Sáb · 10/Oct',
+      'rest.quinta.aviso':'El jueves (día 1) y el viernes (día 2), los restaurantes del campus están en pleno funcionamiento.',
+      'rest.sabado.aviso':'⚠️ <strong>Atención:</strong> El sábado, los restaurantes universitarios del campus están cerrados. A continuación, sugerencias de restaurantes abiertos en la zona de Pampulha y alrededores de la UFMG. Confirme el horario antes de ir, ya que los horarios pueden variar.',
+      'bh.intro':'La capital de Minas Gerais es vibrante, acogedora y repleta de arte, cultura y gastronomía. ¡Llegando antes del feriado, vale la pena explorar todo lo que BH tiene para ofrecer!',
+      'bh.card.lagoa.title':'Lagoa da Pampulha',
+      'bh.card.lagoa.text':'A pocos minutos de la UFMG está la Lagoa da Pampulha, donde se encuentra la Iglesia São Francisco de Assis, obra de Niemeyer y Portinari.',
+      'bh.card.mercado.title':'Mercado Central',
+      'bh.card.mercado.text':'El Mercado Central de BH es uno de los más grandes de Brasil — más de 400 stands con quesos, cachaças, dulces de Minas y artesanía. ¡Parada obligatoria para quienes quieran llevar souvenirs mineros!',
+      'bh.card.circuito.title':'Circuito Cultural',
+      'bh.card.circuito.text':'Museo de Arte de Pampulha, Palácio das Artes, Praça da Liberdade... BH tiene una intensa agenda cultural durante octubre.',
+      'bh.card.mirante.title':'Mirador del Mangabeiras',
+      'bh.card.mirante.text':'Vista panorámica impresionante de la ciudad, especialmente al atardecer. Una de las atracciones más fotogénicas de Belo Horizonte — ¡imperdible!',
+      'bh.card.musica.title':'Escena Musical de BH',
+      'bh.card.musica.text':'BH es cuna de grandes nombres de la MPB. Clubes de jazz, shows de música en vivo y festivales tienen lugar durante octubre — ¡combine la visita con la agenda cultural!',
+      'bh.card.feira.title':'Feria Hippie',
+      'bh.card.feira.text':'La tradicional Feria Hippie de BH se realiza todos los domingos en la Avenida Afonso Pena y reúne a cientos de artistas, artesanos, músicos y productores locales. Es uno de los mayores espacios de cultura y artesanía de Brasil.',
+      'bh.hippie.title':'Sugerencia de actividades','bh.hippie.text':'Enlaces o portales para acceder.',
+      'gastro.intro':'La cocina minera es patrimonio inmaterial de Brasil. ¡Prepare el apetito — la experiencia gastronómica es parte del congreso!',
+      'gastro.feijao.nome':'Feijão Tropeiro','gastro.feijao.desc':'Frijoles con harina de mandioca, tocino, chorizo y huevo. El plato más emblemático de la cocina minera.',
+      'gastro.queijo.nome':'Queso Minas','gastro.queijo.desc':'El ícono absoluto de Minas Gerais.',
+      'gastro.tutu.nome':'Tutu à Mineira','gastro.tutu.desc':'Crema espesa de frijoles con chicharrón. Acompañamiento clásico en los restaurantes tradicionales.',
+      'gastro.doce.nome':'Dulce de Leche','gastro.doce.desc':'El dulce que define Minas. Artesanal, cremoso, para comer con cuchara. Perfecto con queso fresco.',
+      'gastro.cafe.nome':'Café con Pão de Queijo','gastro.cafe.desc':'El desayuno minero por excelencia. Café fuerte con panecillo de queso caliente.',
+      'hosp.intro':'Sugerencias de hoteles próximos al campus de la UFMG o bien conectados por transporte. ¡BH tiene excelentes opciones para todos los presupuestos!',
+      'hosp.hotel1.nome':'Hotel Ouro Minas Palace','hosp.hotel1.dist':'📍 ~8 km de la UFMG',
+      'hosp.hotel1.desc':'Uno de los más tradicionales de BH, con spa, piscina y gastronomía minera de alto nivel.',
+      'hosp.hotel2.nome':'Ibis Styles Savassi','hosp.hotel2.dist':'📍 Savassi · ~20 min de la UFMG',
+      'hosp.hotel2.desc':'Excelente relación calidad-precio en el barrio más animado de BH. Fácil acceso por transporte público.',
+      'hosp.hotel3.nome':'Hotel BH Plaza','hosp.hotel3.dist':'📍 Centro · ~25 min de la UFMG',
+      'hosp.hotel3.desc':'Económico y bien ubicado en el centro histórico. Acceso facilitado a la línea de metro.',
+      'hosp.hotel4.nome':'Airbnb — Pampulha','hosp.hotel4.dist':'📍 Junto a la UFMG',
+      'hosp.hotel4.desc':'Diversas opciones de apartamentos y casas en el barrio de Pampulha, a 5–10 minutos a pie. ¡Ideal para grupos!',
+      'hosp.dica':'💡 <strong>Consejo:</strong> El evento tiene lugar los días 8–10/oct, víspera del feriado del 12/10. ¡Reserve con anticipación ya que el período es muy solicitado en BH! El organizador puede negociar tarifas grupales con hoteles cercanos — espere comunicado del comité organizador.',
+      'insc.intro':'Asegure su lugar en el mayor encuentro de investigación en musicoterapia de Brasil. Haga clic en la categoría que mejor se aplique a usted para acceder al formulario de inscripción:',
+      'insc.passo1':'Haga clic en su categoría anterior y complete el formulario de inscripción con sus datos',
+      'insc.passo2':'Realice el pago vía <strong>PIX</strong> y envíe el comprobante directamente en el formulario',
+      'insc.passo3':'Espere la confirmación de la inscripción por correo electrónico',
+      'insc.aviso.trabalhos':'<strong>Envío de trabajos científicos:</strong> se realiza en un formulario separado — acceda a la sección <a href="#submissao">Envío de Trabajos</a> en este sitio.',
+      'insc.duvidas':'¿Consultas?','insc.contato':'Contactar por correo electrónico',
     }
   };
 
@@ -2005,7 +2492,7 @@ Os aplicativos de corrida, como Uber e 99 funcionam bem, além dos taxis tradici
       var v = t[el.dataset.i18n];
       if (v !== undefined) el.innerHTML = v;
     });
-    document.querySelectorAll('.lang-flag').forEach(function(btn) {
+    document.querySelectorAll('.lang-flag, .nav-lang-flag').forEach(function(btn) {
       btn.classList.toggle('lang-active', btn.dataset.lang === lang);
     });
     var lbl = document.getElementById('tts-label');
@@ -2017,6 +2504,40 @@ Os aplicativos de corrida, como Uber e 99 funcionam bem, além dos taxis tradici
 
   // Aplica idioma salvo
   setLang(currentLang);
+  // ─────────────────────────────────────────────────────────────────────────
+
+  // ─── MOBILE MENU ──────────────────────────────────────────────────────────
+  if (window.innerWidth <= 1025) {
+    var menuBtn = document.getElementById('nav-menu-btn');
+    var navLinks = document.getElementById('nav-links');
+    var navOverlay = document.getElementById('nav-overlay');
+
+    if (menuBtn && navLinks) {
+      menuBtn.addEventListener('click', function() {
+        navLinks.classList.toggle('mobile-open');
+        menuBtn.classList.toggle('open');
+        navOverlay.classList.toggle('active');
+      });
+    }
+
+    if (navOverlay) {
+      navOverlay.addEventListener('click', function() {
+        navLinks.classList.remove('mobile-open');
+        menuBtn.classList.remove('open');
+        navOverlay.classList.remove('active');
+      });
+    }
+
+    if (navLinks) {
+      navLinks.querySelectorAll('a').forEach(function(link) {
+        link.addEventListener('click', function() {
+          navLinks.classList.remove('mobile-open');
+          menuBtn.classList.remove('open');
+          navOverlay.classList.remove('active');
+        });
+      });
+    }
+  }
   // ─────────────────────────────────────────────────────────────────────────
 
   // ─── TTS READER ──────────────────────────────────────────────────────────
@@ -2074,38 +2595,121 @@ Os aplicativos de corrida, como Uber e 99 funcionam bem, além dos taxis tradici
       return null;
     }
 
-    function buildList() {
-      var result = [];
-      document.querySelectorAll('section[id]:not(#hero)').forEach(function(sec) {
-        var all = Array.from(sec.querySelectorAll(BLOCK_SEL));
-        var set = new Set(all);
-        var deduped = all.filter(function(el) {
-          if (el.closest('#prog-resultado')) return false;
-          if (!isVisible(el)) return false;
-          var p = el.parentElement;
-          while (p && p !== sec) { if (set.has(p)) return false; p = p.parentElement; }
-          return true;
-        });
-        deduped.forEach(function(el) {
-          var txt = cleanTTS(el.innerText || '');
-          if (txt.length > 1) result.push({ el: el, sec: sec, txt: txt });
-        });
-        sec.querySelectorAll('img[alt]').forEach(function(img) {
-          var alt = cleanTTS(img.alt);
-          if (alt && !img.closest('#prog-resultado') && isVisible(img))
-            result.push({ el: img, sec: sec, txt: 'Imagem: ' + alt });
-        });
-      });
-      return result;
-    }
-
     function getBestVoice(langCode) {
       var vs = synth.getVoices();
       return vs.find(function(v) { return v.lang === langCode; }) ||
              vs.find(function(v) { return v.lang.startsWith(langCode.split('-')[0]); }) || null;
     }
 
+    function buildList() {
+      var result = [];
+      var seenTexts = new Set();
+      var minLength = 3;
+
+      document.querySelectorAll('section[id]:not(#hero)').forEach(function(sec) {
+        var all = Array.from(sec.querySelectorAll(BLOCK_SEL));
+        var set = new Set(all);
+
+        var deduped = all.filter(function(el) {
+          if (el.closest('#prog-resultado')) return false;
+          if (!isVisible(el)) return false;
+
+          var p = el.parentElement;
+          while (p && p !== sec) {
+            if (set.has(p)) return false;
+            p = p.parentElement;
+          }
+          return true;
+        });
+
+        deduped.forEach(function(el) {
+          var txt = cleanTTS(el.innerText || '');
+          if (txt.length > minLength) {
+            var norm = txt.toLowerCase().trim();
+            if (!seenTexts.has(norm)) {
+              result.push({ el: el, sec: sec, txt: txt });
+              seenTexts.add(norm);
+            }
+          }
+        });
+
+        sec.querySelectorAll('img[alt]').forEach(function(img) {
+          var alt = cleanTTS(img.alt);
+          if (alt && alt.length > minLength && !img.closest('#prog-resultado') && isVisible(img)) {
+            var norm = ('imagem: ' + alt).toLowerCase();
+            if (!seenTexts.has(norm)) {
+              result.push({ el: img, sec: sec, txt: 'Imagem: ' + alt });
+              seenTexts.add(norm);
+            }
+          }
+        });
+      });
+      return result;
+    }
+
+
     var items = [], idx = 0, playing = false, rate = 1, started = false, gen = 0;
+    var lastSpokenIdx = -1;
+    window.ttsPitch = 1;
+
+    function wrapWordsInElement(el) {
+      if (el._ttsWrapped) return;
+      el._ttsWrapped = true;
+
+      var textNodes = [];
+      var walk = document.createTreeWalker(
+        el,
+        NodeFilter.SHOW_TEXT,
+        null,
+        false
+      );
+
+      var node;
+      while (node = walk.nextNode()) {
+        if (node.nodeValue.trim().length > 0) {
+          textNodes.push(node);
+        }
+      }
+
+      textNodes.forEach(function(node) {
+        var text = node.nodeValue;
+        var words = text.split(/(\s+)/);
+        var frag = document.createDocumentFragment();
+
+        words.forEach(function(word, idx) {
+          if (/\s/.test(word)) {
+            frag.appendChild(document.createTextNode(word));
+          } else {
+            var span = document.createElement('span');
+            span.className = 'tts-word';
+            span.setAttribute('data-word', word.toLowerCase());
+            span.textContent = word;
+            frag.appendChild(span);
+          }
+        });
+
+        node.parentNode.replaceChild(frag, node);
+      });
+    }
+
+    function highlightWord(el, wordIdx) {
+      var words = el.querySelectorAll('.tts-word');
+      document.querySelectorAll('.tts-word-active').forEach(function(w) {
+        w.classList.remove('tts-word-active');
+      });
+
+      if (wordIdx >= 0 && wordIdx < words.length) {
+        var word = words[wordIdx];
+        word.classList.add('tts-word-active');
+        word.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      }
+    }
+
+    function clearWordHighlight() {
+      document.querySelectorAll('.tts-word-active').forEach(function(w) {
+        w.classList.remove('tts-word-active');
+      });
+    }
 
     function clearHL() {
       document.querySelectorAll('.tts-el-active').forEach(function(e) { e.classList.remove('tts-el-active'); });
@@ -2114,47 +2718,86 @@ Os aplicativos de corrida, como Uber e 99 funcionam bem, além dos taxis tradici
 
     function setActive(i) {
       clearHL();
-      if (i < 0 || i >= items.length) return;
+      if (i < 0 || i >= items.length || !items[i]) return;
+
       var item = items[i];
+      if (!item.el || !item.el.parentElement) return;
+
       item.el.classList.add('tts-el-active');
       var card = findCard(item.el);
       if (card) card.classList.add('tts-card-active');
+
       var lbl = document.getElementById('tts-label');
-      if (lbl) lbl.textContent = cleanTTS((item.sec.querySelector('h2,h3') || {}).textContent || '') ||
-                                 (TRANSLATIONS[currentLang] || {})['tts.label'] || 'Lendo\u2026';
-      var rect = item.el.getBoundingClientRect();
-      if (rect.top < 120 || rect.bottom > window.innerHeight - 80)
-        item.el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      if (lbl) {
+        var secTitle = item.sec.querySelector('h2,h3');
+        var title = secTitle ? cleanTTS(secTitle.textContent) : '';
+        lbl.textContent = title || (TRANSLATIONS[currentLang] || {})['tts.label'] || 'Lendo\u2026';
+      }
+
+      try {
+        var rect = item.el.getBoundingClientRect();
+        if (rect.top < 120 || rect.bottom > window.innerHeight - 80) {
+          item.el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+      } catch (e) {}
     }
 
     function speakAt(i) {
-      synth.cancel();
+      if (synth.speaking) synth.cancel();
       idx = i;
       var myGen = ++gen;
 
-      if (idx >= items.length) { stopAll(); return; }
+      if (idx >= items.length || idx < 0) { stopAll(); return; }
+      if (!playing) return;
+
       setActive(idx);
 
       var item = items[idx];
-      var txt  = item.txt;
-      if (!txt) {
-        if (playing) setTimeout(function() { if (gen === myGen) speakAt(idx + 1); }, 0);
+      if (!item || !item.txt || item.txt.length < 2) {
+        setTimeout(function() { if (gen === myGen && playing) speakAt(idx + 1); }, 100);
         return;
       }
 
-      var utt  = new SpeechSynthesisUtterance(txt);
+      wrapWordsInElement(item.el);
+      var words = item.el.querySelectorAll('.tts-word');
+      var wordCount = words.length;
+
+      var utt = new SpeechSynthesisUtterance(item.txt);
       utt.lang = TTS_LANGS[currentLang] || 'pt-BR';
       utt.rate = rate;
+      utt.pitch = window.ttsPitch || 1;
       var voice = getBestVoice(utt.lang);
       if (voice) utt.voice = voice;
 
+      var startTime = Date.now();
+      var estimatedDuration = (item.txt.length / (rate * 15)) * 1000;
+      var wordDuration = wordCount > 0 ? estimatedDuration / wordCount : 100;
+
+      var highlightInterval = setInterval(function() {
+        if (gen !== myGen || !synth.speaking) {
+          clearInterval(highlightInterval);
+          return;
+        }
+
+        var elapsed = Date.now() - startTime;
+        var wordIdx = Math.floor(elapsed / wordDuration);
+        if (wordIdx >= wordCount) wordIdx = wordCount - 1;
+
+        if (wordIdx >= 0) highlightWord(item.el, wordIdx);
+      }, 50);
+
       utt.onend = function() {
-        if (gen !== myGen) return;
-        if (playing) speakAt(idx + 1);
+        clearInterval(highlightInterval);
+        clearWordHighlight();
+        if (gen === myGen && playing) speakAt(idx + 1);
       };
+
       utt.onerror = function(e) {
-        if (gen !== myGen) return;
-        if (e.error !== 'interrupted' && playing) speakAt(idx + 1);
+        clearInterval(highlightInterval);
+        clearWordHighlight();
+        if (gen === myGen && playing && e.error !== 'interrupted') {
+          speakAt(idx + 1);
+        }
       };
 
       synth.speak(utt);
@@ -2170,6 +2813,7 @@ Os aplicativos de corrida, como Uber e 99 funcionam bem, além dos taxis tradici
     function stopAll() {
       playing = false; idx = 0; gen++;
       synth.cancel(); clearHL();
+      clearWordHighlight();
       items = []; started = false;
       updateBtn();
       var lbl = document.getElementById('tts-label');
@@ -2188,39 +2832,49 @@ Os aplicativos de corrida, como Uber e 99 funcionam bem, além dos taxis tradici
         if (item.el._ttsReady) return;
         item.el._ttsReady = true;
         item.el.classList.add('tts-clickable');
+
         item.el.addEventListener('click', function(e) {
           e.stopPropagation();
-          ensureStarted();
+          if (!started) {
+            started = true;
+            items = buildList();
+          }
+          idx = i;
           playing = true;
           updateBtn();
+          gen++;
           speakAt(i);
-        });
+        }, { once: false });
       });
+    }
+
+    function toggleMinimize() {
+      var bar = document.getElementById('tts-bar');
+      bar.classList.toggle('tts-minimized');
+      var btn = document.getElementById('tts-minimize-btn');
+      if (btn) btn.innerHTML = bar.classList.contains('tts-minimized') ? '+' : '&#8211;';
     }
 
     // ── UI ──
     var bar = document.createElement('div');
     bar.id = 'tts-bar';
     bar.innerHTML =
-      '<span id="tts-label" data-i18n="tts.label">Leitor de tela</span>' +
       '<div class="tts-controls">' +
-        '<button id="tts-play-btn" title="Play / Pause" aria-label="Play">\u25b6</button>' +
-        '<button id="tts-stop-btn" title="Parar" aria-label="Parar">\u23f9</button>' +
+        '<button id="tts-prev-btn" title="Anterior">&#9664;</button>' +
+        '<button id="tts-play-btn" title="Play / Pause">&#9654;</button>' +
+        '<button id="tts-stop-btn" title="Parar">&#9632;</button>' +
+        '<button id="tts-next-btn" title="Próximo">&#9654;&#9654;</button>' +
+        '<div class="tts-divider"></div>' +
         '<select id="tts-speed" aria-label="Velocidade">' +
-          '<option value="0.75">0.75\xd7</option>' +
-          '<option value="1" selected>1\xd7</option>' +
-          '<option value="1.25">1.25\xd7</option>' +
-          '<option value="1.5">1.5\xd7</option>' +
-          '<option value="2">2\xd7</option>' +
+          '<option value="0.75">0.75×</option>' +
+          '<option value="1" selected>1×</option>' +
+          '<option value="1.25">1.25×</option>' +
+          '<option value="1.5">1.5×</option>' +
+          '<option value="2">2×</option>' +
         '</select>' +
-        '<span class="tts-sep">|</span>' +
-        '<div class="lang-flags">' +
-          '<button class="lang-flag lang-active" data-lang="pt" title="Portugu\u00eas">\ud83c\udde7\ud83c\uddf7</button>' +
-          '<button class="lang-flag" data-lang="en" title="English">\ud83c\uddff\ud83c\udde6</button>' +
-          '<button class="lang-flag" data-lang="es" title="Espa\u00f1ol">\ud83c\udde8\ud83c\uddf4</button>' +
-        '</div>' +
-        '<button id="tts-lang-btn" title="Trocar idioma">\ud83c\udde7\ud83c\uddf7</button>' +
-      '</div>';
+        '<button id="tts-minimize-btn" title="Minimizar">&#8211;</button>' +
+      '</div>' +
+      '<div id="tts-current-word"></div>';
     document.body.appendChild(bar);
 
     document.getElementById('tts-play-btn').addEventListener('click', function() {
@@ -2231,28 +2885,56 @@ Os aplicativos de corrida, como Uber e 99 funcionam bem, além dos taxis tradici
       }
     });
     document.getElementById('tts-stop-btn').addEventListener('click', stopAll);
+    document.getElementById('tts-prev-btn').addEventListener('click', function() {
+      ensureStarted();
+      if (idx > 0) { playing = true; updateBtn(); speakAt(idx - 1); }
+    });
+    document.getElementById('tts-next-btn').addEventListener('click', function() {
+      ensureStarted();
+      if (idx < items.length - 1) { playing = true; updateBtn(); speakAt(idx + 1); }
+    });
     document.getElementById('tts-speed').addEventListener('change', function(e) {
       rate = parseFloat(e.target.value);
       if (playing) speakAt(idx);
     });
+    if (window.innerWidth <= 768) {
+      var minimizeBtn = document.getElementById('tts-minimize-btn');
+      if (minimizeBtn) {
+        minimizeBtn.style.display = 'block';
+        minimizeBtn.addEventListener('click', toggleMinimize);
+      }
+    }
+
     document.querySelectorAll('.lang-flag').forEach(function(btn) {
       btn.addEventListener('click', function() {
         if (started) stopAll();
         setLang(btn.dataset.lang);
       });
     });
-    var langToggleBtn = document.getElementById('tts-lang-btn');
-    if (langToggleBtn) {
-      langToggleBtn.addEventListener('click', function() {
-        var next = LANG_ORDER[(LANG_ORDER.indexOf(currentLang) + 1) % LANG_ORDER.length];
-        if (started) stopAll();
-        setLang(next);
-      });
-    }
 
-    if (typeof synth.onvoiceschanged !== 'undefined') synth.onvoiceschanged = function() {};
+    document.querySelectorAll('.nav-lang-flag').forEach(function(btn) {
+      btn.addEventListener('click', function() {
+        if (started) stopAll();
+        document.querySelectorAll('.nav-lang-flag').forEach(function(b) {
+          b.classList.remove('lang-active');
+        });
+        btn.classList.add('lang-active');
+        setLang(btn.dataset.lang);
+      });
+    });
+
+    document.addEventListener('keydown', function(e) {
+      if (e.ctrlKey || e.metaKey) {
+        if (e.key === ' ') { e.preventDefault(); document.getElementById('tts-play-btn').click(); }
+        else if (e.key === 'ArrowLeft') { e.preventDefault(); document.getElementById('tts-prev-btn').click(); }
+        else if (e.key === 'ArrowRight') { e.preventDefault(); document.getElementById('tts-next-btn').click(); }
+        else if (e.key === 'Escape') { e.preventDefault(); stopAll(); }
+      }
+    });
+
     window.addEventListener('beforeunload', function() { synth.cancel(); });
   })();
+
   // ─────────────────────────────────────────────────────────────────────────
 
 </script>
