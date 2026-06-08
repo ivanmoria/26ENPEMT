@@ -468,11 +468,6 @@
     display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: center;
     position: relative; overflow: hidden;
   }
-  .local-hero::after {
-    content: '🎵';
-    position: absolute; right: 40px; bottom: -20px;
-    font-size: 10rem; opacity: .06; pointer-events: none;
-  }
   .local-hero h3 { font-family: 'Playfair Display', serif; font-size: 1.8rem; font-weight: 700; margin-bottom: 12px; }
   .local-hero p { font-size: .95rem; line-height: 1.7; opacity: .85; }
   .local-facts { display: flex; flex-direction: column; gap: 16px; }
@@ -646,13 +641,25 @@
     flex-shrink: 0;
   }
   .inscricao-passo p { font-size: .85rem; color: rgba(255,255,255,.75); line-height: 1.55; }
-  .inscricao-aviso-trabalhos {
-    max-width: 700px; margin: 0 auto;
-    background: rgba(201,148,58,.15); border: 1px solid rgba(201,148,58,.35);
-    border-radius: 12px; padding: 16px 24px;
-    font-size: .88rem; color: rgba(255,255,255,.85); line-height: 1.6;
+  .inscricao-btns {
+    display: flex; flex-wrap: wrap; gap: 16px;
+    justify-content: center; margin-top: 20px;
   }
-  .inscricao-aviso-trabalhos a { color: var(--ouro-claro); text-decoration: underline; }
+  .btn-inscricao-cta {
+    display: inline-block;
+    background: var(--ouro-claro); color: #1a1a1a;
+    font-weight: 800; font-size: 1rem; letter-spacing: 2px;
+    text-decoration: none; text-transform: uppercase;
+    padding: 18px 48px; border-radius: 50px;
+    transition: background .2s, transform .15s;
+  }
+  .btn-inscricao-cta:hover { background: #e0b44a; transform: translateY(-2px); }
+  .btn-inscricao-outline {
+    background: transparent;
+    border: 2px solid var(--ouro-claro);
+    color: var(--ouro-claro);
+  }
+  .btn-inscricao-outline:hover { background: rgba(201,148,58,.15); transform: translateY(-2px); }
 
   /* ─── SUBMISSÃO DE TRABALHOS ─── */
   #submissao { background: var(--branco); }
@@ -1097,18 +1104,6 @@
         <span class="sub-tipo-icon">📋</span>
         <div class="sub-tipo-nome" data-i18n="sub.poster.nome">Pôster</div>
         <div class="sub-tipo-desc" data-i18n="sub.poster.desc">Apresentação visual de pesquisa. Formato A1 impresso. Sessão de apresentação com interação direta com participantes.</div>
-        <span class="sub-tipo-prazo" data-i18n="sub.prazo">📅 Prazo: a confirmar</span>
-      </div>
-      <div class="sub-tipo" onclick="window.open('URL_GOOGLE_FORM_MESA', '_blank')">
-        <span class="sub-tipo-icon">🗣️</span>
-        <div class="sub-tipo-nome" data-i18n="sub.mesa.nome">Mesa Redonda</div>
-        <div class="sub-tipo-desc" data-i18n="sub.mesa.desc">Proposta de sessão temática com 3 a 4 apresentadores articulados em torno de um eixo comum. 90 minutos.</div>
-        <span class="sub-tipo-prazo" data-i18n="sub.prazo">📅 Prazo: a confirmar</span>
-      </div>
-      <div class="sub-tipo" onclick="window.open('URL_GOOGLE_FORM_WORKSHOP', '_blank')">
-        <span class="sub-tipo-icon">🎸</span>
-        <div class="sub-tipo-nome" data-i18n="sub.workshop.nome">Workshop / Oficina</div>
-        <div class="sub-tipo-desc" data-i18n="sub.workshop.desc">Proposta de vivência prática, metodologia clínica ou comunitária. Duração de 2 horas. Vagas limitadas por oficina.</div>
         <span class="sub-tipo-prazo" data-i18n="sub.prazo">📅 Prazo: a confirmar</span>
       </div>
     </div>
@@ -1753,9 +1748,9 @@ Os aplicativos de corrida, como Uber e 99 funcionam bem, além dos taxis tradici
     <p class="section-text reveal" data-i18n="insc.intro">Garanta sua vaga no maior encontro de pesquisa em musicoterapia do Brasil. Clique na categoria que melhor se aplica a você para acessar o formulário de inscrição:</p>
 
     <div class="preco-grid">
-      <div class="preco-card reveal" onclick="window.open('https://forms.gle/LAqSjPbVBcZMFd6HA', '_blank')">
-        <div class="preco-categoria" data-i18n="insc.cat1">Estudante de Graduação</div>
-        <div class="preco-valor"><span>R$</span>180</div>
+      <div class="preco-card reveal" onclick="window.open('https://forms.gle/Gh4KQv3kH4hw5nZ57', '_blank')">
+        <div class="preco-categoria" data-i18n="insc.cat1">Estudante de Graduação em Musicoterapia</div>
+        <div class="preco-valor"><span>R$</span>50</div>
         <div class="preco-periodo" data-i18n="insc.lote">Lote antecipado</div>
         <ul class="preco-features">
           <li data-i18n="insc.f1">Acesso a todas as palestras</li>
@@ -1764,35 +1759,36 @@ Os aplicativos de corrida, como Uber e 99 funcionam bem, além dos taxis tradici
           <li data-i18n="insc.f4">Coffee breaks</li>
         </ul>
       </div>
-      <div class="preco-card reveal" onclick="window.open('https://forms.gle/LAqSjPbVBcZMFd6HA', '_blank')">
-        <div class="preco-categoria" data-i18n="insc.cat2">Pós-Graduação / Pesquisador</div>
-        <div class="preco-valor"><span>R$</span>280</div>
-        <div class="preco-periodo" data-i18n="insc.lote">Lote antecipado</div>
-        <ul class="preco-features">
-          <li data-i18n="insc.f1">Acesso a todas as palestras</li>
-          <li data-i18n="insc.f2">Certificado de participação</li>
-          <li data-i18n="insc.f4">Coffee breaks</li>
-        </ul>
-      </div>
-      <div class="preco-card destaque reveal" onclick="window.open('https://forms.gle/LAqSjPbVBcZMFd6HA', '_blank')">
+      <div class="preco-card destaque reveal" onclick="window.open('https://forms.gle/Gh4KQv3kH4hw5nZ57', '_blank')">
         <div class="preco-badge" data-i18n="insc.popular">+ Popular</div>
-        <div class="preco-categoria" data-i18n="insc.cat3">Musicoterapeuta</div>
-        <div class="preco-valor"><span>R$</span>320</div>
+        <div class="preco-categoria" data-i18n="insc.cat2">Profissional Associado à UBAM</div>
+        <div class="preco-valor"><span>R$</span>100</div>
         <div class="preco-periodo" data-i18n="insc.lote">Lote antecipado</div>
         <ul class="preco-features">
           <li data-i18n="insc.f5">Acesso completo ao evento</li>
           <li data-i18n="insc.f6">Oficinas incluídas</li>
           <li data-i18n="insc.f7">Direito a voto na Assembleia</li>
-          <li data-i18n="insc.f8">Janta de abertura inclusa</li>
+          <li data-i18n="insc.f4">Coffee breaks</li>
         </ul>
       </div>
-      <div class="preco-card reveal" onclick="window.open('https://forms.gle/LAqSjPbVBcZMFd6HA', '_blank')">
-        <div class="preco-categoria" data-i18n="insc.cat4">Profissional de Outras Áreas</div>
-        <div class="preco-valor"><span>R$</span>350</div>
+      <div class="preco-card reveal" onclick="window.open('https://forms.gle/Gh4KQv3kH4hw5nZ57', '_blank')">
+        <div class="preco-categoria" data-i18n="insc.cat3">Estudante de Outras Áreas</div>
+        <div class="preco-valor"><span>R$</span>100</div>
         <div class="preco-periodo" data-i18n="insc.lote">Lote antecipado</div>
         <ul class="preco-features">
           <li data-i18n="insc.f1">Acesso a todas as palestras</li>
           <li data-i18n="insc.f9">Mesas e painéis</li>
+          <li data-i18n="insc.f2">Certificado de participação</li>
+          <li data-i18n="insc.f4">Coffee breaks</li>
+        </ul>
+      </div>
+      <div class="preco-card reveal" onclick="window.open('https://forms.gle/Gh4KQv3kH4hw5nZ57', '_blank')">
+        <div class="preco-categoria" data-i18n="insc.cat4">Profissional Não-Associado à UBAM</div>
+        <div class="preco-valor"><span>R$</span>150</div>
+        <div class="preco-periodo" data-i18n="insc.lote">Lote antecipado</div>
+        <ul class="preco-features">
+          <li data-i18n="insc.f5">Acesso completo ao evento</li>
+          <li data-i18n="insc.f6">Oficinas incluídas</li>
           <li data-i18n="insc.f2">Certificado de participação</li>
           <li data-i18n="insc.f4">Coffee breaks</li>
         </ul>
@@ -1805,8 +1801,9 @@ Os aplicativos de corrida, como Uber e 99 funcionam bem, além dos taxis tradici
         <div class="inscricao-passo"><span class="inscricao-num">2</span><p data-i18n="insc.passo2">Realize o pagamento via <strong>PIX</strong> e envie o comprovante diretamente no formulário</p></div>
         <div class="inscricao-passo"><span class="inscricao-num">3</span><p data-i18n="insc.passo3">Aguarde a confirmação da inscrição por e-mail</p></div>
       </div>
-      <div class="inscricao-aviso-trabalhos" data-i18n="insc.aviso.trabalhos">
-        <strong>Envio de trabalhos científicos:</strong> feito em formulário separado — acesse a seção <a href="#submissao">Envio de Trabalhos</a> neste site.
+      <div class="inscricao-btns">
+        <a href="https://forms.gle/Gh4KQv3kH4hw5nZ57" target="_blank" class="btn-inscricao-cta" data-i18n="insc.cta">REALIZAR INSCRIÇÃO</a>
+        <a href="#submissao" class="btn-inscricao-cta btn-inscricao-outline" data-i18n="insc.cta.trabalhos">ENVIAR TRABALHO</a>
       </div>
 <p style="margin-top:20px; font-size:.85rem; color:rgba(255,255,255,.55)">
   📧 <span data-i18n="insc.duvidas">Dúvidas?</span>
@@ -2024,7 +2021,7 @@ Os aplicativos de corrida, como Uber e 99 funcionam bem, além dos taxis tradici
       'sub.mesa.desc':'Proposta de sessão temática com 3 a 4 apresentadores articulados em torno de um eixo comum. 90 minutos.',
       'sub.workshop.nome':'Workshop / Oficina',
       'sub.workshop.desc':'Proposta de vivência prática, metodologia clínica ou comunitária. Duração de 2 horas. Vagas limitadas por oficina.',
-      'sub.prazo':'📅 Prazo: a confirmar',
+      'sub.prazo':'📅 Prazo: até 10 de agosto de 2026',
       'prog.label':'Agenda','prog.title':'Programação <em>preliminar</em>',
       'local.label':'O Local','local.title':'Escola de Música da <em>UFMG</em>',
       'rest.label':'Onde Comer','rest.title':'Restaurantes <em>durante o evento</em>',
@@ -2032,8 +2029,8 @@ Os aplicativos de corrida, como Uber e 99 funcionam bem, além dos taxis tradici
       'bh.label':'A Cidade','bh.title':'Bem-vindo a <em>Belo Horizonte</em>',
       'hosp.label':'Onde Ficar','hosp.title':'Hospedagem <em>recomendada</em>',
       'insc.label':'Participe','insc.title':'Inscrições <em>abertas</em>',
-      'insc.cat1':'Estudante de Graduação','insc.cat2':'Pós-Graduação / Pesquisador',
-      'insc.cat3':'Musicoterapeuta','insc.cat4':'Profissional de Outras Áreas',
+      'insc.cat1':'Estudante de Graduação em Musicoterapia','insc.cat2':'Profissional Associado à UBAM',
+      'insc.cat3':'Estudante de Outras Áreas','insc.cat4':'Profissional Não-Associado à UBAM',
       'insc.lote':'Lote antecipado','insc.popular':'+ Popular',
       'insc.f1':'Acesso a todas as palestras','insc.f2':'Certificado de participação',
       'insc.f3':'Material do evento','insc.f4':'Coffee breaks',
@@ -2109,9 +2106,9 @@ Os aplicativos de corrida, como Uber e 99 funcionam bem, além dos taxis tradici
       'tl.retorno.title':'✈️ Retorno dos participantes',
       'tl.retorno.desc':'Com o feriado de 12/10 (domingo), muitos participantes aproveitarão para retornar na segunda ou terça. Programe suas passagens com antecedência!',
       'tl.badge.logistica':'Logística',
-      'local.h3':'Um centenário palco da música brasileira',
-      'local.p1':'Fundada em 1925, a Escola de Música da UFMG é uma das mais tradicionais do país. Localizada no Campus Pampulha — projeto urbanístico Patrimônio Mundial da UNESCO — a escola reúne salas de concerto, estúdios de gravação e espaços de pesquisa de excelência.',
-      'local.p2':'O campus da UFMG foi projetado por Oscar Niemeyer com paisagismo de Burle Marx, em uma das mais belas realizações da arquitetura modernista brasileira.',
+      'local.h3':'Um século de música, pesquisa e formação',
+      'local.p1':'Fundada em 1925 como Conservatório Mineiro de Música, a Escola de Música da UFMG completou um século em 2025. Incorporada à UFMG em 1962, forma músicos, professores e pesquisadores em graduação — incluindo Musicoterapia —, pós-graduação e extensão.',
+      'local.p2':'Instalada no Campus Pampulha desde 1997, a escola está às margens da Lagoa da Pampulha, cujo entorno integra o Conjunto Moderno da Pampulha, reconhecido como Patrimônio Mundial da UNESCO desde 2016.',
       'local.fact.endereco.label':'Endereço','local.fact.endereco':'Av. Pres. Antônio Carlos, 6627 — Pampulha, BH/MG',
       'local.fact.telefone.label':'Telefone',
       'local.fact.fundacao.label':'Fundação','local.fact.fundacao':'1925 · 100 anos de música e pesquisa',
@@ -2161,6 +2158,7 @@ Os aplicativos de corrida, como Uber e 99 funcionam bem, além dos taxis tradici
       'insc.passo2':'Realize o pagamento via <strong>PIX</strong> e envie o comprovante diretamente no formulário',
       'insc.passo3':'Aguarde a confirmação da inscrição por e-mail',
       'insc.aviso.trabalhos':'<strong>Envio de trabalhos científicos:</strong> feito em formulário separado — acesse a seção <a href="#submissao">Envio de Trabalhos</a> neste site.',
+      'insc.cta':'REALIZAR INSCRIÇÃO','insc.cta.trabalhos':'ENVIAR TRABALHO',
       'insc.duvidas':'Dúvidas?','insc.contato':'Entrar em contato via e-mail',
     },
     en: {
@@ -2184,7 +2182,7 @@ Os aplicativos de corrida, como Uber e 99 funcionam bem, além dos taxis tradici
       'sub.mesa.desc':'Thematic session proposal with 3 to 4 presenters organized around a common theme. 90 minutes.',
       'sub.workshop.nome':'Workshop',
       'sub.workshop.desc':'Proposal for a hands-on experience, clinical or community methodology. Duration: 2 hours. Limited spots per workshop.',
-      'sub.prazo':'📅 Deadline: to be confirmed',
+      'sub.prazo':'📅 Deadline: August 10, 2026',
       'prog.label':'Schedule','prog.title':'<em>Preliminary</em> Schedule',
       'local.label':'The Venue','local.title':'School of Music — <em>UFMG</em>',
       'rest.label':'Where to Eat','rest.title':'Restaurants <em>during the event</em>',
@@ -2192,8 +2190,8 @@ Os aplicativos de corrida, como Uber e 99 funcionam bem, além dos taxis tradici
       'bh.label':'The City','bh.title':'Welcome to <em>Belo Horizonte</em>',
       'hosp.label':'Where to Stay','hosp.title':'<em>Recommended</em> Accommodation',
       'insc.label':'Join Us','insc.title':'Registration <em>open</em>',
-      'insc.cat1':'Undergraduate Student','insc.cat2':'Postgraduate / Researcher',
-      'insc.cat3':'Music Therapist','insc.cat4':'Other Professional',
+      'insc.cat1':'Music Therapy Undergraduate Student','insc.cat2':'UBAM Member Professional',
+      'insc.cat3':'Student from Other Fields','insc.cat4':'Non-UBAM Professional',
       'insc.lote':'Early bird','insc.popular':'Most Popular',
       'insc.f1':'Access to all lectures','insc.f2':'Certificate of participation',
       'insc.f3':'Event materials','insc.f4':'Coffee breaks',
@@ -2269,9 +2267,9 @@ Os aplicativos de corrida, como Uber e 99 funcionam bem, além dos taxis tradici
       'tl.retorno.title':'✈️ Participants Departure',
       'tl.retorno.desc':'With the 12/10 holiday (Sunday), many participants will take the opportunity to return on Monday or Tuesday. Plan your tickets in advance!',
       'tl.badge.logistica':'Logistics',
-      'local.h3':'A century-old stage of Brazilian music',
-      'local.p1':'Founded in 1925, the School of Music of UFMG is one of the most traditional in the country. Located on the Pampulha Campus — a UNESCO World Heritage urban project — the school brings together concert halls, recording studios and excellent research spaces.',
-      'local.p2':'The UFMG campus was designed by Oscar Niemeyer with landscaping by Burle Marx, one of the most beautiful achievements of Brazilian modernist architecture.',
+      'local.h3':'A century of music, research and education',
+      'local.p1':'Founded in 1925 as the Conservatório Mineiro de Música, the School of Music of UFMG celebrated its centenary in 2025. Incorporated into UFMG in 1962, it trains musicians, teachers and researchers at undergraduate — including Music Therapy —, graduate and extension levels.',
+      'local.p2':'Located on the Pampulha Campus since 1997, the school sits on the shores of Lagoa da Pampulha, whose surroundings form the Modern Ensemble of Pampulha, a UNESCO World Heritage Site since 2016.',
       'local.fact.endereco.label':'Address','local.fact.endereco':'Av. Pres. Antônio Carlos, 6627 — Pampulha, BH/MG',
       'local.fact.telefone.label':'Phone',
       'local.fact.fundacao.label':'Founded','local.fact.fundacao':'1925 · 100 years of music and research',
@@ -2321,6 +2319,7 @@ Os aplicativos de corrida, como Uber e 99 funcionam bem, além dos taxis tradici
       'insc.passo2':'Make the payment via <strong>PIX</strong> and send the receipt directly in the form',
       'insc.passo3':'Wait for the registration confirmation by email',
       'insc.aviso.trabalhos':'<strong>Scientific paper submission:</strong> done via a separate form — access the <a href="#submissao">Paper Submission</a> section on this site.',
+      'insc.cta':'REGISTER NOW','insc.cta.trabalhos':'SUBMIT A PAPER',
       'insc.duvidas':'Questions?','insc.contato':'Contact us by email',
     },
     es: {
@@ -2344,7 +2343,7 @@ Os aplicativos de corrida, como Uber e 99 funcionam bem, além dos taxis tradici
       'sub.mesa.desc':'Propuesta de sesión temática con 3 a 4 presentadores articulados en torno a un eje común. 90 minutos.',
       'sub.workshop.nome':'Taller / Oficina',
       'sub.workshop.desc':'Propuesta de vivencia práctica, metodología clínica o comunitaria. Duración de 2 horas. Cupos limitados por taller.',
-      'sub.prazo':'📅 Plazo: a confirmar',
+      'sub.prazo':'📅 Plazo: hasta el 10 de agosto de 2026',
       'prog.label':'Agenda','prog.title':'Programa <em>preliminar</em>',
       'local.label':'El Local','local.title':'Escuela de Música — <em>UFMG</em>',
       'rest.label':'Dónde Comer','rest.title':'Restaurantes <em>durante el evento</em>',
@@ -2352,8 +2351,8 @@ Os aplicativos de corrida, como Uber e 99 funcionam bem, além dos taxis tradici
       'bh.label':'La Ciudad','bh.title':'Bienvenido a <em>Belo Horizonte</em>',
       'hosp.label':'Dónde Quedarse','hosp.title':'Alojamiento <em>recomendado</em>',
       'insc.label':'Participa','insc.title':'Inscripciones <em>abiertas</em>',
-      'insc.cat1':'Estudiante de Grado','insc.cat2':'Posgrado / Investigador',
-      'insc.cat3':'Musicoterapeuta','insc.cat4':'Profesional de Otras Áreas',
+      'insc.cat1':'Estudiante de Grado en Musicoterapia','insc.cat2':'Profesional Asociado a la UBAM',
+      'insc.cat3':'Estudiante de Otras Áreas','insc.cat4':'Profesional No Asociado a la UBAM',
       'insc.lote':'Lote anticipado','insc.popular':'Más Popular',
       'insc.f1':'Acceso a todas las conferencias','insc.f2':'Certificado de participación',
       'insc.f3':'Material del evento','insc.f4':'Coffee breaks',
@@ -2429,9 +2428,9 @@ Os aplicativos de corrida, como Uber e 99 funcionam bem, além dos taxis tradici
       'tl.retorno.title':'✈️ Regreso de los participantes',
       'tl.retorno.desc':'Con el feriado del 12/10 (domingo), muchos participantes aprovecharán para regresar el lunes o martes. ¡Planifique sus pasajes con anticipación!',
       'tl.badge.logistica':'Logística',
-      'local.h3':'Un escenario centenario de la música brasileña',
-      'local.p1':'Fundada en 1925, la Escuela de Música de la UFMG es una de las más tradicionales del país. Ubicada en el Campus Pampulha — un proyecto urbanístico Patrimonio Mundial de la UNESCO — la escuela reúne salas de concierto, estudios de grabación y espacios de investigación de excelencia.',
-      'local.p2':'El campus de la UFMG fue proyectado por Oscar Niemeyer con paisajismo de Burle Marx, en una de las más bellas realizaciones de la arquitectura modernista brasileña.',
+      'local.h3':'Un siglo de música, investigación y formación',
+      'local.p1':'Fundada en 1925 como Conservatório Mineiro de Música, la Escuela de Música de la UFMG celebró su centenario en 2025. Incorporada a la UFMG en 1962, forma músicos, docentes e investigadores en grado — incluyendo Musicoterapia —, posgrado y extensión.',
+      'local.p2':'Instalada en el Campus Pampulha desde 1997, la escuela se ubica a orillas de la Lagoa da Pampulha, cuyo entorno integra el Conjunto Moderno de Pampulha, reconocido como Patrimonio Mundial de la UNESCO desde 2016.',
       'local.fact.endereco.label':'Dirección','local.fact.endereco':'Av. Pres. Antônio Carlos, 6627 — Pampulha, BH/MG',
       'local.fact.telefone.label':'Teléfono',
       'local.fact.fundacao.label':'Fundación','local.fact.fundacao':'1925 · 100 años de música e investigación',
@@ -2481,6 +2480,7 @@ Os aplicativos de corrida, como Uber e 99 funcionam bem, além dos taxis tradici
       'insc.passo2':'Realice el pago vía <strong>PIX</strong> y envíe el comprobante directamente en el formulario',
       'insc.passo3':'Espere la confirmación de la inscripción por correo electrónico',
       'insc.aviso.trabalhos':'<strong>Envío de trabajos científicos:</strong> se realiza en un formulario separado — acceda a la sección <a href="#submissao">Envío de Trabajos</a> en este sitio.',
+      'insc.cta':'REALIZAR INSCRIPCIÓN','insc.cta.trabalhos':'ENVIAR TRABAJO',
       'insc.duvidas':'¿Consultas?','insc.contato':'Contactar por correo electrónico',
     }
   };
