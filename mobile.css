@@ -21,9 +21,9 @@
   display: block;
   border-radius: 2px;
 }
-.nav-menu-btn.open span:nth-child(1) { transform: rotate(45deg) translate(5px, 5px); }
-.nav-menu-btn.open span:nth-child(2) { opacity: 0; transform: scaleX(0); }
-.nav-menu-btn.open span:nth-child(3) { transform: rotate(-45deg) translate(5px, -5px); }
+.nav-menu-btn.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+.nav-menu-btn.open span:nth-child(2) { opacity: 0; }
+.nav-menu-btn.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
 
 .nav-overlay {
   display: none;
@@ -58,6 +58,13 @@
   }
 
   .nav-logo { height: 32px !important; }
+  .nav-brand .nav-logo-full { height: 36px !important; width: auto !important; max-width: none !important; }
+
+  /* Logos de apoio (UBAM / UFMG / Música): só dentro do menu expansível,
+     nunca soltas no cabeçalho. */
+  nav > .nav-brands { display: none !important; }
+  .nav-links .nav-brands { display: block !important; margin-top: 14px; }
+  .nav-links .nav-ubam { margin-top: 0; padding-top: 0; border-top: none; }
 
   .nav-menu-btn { display: flex !important; position: relative !important; top: auto !important; left: auto !important; z-index: 200 !important; }
 
@@ -66,8 +73,8 @@
   .nav-lang-selector-mobile {
     display: list-item !important;
     border-top: 1px solid var(--creme-escuro) !important;
-    padding: 20px 0 0 0 !important;
-    margin-top: 20px !important;
+    padding: 16px 0 0 0 !important;
+    margin-top: 16px !important;
   }
 
   .nav-lang-selector-mobile .nav-lang-label {
@@ -104,29 +111,25 @@
     z-index: 160;
     gap: 0;
     overflow-y: auto;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
   }
+  .nav-links::-webkit-scrollbar { display: none; }
   .nav-links.mobile-open { transform: translateX(0); }
 
-  /* Logo dentro do sidebar — igual ao cabeçalho */
+  /* Logo dentro do sidebar — igual ao cabeçalho (PC) */
   .nav-sidebar-brand {
     display: flex !important;
-    flex-direction: row !important;
+    justify-content: center !important;
     align-items: center !important;
-    gap: 10px;
     padding-bottom: 20px !important;
     border-bottom: 1px solid var(--creme-escuro) !important;
     margin-bottom: 8px;
   }
   .nav-sidebar-brand img {
-    height: 32px;
-    width: auto;
-  }
-  .nav-sidebar-brand span {
-    font-family: 'Playfair Display', serif;
-    font-size: .95rem;
-    font-weight: 700;
-    color: var(--verde);
-    letter-spacing: .5px;
+    width: 100%;
+    max-width: 150px;
+    height: auto;
   }
 
   .nav-links li { width: 100%; }
@@ -207,19 +210,13 @@
     background: none;
   }
 
-  /* Linha 1: abas de dias */
+  /* Linha 1: abas de dias — quebram linha para não cortar */
   .prog-tabs {
     display: flex;
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
-    scrollbar-width: none;
-    flex-wrap: nowrap !important;
-    gap: 6px;
-    padding-bottom: 4px;
-    margin-bottom: 10px !important;
+    flex-wrap: wrap !important;
+    gap: 8px;
+    margin-bottom: 16px !important;
     width: 100%;
-    /* padding lateral para o último botão não ficar colado na borda */
-    padding-right: 4px;
   }
   .prog-tabs::-webkit-scrollbar { display: none; }
 
@@ -411,28 +408,47 @@
 }
 
 /* ═══════════════════════════════════════
-   TTS BAR — MOBILE (bottom center)
+   TTS BAR — MOBILE (dentro do cabeçalho, entre a logo e o menu)
 ═══════════════════════════════════════ */
-@media (max-width: 1024px) {
-  #tts-bar {
-    top: auto !important;
-    bottom: 20px; right: auto;
-    left: 50%; transform: translateX(-50%);
-    padding: 10px 16px;
-    gap: 10px;
+@media (max-width: 1025px) {
+  #navbar > #tts-bar {
+    position: static !important;
+    z-index: auto !important;
+    top: auto !important; bottom: auto !important;
+    left: auto !important; right: auto !important;
+    transform: none !important;
+    margin: 0 6px !important;
+    padding: 0 !important;
+    background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+    backdrop-filter: none !important;
+    border-radius: 0 !important;
+    flex: 0 0 auto;
   }
-  #tts-label { display: none; }
-  #tts-play-btn, #tts-stop-btn {
-    width: 44px !important; height: 44px !important;
-    font-size: 1.05rem !important;
+  #navbar > #tts-bar .tts-controls {
+    padding: 0 !important;
+    gap: 2px !important;
+    justify-content: center !important;
   }
-  #tts-speed {
+  #navbar > #tts-bar #tts-prev-btn,
+  #navbar > #tts-bar #tts-next-btn,
+  #navbar > #tts-bar #tts-stop-btn {
+    width: 32px !important; height: 32px !important;
+    font-size: .7rem !important;
+    color: var(--verde) !important;
+  }
+  #navbar > #tts-bar #tts-play-btn {
+    width: 36px !important; height: 36px !important;
     font-size: .8rem !important;
-    padding: 6px 10px !important;
+    background: var(--verde) !important; color: #fff !important;
   }
-  .tts-sep { display: none; }
-  .lang-flags { display: none !important; }
-  #tts-lang-btn { display: flex !important; align-items: center; justify-content: center; }
+  #navbar > #tts-bar .tts-divider,
+  #navbar > #tts-bar #tts-speed,
+  #navbar > #tts-bar #tts-minimize-btn,
+  #navbar > #tts-bar #tts-current-word {
+    display: none !important;
+  }
 }
 
 /* ═══════════════════════════════════════
