@@ -7,7 +7,6 @@
 <link rel="icon" type="image/png" href="img/logo-enpemt-nav.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=DM+Sans:wght@300;400;500;600&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="mobile.css">
 <style>
   :root {
     --verde: #2D6A4F;
@@ -583,17 +582,51 @@
   /* ─── HOSPEDAGEM ─── */
   #hospedagem { background: var(--branco); }
   .hotel-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 24px; margin-top: 40px; }
-  @media (min-width: 900px) { .hotel-grid { grid-template-columns: repeat(4, 1fr); } }
+  @media (min-width: 900px) { .hotel-grid { grid-template-columns: repeat(3, 1fr); } }
   .hotel-card {
     background: var(--creme); border-radius: 20px; padding: 28px;
     border: 1px solid var(--creme-escuro);
     transition: transform .3s, box-shadow .3s;
+    display: flex; flex-direction: column;
   }
   .hotel-card:hover { transform: translateY(-5px); box-shadow: 0 16px 40px rgba(0,0,0,.1); }
   .hotel-stars { font-size: 1.1rem; margin-bottom: 8px; color: var(--ouro); }
   .hotel-name { font-family: 'Playfair Display', serif; font-size: 1.1rem; font-weight: 700; color: var(--marrom); margin-bottom: 6px; }
   .hotel-dist { font-size: .8rem; color: var(--verde); font-weight: 600; margin-bottom: 10px; }
   .hotel-desc { font-size: .88rem; color: #666; line-height: 1.6; }
+  .hotel-addr { font-size: .78rem; color: #8a8a8a; line-height: 1.5; margin-top: 10px; }
+  .hotel-badge {
+    display: inline-block; align-self: flex-start; margin-top: 14px;
+    background: var(--ouro); color: #fff; border-radius: 999px;
+    padding: 6px 14px; font-size: .74rem; font-weight: 700; letter-spacing: .04em;
+  }
+  .hotel-link {
+    margin-top: 14px; align-self: flex-start;
+    font-size: .82rem; font-weight: 600; color: var(--verde);
+    text-decoration: none; border-bottom: 1px solid currentColor;
+    transition: opacity .2s;
+  }
+  .hotel-link:hover { opacity: .7; }
+  .hotel-spacer { flex: 1; }
+  .hosp-hint { margin-top: 28px; font-size: .85rem; color: #999; }
+  .hotel-card[data-mapa] { cursor: pointer; }
+  .hotel-card[data-mapa]:focus-visible { outline: 3px solid var(--ouro); outline-offset: 3px; }
+  .hotel-card[aria-pressed="true"] {
+    border-color: var(--ouro);
+    box-shadow: inset 0 0 0 2px var(--ouro), 0 12px 32px rgba(0,0,0,.10);
+  }
+  .hotel-card[aria-pressed="true"] .hotel-name { color: var(--verde); }
+  .hosp-mapa { margin-top: 40px; }
+  .hosp-mapa-reset {
+    margin-top: 14px; padding: 8px 16px; cursor: pointer;
+    background: transparent; border: 1px solid var(--creme-escuro);
+    border-radius: 999px; font: inherit; font-size: .82rem; font-weight: 600;
+    color: var(--marrom); transition: background .2s, border-color .2s;
+  }
+  .hosp-mapa-reset:hover { background: var(--creme); border-color: var(--ouro); }
+  .hosp-mapa .mapa-frame iframe { height: 340px; }
+  .hosp-mapa-cap { margin-top: 12px; font-size: .85rem; color: #888; line-height: 1.6; }
+  .hosp-mapa-cap strong { color: var(--marrom); }
 
   /* ─── INSCRIÇÕES ─── */
   #inscricoes {
@@ -996,6 +1029,513 @@
   #tts-lang-btn:hover { background: rgba(255,255,255,.25); }
 
 
+
+  /* ══════════════════════════════════════════════════════════════════════
+     RESPONSIVO — antes em mobile.css, incorporado aqui para o site ser um
+     arquivo unico. Fica DEPOIS das regras acima de proposito: e a ordem que
+     faz estas regras vencerem o desempate de especificidade.
+     ══════════════════════════════════════════════════════════════════════ */
+  /* ─── MOBILE.CSS — XXVI ENPEMT 2026 ─── */
+
+  /* ═══════════════════════════════════════
+     NAV — HAMBURGER MOBILE
+  ═══════════════════════════════════════ */
+  .nav-menu-btn {
+    display: none;
+    flex-direction: column;
+    gap: 5px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 8px;
+    z-index: 200;
+  }
+  .nav-menu-btn span {
+    width: 24px;
+    height: 2px;
+    background: var(--verde);
+    transition: all .3s;
+    display: block;
+    border-radius: 2px;
+  }
+  .nav-menu-btn.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+  .nav-menu-btn.open span:nth-child(2) { opacity: 0; }
+  .nav-menu-btn.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+  .nav-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,.45);
+    z-index: 140;
+  }
+  .nav-overlay.active { display: block; }
+
+  @media (max-width: 1025px) {
+    /* Reset sidebar → top bar (celular + tablet) */
+    body { padding-left: 0 !important; }
+    #progress-bar { left: 0 !important; }
+
+    nav {
+      width: 100% !important; height: auto !important;
+      flex-direction: row !important;
+      align-items: center !important; justify-content: space-between !important;
+      padding: 12px 20px !important;
+      border-right: none !important;
+      border-bottom: 1px solid var(--creme-escuro) !important;
+      overflow-y: visible !important;
+      box-shadow: none !important;
+      z-index: 155 !important;
+    }
+
+    .nav-brand {
+      flex-direction: row !important; align-items: center !important;
+      padding: 0 !important; border-bottom: none !important;
+      margin-bottom: 0 !important; gap: 10px !important;
+    }
+
+    .nav-logo { height: 32px !important; }
+    .nav-brand .nav-logo-full { height: 36px !important; width: auto !important; max-width: none !important; }
+
+    /* Logos de apoio (UBAM / UFMG / Música): só dentro do menu expansível,
+       nunca soltas no cabeçalho. */
+    nav > .nav-brands { display: none !important; }
+    .nav-links .nav-brands { display: block !important; margin-top: 14px; }
+    .nav-links .nav-ubam { margin-top: 0; padding-top: 0; border-top: none; }
+
+    /* Alvo de toque de 44x44 (minimo iOS/Android). O botao desenha so 24x18
+       de risquinhos; o resto e area clicavel. */
+    .nav-menu-btn {
+      display: flex !important; position: relative !important;
+      top: auto !important; left: auto !important; z-index: 200 !important;
+      align-items: center !important; justify-content: center !important;
+      min-width: 44px !important; min-height: 44px !important;
+      margin-right: -8px !important; /* compensa a folga extra na borda */
+      -webkit-tap-highlight-color: rgba(45,106,79,.15);
+      touch-action: manipulation;
+    }
+
+    .nav-lang-selector { display: none !important; }
+
+    .nav-lang-selector-mobile {
+      display: list-item !important;
+      border-top: 1px solid var(--creme-escuro) !important;
+      padding: 16px 0 0 0 !important;
+      margin-top: 16px !important;
+    }
+
+    .nav-lang-selector-mobile .nav-lang-label {
+      display: block;
+      font-size: .7rem;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      color: var(--marrom);
+      opacity: .7;
+      margin-bottom: 12px;
+      padding: 0;
+    }
+
+    .nav-lang-selector-mobile .nav-lang-flags {
+      display: flex;
+      flex-direction: row;
+      gap: 8px;
+      padding: 0;
+    }
+
+    .nav-links {
+      display: flex !important;
+      flex-direction: column;
+      position: fixed;
+      top: 0; left: 0;
+      height: 100dvh;
+      width: min(280px, 85vw);
+      background: var(--branco);
+      padding: 20px 28px 40px;
+      box-shadow: 4px 0 40px rgba(0,0,0,.15);
+      transform: translateX(-110%);
+      transition: transform .32s cubic-bezier(.4,0,.2,1);
+      z-index: 160;
+      gap: 0;
+      overflow-y: auto;
+      scrollbar-width: none;
+      -ms-overflow-style: none;
+    }
+    .nav-links::-webkit-scrollbar { display: none; }
+    .nav-links.mobile-open { transform: translateX(0); }
+
+    /* Logo dentro do sidebar — igual ao cabeçalho (PC) */
+    .nav-sidebar-brand {
+      display: flex !important;
+      justify-content: center !important;
+      align-items: center !important;
+      padding-bottom: 20px !important;
+      border-bottom: 1px solid var(--creme-escuro) !important;
+      margin-bottom: 8px;
+    }
+    .nav-sidebar-brand img {
+      width: 100%;
+      max-width: 150px;
+      height: auto;
+    }
+
+    .nav-links li { width: 100%; }
+    .nav-links a {
+      font-size: .95rem;
+      padding: 14px 0;
+      border-bottom: 1px solid var(--creme-escuro);
+      display: block;
+      width: 100%;
+      letter-spacing: .5px;
+    }
+    .nav-links li:last-child a {
+      margin-top: 20px;
+      border-bottom: none;
+      text-align: center;
+      padding: 13px 0;
+      border-radius: 50px;
+    }
+  }
+
+  /* ═══════════════════════════════════════
+     HERO — IMAGEM SEM CORTE NO MOBILE
+  ═══════════════════════════════════════ */
+  @media (max-width: 768px) {
+    /*
+     * SOLUÇÃO TEMPORÁRIA: mostra o lado esquerdo da imagem (onde está o texto)
+     * sem barras pretas. Quando tiver a versão portrait/quadrada da imagem,
+     * salve como img/hero-mobile.png e descomente o bloco abaixo.
+     */
+
+     .hero-bg {
+        background-image: url('img/hero-mobile.png') !important;
+        background-size: cover !important;
+       background-position: -520px center !important;
+      }
+  
+  }
+
+  /* ═══════════════════════════════════════
+     HERO — CONTEÚDO (TEXTO/PILLS)
+  ═══════════════════════════════════════ */
+  @media (max-width: 768px) {
+    .hero-content { padding: 88px 20px 48px; }
+    .hero-meta { gap: 10px; margin-bottom: 32px; }
+    .hero-pill { font-size: .82rem; padding: 9px 16px; }
+  }
+  @media (max-width: 480px) {
+    .hero-content { padding: 76px 16px 36px; }
+    .hero-meta { flex-direction: column; align-items: center; }
+    .hero-pill { width: 100%; justify-content: center; }
+    .hero-eyebrow { font-size: .68rem; }
+  }
+
+  /* ═══════════════════════════════════════
+     SECTIONS GERAIS
+  ═══════════════════════════════════════ */
+  @media (max-width: 768px) {
+    section { padding: 56px 20px; }
+    .section-title { font-size: clamp(1.6rem, 6vw, 2.4rem); }
+  }
+  @media (max-width: 480px) {
+    section { padding: 44px 16px; }
+  }
+
+  /* ═══════════════════════════════════════
+     PROGRAMAÇÃO — TABS HORIZONTAIS SCROLLÁVEIS
+     Correções críticas:
+     1. Remover margin negativo (rompe overflow-x)
+     2. Remover position:sticky (conflita com overflow em alguns browsers)
+     3. margin-left:auto no btn-download quebra scroll → zeramos aqui
+  ═══════════════════════════════════════ */
+  @media (max-width: 768px) {
+    /* Limpar o wrapper — sem margem negativa nem sticky */
+    .prog-header {
+      position: static;
+      margin: 0;
+      padding: 0;
+      background: none;
+    }
+
+    /* Linha 1: abas de dias — quebram linha para não cortar */
+    .prog-tabs {
+      display: flex;
+      flex-wrap: wrap !important;
+      gap: 8px;
+      margin-bottom: 16px !important;
+      width: 100%;
+    }
+    .prog-tabs::-webkit-scrollbar { display: none; }
+
+    /* Filtro de atividades */
+    .prog-filtro { flex-wrap: wrap; gap: 8px; margin-bottom: 20px; }
+    .prog-filtro select { min-width: 0; width: 100%; border-radius: 12px; }
+
+    /* Botões de dias — texto curto no mobile */
+    .tab-dia { display: none; }
+    .tab-btn {
+      white-space: nowrap;
+      flex-shrink: 0;
+      padding: 8px 12px;
+      font-size: .8rem;
+      min-height: 40px;
+      border-radius: 20px;
+    }
+
+    /* FIX CRÍTICO: margin-left:auto em flex com overflow-x:auto
+       empurra o botão para o infinito. Substituímos por margem fixa. */
+    .prog-tabs .btn-download-pdf {
+      margin-left: 8px !important;
+      flex-shrink: 0;
+    }
+
+    .btn-download-pdf {
+      font-size: .78rem;
+      padding: 8px 14px;
+    }
+
+    /* Timeline */
+    .timeline {
+      padding-left: 22px;
+      gap: 22px;
+    }
+    .tl-item::before { left: -28px; }
+  }
+
+  /* ═══════════════════════════════════════
+     RESTAURANTES — TABS SCROLLÁVEIS
+  ═══════════════════════════════════════ */
+  @media (max-width: 768px) {
+    .rest-tabs {
+      display: flex;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none;
+      white-space: nowrap;
+      flex-wrap: nowrap;
+      gap: 6px;
+      width: 100%;
+    }
+    .rest-tabs::-webkit-scrollbar { display: none; }
+    .rest-tab { white-space: nowrap; flex-shrink: 0; }
+  }
+
+  /* ═══════════════════════════════════════
+     MAPA TABS
+  ═══════════════════════════════════════ */
+  @media (max-width: 768px) {
+    .mapa-frame iframe, .hosp-mapa .mapa-frame iframe { height: 260px; }
+    .mapa-tabs {
+      display: flex;
+      overflow-x: auto;
+      scrollbar-width: none;
+      white-space: nowrap;
+      flex-wrap: nowrap;
+      width: 100%;
+    }
+    .mapa-tabs::-webkit-scrollbar { display: none; }
+    .mapa-tab { white-space: nowrap; flex-shrink: 0; }
+  }
+
+  /* ═══════════════════════════════════════
+     SOBRE — card 8-10 outubro
+  ═══════════════════════════════════════ */
+  @media (max-width: 768px) {
+    .sobre-card-bg { padding: 24px 20px; }
+    .card-brasil-bg { width: 75%; right: -20px; opacity: .18; }
+    .date-big { font-size: 2.4rem; }
+    .sobre-logo-grande { display: none; }
+    .sobre-grid { grid-template-columns: 1fr !important; }
+    .sobre-info-list { font-size: .85rem; }
+    .sobre-info-list li { padding: 6px 0; }
+  }
+
+  /* ═══════════════════════════════════════
+     BH
+  ═══════════════════════════════════════ */
+  @media (max-width: 600px) {
+    .bh-grid { grid-template-columns: 1fr !important; }
+    .bh-card-img { height: 160px; }
+  }
+
+  /* ═══════════════════════════════════════
+     HIPPIE BOX
+  ═══════════════════════════════════════ */
+  @media (max-width: 600px) {
+    .hippie-box { flex-direction: column; gap: 10px; padding: 20px 18px; }
+  }
+
+  /* ═══════════════════════════════════════
+     GASTRONOMIA GRID
+  ═══════════════════════════════════════ */
+  @media (max-width: 480px) {
+    .comida-grid { grid-template-columns: 1fr 1fr; gap: 12px; }
+    .comida-item { padding: 20px 14px; }
+    .comida-emoji { font-size: 2.2rem; }
+  }
+
+  /* ═══════════════════════════════════════
+     LOCAL
+  ═══════════════════════════════════════ */
+  @media (max-width: 768px) {
+    /* Card principal — coluna única */
+    .local-hero {
+      grid-template-columns: 1fr !important;
+      padding: 28px 22px;
+      gap: 20px;
+    }
+    .local-hero h3 { font-size: 1.35rem; }
+
+    /* Fotos — coluna única */
+    .local-fotos { grid-template-columns: 1fr; gap: 12px; margin: 24px 0; }
+    .local-foto { aspect-ratio: 16/9; }
+
+    /* Foto wide — legenda não sobrepõe o aviso */
+    .local-foto-wide > figcaption {
+      position: relative;
+      bottom: auto;
+      background: rgba(0,0,0,.65);
+      padding: 10px 16px;
+    }
+    .local-foto-nota {
+      border-radius: 0 0 12px 12px;
+      font-size: .82rem;
+      padding: 12px 16px;
+    }
+  }
+
+  /* ═══════════════════════════════════════
+     INSCRIÇÕES — PREÇO CARDS
+  ═══════════════════════════════════════ */
+  @media (max-width: 600px) {
+    .preco-grid { grid-template-columns: 1fr; }
+    .preco-card { padding: 24px 20px; }
+    .preco-valor { font-size: 2.4rem; }
+    .inscricao-como { flex-direction: column; }
+    .inscricao-passo { border-right: none; border-bottom: 1px solid rgba(255,255,255,.1); flex-direction: row; text-align: left; }
+    .inscricao-passo:last-child { border-bottom: none; }
+  }
+
+  /* ═══════════════════════════════════════
+     SUBMISSÃO — TIPOS
+  ═══════════════════════════════════════ */
+  @media (max-width: 600px) {
+    .sub-tipos { grid-template-columns: 1fr; }
+    .sub-form-area.active { padding: 22px 16px; }
+    .form-normas { padding: 14px 16px; }
+  }
+
+  /* ═══════════════════════════════════════
+     HOSPEDAGEM
+  ═══════════════════════════════════════ */
+  @media (max-width: 600px) {
+    .hotel-grid { grid-template-columns: 1fr; }
+  }
+
+  /* ═══════════════════════════════════════
+     BOTÕES — touch targets mínimos (44px)
+  ═══════════════════════════════════════ */
+  @media (max-width: 768px) {
+    .btn-primary, .btn-secondary {
+      min-height: 50px;
+      padding: 14px 28px;
+      font-size: .95rem;
+    }
+    .btn-form {
+      min-height: 48px;
+      width: 100%;
+      text-align: center;
+    }
+    .btn-inscricao-finalizar {
+      padding: 15px 40px;
+      min-height: 52px;
+      font-size: .95rem;
+    }
+    .hero-cta { gap: 12px; }
+  }
+
+  /* ═══════════════════════════════════════
+     TTS BAR — MOBILE (dentro do cabeçalho, entre a logo e o menu)
+  ═══════════════════════════════════════ */
+  @media (max-width: 1025px) {
+    #navbar > #tts-bar {
+      position: static !important;
+      z-index: auto !important;
+      top: auto !important; bottom: auto !important;
+      left: auto !important; right: auto !important;
+      transform: none !important;
+      margin: 0 6px !important;
+      padding: 0 !important;
+      background: transparent !important;
+      border: none !important;
+      box-shadow: none !important;
+      backdrop-filter: none !important;
+      border-radius: 0 !important;
+      flex: 0 0 auto;
+    }
+    #navbar > #tts-bar .tts-controls {
+      padding: 0 !important;
+      gap: 2px !important;
+      justify-content: center !important;
+    }
+    #navbar > #tts-bar #tts-prev-btn,
+    #navbar > #tts-bar #tts-next-btn,
+    #navbar > #tts-bar #tts-stop-btn {
+      width: 32px !important; height: 32px !important;
+      font-size: .7rem !important;
+      color: var(--verde) !important;
+    }
+    #navbar > #tts-bar #tts-play-btn {
+      width: 36px !important; height: 36px !important;
+      font-size: .8rem !important;
+      background: var(--verde) !important; color: #fff !important;
+    }
+    #navbar > #tts-bar .tts-divider,
+    #navbar > #tts-bar #tts-speed,
+    #navbar > #tts-bar #tts-minimize-btn,
+    #navbar > #tts-bar #tts-current-word {
+      display: none !important;
+    }
+  }
+
+  /* ═══════════════════════════════════════
+     FOOTER
+  ═══════════════════════════════════════ */
+  @media (max-width: 768px) {
+    footer { padding: 44px 20px 24px; }
+    .footer-bottom {
+      flex-direction: column;
+      text-align: center;
+      gap: 6px;
+      font-size: .75rem;
+    }
+  }
+
+
+  /* ═══════════════════════════════════════
+     UTILITÁRIOS MOBILE
+  ═══════════════════════════════════════ */
+  @media (max-width: 768px) {
+    .hero-wave { bottom: -2px; }
+  }
+
+  /* ═══════════════════════════════════════
+     SCROLLBAR ESTILIZADA
+  ═══════════════════════════════════════ */
+  @media (max-width: 1025px) {
+    ::-webkit-scrollbar { width: 3px; }
+    ::-webkit-scrollbar-track { background: transparent; }
+    ::-webkit-scrollbar-thumb {
+      background: rgba(45,106,79,.25);
+      border-radius: 99px;
+    }
+    ::-webkit-scrollbar-thumb:active {
+      background: rgba(45,106,79,.5);
+    }
+    * { scrollbar-width: thin; scrollbar-color: rgba(45,106,79,.25) transparent; }
+    .prog-tabs, .rest-tabs, .mapa-tabs { scrollbar-width: none; }
+    .prog-tabs::-webkit-scrollbar, .rest-tabs::-webkit-scrollbar, .mapa-tabs::-webkit-scrollbar { display: none; }
+  }
 </style>
 </head>
 <body>
@@ -1743,20 +2283,56 @@ Os aplicativos de corrida, como Uber e 99 funcionam bem, além dos taxis tradici
     <span class="section-label reveal" data-i18n="hosp.label">Onde Ficar</span>
     <h2 class="section-title reveal" data-i18n="hosp.title">Hospedagem <em>recomendada</em></h2>
     <div class="divider reveal"></div>
-    <p class="section-text reveal" data-i18n="hosp.intro">Sugestões de hotéis próximos ao campus da UFMG ou bem conectados por transporte. BH tem ótimas opções para todos os orçamentos!</p>
+    <p class="section-text reveal" data-i18n="hosp.intro">A comissão organizadora firmou parceria com estabelecimentos na região da Pampulha, próximos ao campus da UFMG. Identifique-se como participante do 26º ENPEMT ao fazer a reserva.</p>
+
+    <p class="hosp-hint reveal" data-i18n="hosp.hint">👆 Clique em um card para ver no mapa o trajeto a pé até a Escola de Música.</p>
 
     <div class="hotel-grid">
-      <div class="hotel-card reveal"><div class="hotel-stars">★★★★★</div><div class="hotel-name" data-i18n="hosp.hotel1.nome">Hotel Ouro Minas Palace</div><div class="hotel-dist" data-i18n="hosp.hotel1.dist">📍 ~8 km da UFMG</div><div class="hotel-desc" data-i18n="hosp.hotel1.desc">Um dos mais tradicionais de BH, com spa, piscina e gastronomia mineira de alto nível.</div></div>
+      <div class="hotel-card reveal" data-mapa="h1">
+        <div class="hotel-stars">🏨</div>
+        <div class="hotel-name" data-i18n="hosp.hotel1.nome">BH Jaraguá Hotel</div>
+        <div class="hotel-dist" data-i18n="hosp.hotel1.dist">📍 Indaiá · 14 min a pé do evento (1,0 km)</div>
+        <div class="hotel-desc" data-i18n="hosp.hotel1.desc">Hotel parceiro do evento, a poucos minutos da Escola de Música. Desconto exclusivo para participantes em reservas feitas pelo site oficial.</div>
+        <div class="hotel-addr" data-i18n="hosp.hotel1.addr">R. Boaventura, 987 — Indaiá, Belo Horizonte/MG · CEP 31270-020 · (31) 3232-9700</div>
+        <div class="hotel-spacer"></div>
+        <span class="hotel-badge" data-i18n="hosp.hotel1.badge">6% OFF · código MUSICOTERAPIA</span>
+        <a class="hotel-link" href="https://www.bhjaraguahotel.com.br/" target="_blank" rel="noopener" data-i18n="hosp.hotel1.link">Reservar no site oficial →</a>
+      </div>
 
-      <div class="hotel-card reveal"><div class="hotel-stars">★★★★</div><div class="hotel-name" data-i18n="hosp.hotel2.nome">Ibis Styles Savassi</div><div class="hotel-dist" data-i18n="hosp.hotel2.dist">📍 Savassi · ~20 min da UFMG</div><div class="hotel-desc" data-i18n="hosp.hotel2.desc">Ótimo custo-benefício no bairro mais agitado de BH. Fácil acesso por transporte público.</div></div>
-      <div class="hotel-card reveal"><div class="hotel-stars">★★★</div><div class="hotel-name" data-i18n="hosp.hotel3.nome">Hotel BH Plaza</div><div class="hotel-dist" data-i18n="hosp.hotel3.dist">📍 Centro · ~25 min da UFMG</div><div class="hotel-desc" data-i18n="hosp.hotel3.desc">Econômico e bem localizado no centro histórico. Acesso facilitado à linha de metrô.</div></div>
-      <div class="hotel-card reveal"><div class="hotel-stars">🏠</div><div class="hotel-name" data-i18n="hosp.hotel4.nome">Airbnb — Pampulha</div><div class="hotel-dist" data-i18n="hosp.hotel4.dist">📍 Vizinho à UFMG</div><div class="hotel-desc" data-i18n="hosp.hotel4.desc">Diversas opções de apartamentos e casas no bairro da Pampulha, a 5–10 minutos a pé. Ideal para grupos!</div></div>
+      <div class="hotel-card reveal" data-mapa="h2">
+        <div class="hotel-stars">🏨</div>
+        <div class="hotel-name" data-i18n="hosp.hotel2.nome">Pousada Sossego da Pampulha</div>
+        <div class="hotel-dist" data-i18n="hosp.hotel2.dist">📍 São Luiz · 19 min a pé do evento (1,4 km)</div>
+        <div class="hotel-desc" data-i18n="hosp.hotel2.desc">Pousada parceira do evento, com suítes individual, casal/duplo e triplo e café da manhã incluso. Valor promocional para estadias de duas diárias ou mais.</div>
+        <div class="hotel-addr" data-i18n="hosp.hotel2.addr">Av. Cel. José Dias Bicalho, 1258 — São Luiz, Belo Horizonte/MG · CEP 31275-050 · (31) 3439-3250</div>
+        <div class="hotel-spacer"></div>
+        <span class="hotel-badge" data-i18n="hosp.hotel2.badge">Promoção a partir de 2 diárias</span>
+        <a class="hotel-link" href="https://www.sossegodapampulha.com.br/" target="_blank" rel="noopener" data-i18n="hosp.hotel2.link">Reservar no site oficial →</a>
+      </div>
 
+      <div class="hotel-card reveal" data-mapa="h3">
+        <div class="hotel-stars">🏠</div>
+        <div class="hotel-name" data-i18n="hosp.hotel3.nome">Airbnb — Pampulha</div>
+        <div class="hotel-dist" data-i18n="hosp.hotel3.dist">📍 Vizinho à UFMG</div>
+        <div class="hotel-desc" data-i18n="hosp.hotel3.desc">Diversas opções de apartamentos e casas no bairro da Pampulha, a 5–10 minutos a pé. Ideal para grupos!</div>
+        <div class="hotel-spacer"></div>
+      </div>
+    </div>
+
+    <div class="hosp-mapa reveal" id="hosp-mapa">
+      <div class="mapa-frame">
+        <iframe id="hosp-mapa-frame"
+          src="https://maps.google.com/maps?saddr=BH+Jaragu%C3%A1+Hotel,+Belo+Horizonte&amp;daddr=Escola+de+M%C3%BAsica+da+UFMG,+Belo+Horizonte+to:Pousada+Sossego+da+Pampulha,+Belo+Horizonte&amp;hl=pt-BR&amp;output=embed"
+          title="Mapa com o BH Jaraguá Hotel, a Escola de Música da UFMG e a Pousada Sossego da Pampulha"
+          loading="lazy" allowfullscreen=""></iframe>
+      </div>
+      <button type="button" id="hosp-mapa-reset" class="hosp-mapa-reset" hidden data-i18n="hosp.mapa.reset">↺ Ver os três pontos</button>
+      <p class="hosp-mapa-cap" data-i18n="hosp.mapa.cap">📍 Os três pontos marcados: <strong>BH Jaraguá Hotel</strong> (a leste), <strong>Escola de Música da UFMG</strong> — local do evento, ao centro — e <strong>Pousada Sossego da Pampulha</strong> (a oeste). Cada hospedagem fica a cerca de 2 km do evento.</p>
     </div>
 
     <div style="margin-top: 32px; padding: 24px; background: var(--creme); border-radius: 16px; border-left: 4px solid var(--ouro);">
       <p style="font-size:.9rem; color: var(--marrom);" data-i18n="hosp.dica">
-        💡 <strong>Dica:</strong> O evento acontece nos dias 8–10/out, véspera do feriado de 12/10. Reserve com antecedência pois o período é muito procurado em BH! O organizador pode negociar tarifas coletivas com hotéis próximos — aguarde comunicado da comissão organizadora.
+        💡 <strong>Dica:</strong> O evento acontece nos dias 8–10/out, véspera do feriado de 12/10. Reserve com antecedência pois o período é muito procurado em BH! As tarifas e condições são definidas pelos próprios estabelecimentos e podem sofrer alteração — confirme os valores diretamente com o hotel no momento da reserva.
       </p>
     </div>
   </div>
@@ -2165,16 +2741,24 @@ Os aplicativos de corrida, como Uber e 99 funcionam bem, além dos taxis tradici
       'gastro.tutu.nome':'Tutu à Mineira','gastro.tutu.desc':'Creme espesso de feijão com torresmo. Acompanhamento clássico nos restaurantes tradicionais.',
       'gastro.doce.nome':'Doce de Leite','gastro.doce.desc':'O doce que define Minas. Artesanal, cremoso, de colher. Perfeito com queijo coalho.',
       'gastro.cafe.nome':'Café com Pão de Queijo','gastro.cafe.desc':'O café da manhã mineiro por excelência. Café forte com pão de queijo quentinho.',
-      'hosp.intro':'Sugestões de hotéis próximos ao campus da UFMG ou bem conectados por transporte. BH tem ótimas opções para todos os orçamentos!',
-      'hosp.hotel1.nome':'Hotel Ouro Minas Palace','hosp.hotel1.dist':'📍 ~8 km da UFMG',
-      'hosp.hotel1.desc':'Um dos mais tradicionais de BH, com spa, piscina e gastronomia mineira de alto nível.',
-      'hosp.hotel2.nome':'Ibis Styles Savassi','hosp.hotel2.dist':'📍 Savassi · ~20 min da UFMG',
-      'hosp.hotel2.desc':'Ótimo custo-benefício no bairro mais agitado de BH. Fácil acesso por transporte público.',
-      'hosp.hotel3.nome':'Hotel BH Plaza','hosp.hotel3.dist':'📍 Centro · ~25 min da UFMG',
-      'hosp.hotel3.desc':'Econômico e bem localizado no centro histórico. Acesso facilitado à linha de metrô.',
-      'hosp.hotel4.nome':'Airbnb — Pampulha','hosp.hotel4.dist':'📍 Vizinho à UFMG',
-      'hosp.hotel4.desc':'Diversas opções de apartamentos e casas no bairro da Pampulha, a 5–10 minutos a pé. Ideal para grupos!',
-      'hosp.dica':'💡 <strong>Dica:</strong> O evento acontece nos dias 8–10/out, véspera do feriado de 12/10. Reserve com antecedência pois o período é muito procurado em BH! O organizador pode negociar tarifas coletivas com hotéis próximos — aguarde comunicado da comissão organizadora.',
+      'hosp.intro':'A comissão organizadora firmou parceria com estabelecimentos na região da Pampulha, próximos ao campus da UFMG. Identifique-se como participante do 26º ENPEMT ao fazer a reserva.',
+      'hosp.hotel1.nome':'BH Jaraguá Hotel','hosp.hotel1.dist':'📍 Indaiá · 14 min a pé do evento (1,0 km)',
+      'hosp.hotel1.desc':'Hotel parceiro do evento, a poucos minutos da Escola de Música. Desconto exclusivo para participantes em reservas feitas pelo site oficial.',
+      'hosp.hotel1.addr':'R. Boaventura, 987 — Indaiá, Belo Horizonte/MG · CEP 31270-020 · (31) 3232-9700',
+      'hosp.hotel1.badge':'6% OFF · código MUSICOTERAPIA','hosp.hotel1.link':'Reservar no site oficial →',
+      'hosp.hotel2.nome':'Pousada Sossego da Pampulha','hosp.hotel2.dist':'📍 São Luiz · 19 min a pé do evento (1,4 km)',
+      'hosp.hotel2.desc':'Pousada parceira do evento, com suítes individual, casal/duplo e triplo e café da manhã incluso. Valor promocional para estadias de duas diárias ou mais.',
+      'hosp.hotel2.addr':'Av. Cel. José Dias Bicalho, 1258 — São Luiz, Belo Horizonte/MG · CEP 31275-050 · (31) 3439-3250',
+      'hosp.hotel2.badge':'Promoção a partir de 2 diárias','hosp.hotel2.link':'Reservar no site oficial →',
+      'hosp.hotel3.nome':'Airbnb — Pampulha','hosp.hotel3.dist':'📍 Vizinho à UFMG',
+      'hosp.hotel3.desc':'Diversas opções de apartamentos e casas no bairro da Pampulha, a 5–10 minutos a pé. Ideal para grupos!',
+      'hosp.hint':'👆 Clique em um card para ver no mapa o trajeto a pé até a Escola de Música.',
+      'hosp.mapa.reset':'↺ Ver os três pontos',
+      'hosp.mapa.cap.h1':'🚶 Trajeto a pé do <strong>BH Jaraguá Hotel</strong> até a Escola de Música: <strong>1,0 km · cerca de 14 min</strong>. O percurso entra pelo campus da UFMG.',
+      'hosp.mapa.cap.h2':'🚶 Trajeto a pé da <strong>Pousada Sossego da Pampulha</strong> até a Escola de Música: <strong>1,4 km · cerca de 19 min</strong>. O percurso entra pelo campus da UFMG.',
+      'hosp.mapa.cap.h3':'📍 <strong>Região da Pampulha</strong> — o bairro em volta do campus da UFMG, onde ficam as opções de aluguel por temporada. Não é um endereço único.',
+      'hosp.mapa.cap':'📍 Os três pontos marcados: <strong>BH Jaraguá Hotel</strong> (a leste), <strong>Escola de Música da UFMG</strong> — local do evento, ao centro — e <strong>Pousada Sossego da Pampulha</strong> (a oeste). Cada hospedagem fica a cerca de 2 km do evento.',
+      'hosp.dica':'💡 <strong>Dica:</strong> O evento acontece nos dias 8–10/out, véspera do feriado de 12/10. Reserve com antecedência pois o período é muito procurado em BH! As tarifas e condições são definidas pelos próprios estabelecimentos e podem sofrer alteração — confirme os valores diretamente com o hotel no momento da reserva.',
       'insc.intro':'Garanta sua vaga no maior encontro de pesquisa em musicoterapia do Brasil. Clique na categoria que melhor se aplica a você para acessar o formulário de inscrição:',
       'insc.passo1':'Clique na sua categoria acima e preencha o formulário de inscrição com seus dados',
       'insc.passo2':'Realize o pagamento via <strong>PIX</strong> e envie o comprovante diretamente no formulário',
@@ -2325,16 +2909,24 @@ Os aplicativos de corrida, como Uber e 99 funcionam bem, além dos taxis tradici
       'gastro.tutu.nome':'Tutu à Mineira','gastro.tutu.desc':'Thick bean cream with pork crackling. Classic side dish in traditional restaurants.',
       'gastro.doce.nome':'Doce de Leite','gastro.doce.desc':'The sweet that defines Minas. Artisanal, creamy, spoon-worthy. Perfect with curd cheese.',
       'gastro.cafe.nome':'Coffee with Pão de Queijo','gastro.cafe.desc':'The quintessential Minas breakfast. Strong coffee with warm cheese bread.',
-      'hosp.intro':'Suggestions for hotels close to the UFMG campus or well connected by public transport. BH has great options for every budget!',
-      'hosp.hotel1.nome':'Hotel Ouro Minas Palace','hosp.hotel1.dist':'📍 ~8 km from UFMG',
-      'hosp.hotel1.desc':'One of the most traditional in BH, with spa, pool and high-end Minas gastronomy.',
-      'hosp.hotel2.nome':'Ibis Styles Savassi','hosp.hotel2.dist':'📍 Savassi · ~20 min from UFMG',
-      'hosp.hotel2.desc':'Excellent value in BH\'s liveliest neighbourhood. Easy access by public transport.',
-      'hosp.hotel3.nome':'Hotel BH Plaza','hosp.hotel3.dist':'📍 Downtown · ~25 min from UFMG',
-      'hosp.hotel3.desc':'Budget-friendly and well-located in the historic centre. Easy access to the metro line.',
-      'hosp.hotel4.nome':'Airbnb — Pampulha','hosp.hotel4.dist':'📍 Next to UFMG',
-      'hosp.hotel4.desc':'Various apartment and house options in the Pampulha neighbourhood, 5–10 minutes on foot. Ideal for groups!',
-      'hosp.dica':'💡 <strong>Tip:</strong> The event takes place on 8–10/Oct, the eve of the 12/10 holiday. Book early as the period is very popular in BH! The organizer may negotiate group rates with nearby hotels — await communication from the organizing committee.',
+      'hosp.intro':'The organizing committee has partnered with venues in the Pampulha area, close to the UFMG campus. Identify yourself as a 26th ENPEMT attendee when booking.',
+      'hosp.hotel1.nome':'BH Jaraguá Hotel','hosp.hotel1.dist':'📍 Indaiá · 14 min walk to the venue (1.0 km)',
+      'hosp.hotel1.desc':'Official partner hotel, a few minutes from the School of Music. Exclusive discount for attendees on bookings made through the official website.',
+      'hosp.hotel1.addr':'R. Boaventura, 987 — Indaiá, Belo Horizonte/MG · ZIP 31270-020 · +55 31 3232-9700',
+      'hosp.hotel1.badge':'6% OFF · code MUSICOTERAPIA','hosp.hotel1.link':'Book on the official website →',
+      'hosp.hotel2.nome':'Pousada Sossego da Pampulha','hosp.hotel2.dist':'📍 São Luiz · 19 min walk to the venue (1.4 km)',
+      'hosp.hotel2.desc':'Official partner guesthouse, with single, double/couple and triple suites and breakfast included. Promotional rate for stays of two nights or more.',
+      'hosp.hotel2.addr':'Av. Cel. José Dias Bicalho, 1258 — São Luiz, Belo Horizonte/MG · ZIP 31275-050 · +55 31 3439-3250',
+      'hosp.hotel2.badge':'Special rate from 2 nights','hosp.hotel2.link':'Book on the official website →',
+      'hosp.hotel3.nome':'Airbnb — Pampulha','hosp.hotel3.dist':'📍 Next to UFMG',
+      'hosp.hotel3.desc':'Various apartment and house options in the Pampulha neighbourhood, 5–10 minutes on foot. Ideal for groups!',
+      'hosp.hint':'👆 Tap a card to see the walking route to the School of Music on the map.',
+      'hosp.mapa.reset':'↺ Show all three points',
+      'hosp.mapa.cap.h1':'🚶 Walking route from <strong>BH Jaraguá Hotel</strong> to the School of Music: <strong>1.0 km · about 14 min</strong>. The route goes through the UFMG campus.',
+      'hosp.mapa.cap.h2':'🚶 Walking route from <strong>Pousada Sossego da Pampulha</strong> to the School of Music: <strong>1.4 km · about 19 min</strong>. The route goes through the UFMG campus.',
+      'hosp.mapa.cap.h3':'📍 <strong>Pampulha area</strong> — the neighbourhood around the UFMG campus, where the short-term rentals are. Not a single address.',
+      'hosp.mapa.cap':'📍 The three marked points: <strong>BH Jaraguá Hotel</strong> (east), <strong>School of Music — UFMG</strong>, the event venue, in the middle, and <strong>Pousada Sossego da Pampulha</strong> (west). Each is about 2 km from the venue.',
+      'hosp.dica':'💡 <strong>Tip:</strong> The event takes place on 8–10/Oct, the eve of the 12/10 holiday. Book early as the period is very popular in BH! Rates and conditions are set by the venues themselves and are subject to change — please confirm prices directly with the hotel when booking.',
       'insc.intro':'Secure your spot at Brazil\'s largest music therapy research meeting. Click on the category that best applies to you to access the registration form:',
       'insc.passo1':'Click on your category above and fill in the registration form with your details',
       'insc.passo2':'Make the payment via <strong>PIX</strong> and send the receipt directly in the form',
@@ -2485,16 +3077,24 @@ Os aplicativos de corrida, como Uber e 99 funcionam bem, além dos taxis tradici
       'gastro.tutu.nome':'Tutu à Mineira','gastro.tutu.desc':'Crema espesa de frijoles con chicharrón. Acompañamiento clásico en los restaurantes tradicionales.',
       'gastro.doce.nome':'Dulce de Leche','gastro.doce.desc':'El dulce que define Minas. Artesanal, cremoso, para comer con cuchara. Perfecto con queso fresco.',
       'gastro.cafe.nome':'Café con Pão de Queijo','gastro.cafe.desc':'El desayuno minero por excelencia. Café fuerte con panecillo de queso caliente.',
-      'hosp.intro':'Sugerencias de hoteles próximos al campus de la UFMG o bien conectados por transporte. ¡BH tiene excelentes opciones para todos los presupuestos!',
-      'hosp.hotel1.nome':'Hotel Ouro Minas Palace','hosp.hotel1.dist':'📍 ~8 km de la UFMG',
-      'hosp.hotel1.desc':'Uno de los más tradicionales de BH, con spa, piscina y gastronomía minera de alto nivel.',
-      'hosp.hotel2.nome':'Ibis Styles Savassi','hosp.hotel2.dist':'📍 Savassi · ~20 min de la UFMG',
-      'hosp.hotel2.desc':'Excelente relación calidad-precio en el barrio más animado de BH. Fácil acceso por transporte público.',
-      'hosp.hotel3.nome':'Hotel BH Plaza','hosp.hotel3.dist':'📍 Centro · ~25 min de la UFMG',
-      'hosp.hotel3.desc':'Económico y bien ubicado en el centro histórico. Acceso facilitado a la línea de metro.',
-      'hosp.hotel4.nome':'Airbnb — Pampulha','hosp.hotel4.dist':'📍 Junto a la UFMG',
-      'hosp.hotel4.desc':'Diversas opciones de apartamentos y casas en el barrio de Pampulha, a 5–10 minutos a pie. ¡Ideal para grupos!',
-      'hosp.dica':'💡 <strong>Consejo:</strong> El evento tiene lugar los días 8–10/oct, víspera del feriado del 12/10. ¡Reserve con anticipación ya que el período es muy solicitado en BH! El organizador puede negociar tarifas grupales con hoteles cercanos — espere comunicado del comité organizador.',
+      'hosp.intro':'El comité organizador estableció alianzas con establecimientos en la región de Pampulha, próximos al campus de la UFMG. Identifíquese como participante del 26º ENPEMT al hacer la reserva.',
+      'hosp.hotel1.nome':'BH Jaraguá Hotel','hosp.hotel1.dist':'📍 Indaiá · 14 min a pie del evento (1,0 km)',
+      'hosp.hotel1.desc':'Hotel aliado del evento, a pocos minutos de la Escuela de Música. Descuento exclusivo para participantes en reservas hechas por el sitio oficial.',
+      'hosp.hotel1.addr':'R. Boaventura, 987 — Indaiá, Belo Horizonte/MG · CP 31270-020 · +55 31 3232-9700',
+      'hosp.hotel1.badge':'6% OFF · código MUSICOTERAPIA','hosp.hotel1.link':'Reservar en el sitio oficial →',
+      'hosp.hotel2.nome':'Pousada Sossego da Pampulha','hosp.hotel2.dist':'📍 São Luiz · 19 min a pie del evento (1,4 km)',
+      'hosp.hotel2.desc':'Posada aliada del evento, con suites individual, doble/matrimonial y triple y desayuno incluido. Valor promocional para estadías de dos noches o más.',
+      'hosp.hotel2.addr':'Av. Cel. José Dias Bicalho, 1258 — São Luiz, Belo Horizonte/MG · CP 31275-050 · +55 31 3439-3250',
+      'hosp.hotel2.badge':'Promoción desde 2 noches','hosp.hotel2.link':'Reservar en el sitio oficial →',
+      'hosp.hotel3.nome':'Airbnb — Pampulha','hosp.hotel3.dist':'📍 Junto a la UFMG',
+      'hosp.hotel3.desc':'Diversas opciones de apartamentos y casas en el barrio de Pampulha, a 5–10 minutos a pie. ¡Ideal para grupos!',
+      'hosp.hint':'👆 Haga clic en una tarjeta para ver en el mapa el trayecto a pie a la Escuela de Música.',
+      'hosp.mapa.reset':'↺ Ver los tres puntos',
+      'hosp.mapa.cap.h1':'🚶 Trayecto a pie del <strong>BH Jaraguá Hotel</strong> a la Escuela de Música: <strong>1,0 km · unos 14 min</strong>. El recorrido entra por el campus de la UFMG.',
+      'hosp.mapa.cap.h2':'🚶 Trayecto a pie de la <strong>Pousada Sossego da Pampulha</strong> a la Escuela de Música: <strong>1,4 km · unos 19 min</strong>. El recorrido entra por el campus de la UFMG.',
+      'hosp.mapa.cap.h3':'📍 <strong>Región de Pampulha</strong> — el barrio alrededor del campus de la UFMG, donde están los alquileres temporarios. No es una dirección única.',
+      'hosp.mapa.cap':'📍 Los tres puntos marcados: <strong>BH Jaraguá Hotel</strong> (al este), <strong>Escuela de Música de la UFMG</strong> — sede del evento, al centro — y <strong>Pousada Sossego da Pampulha</strong> (al oeste). Cada alojamiento está a unos 2 km del evento.',
+      'hosp.dica':'💡 <strong>Consejo:</strong> El evento tiene lugar los días 8–10/oct, víspera del feriado del 12/10. ¡Reserve con anticipación ya que el período es muy solicitado en BH! Las tarifas y condiciones son definidas por los propios establecimientos y pueden cambiar — confirme los valores directamente con el hotel al momento de reservar.',
       'insc.intro':'Asegure su lugar en el mayor encuentro de investigación en musicoterapia de Brasil. Haga clic en la categoría que mejor se aplique a usted para acceder al formulario de inscripción:',
       'insc.passo1':'Haga clic en su categoría anterior y complete el formulario de inscripción con sus datos',
       'insc.passo2':'Realice el pago vía <strong>PIX</strong> y envíe el comprobante directamente en el formulario',
@@ -2524,6 +3124,77 @@ Os aplicativos de corrida, como Uber e 99 funcionam bem, além dos taxis tradici
 
   // Aplica idioma salvo
   setLang(currentLang);
+  // ─────────────────────────────────────────────────────────────────────────
+
+  // ─── MAPA DA HOSPEDAGEM ───────────────────────────────────────────────────
+  // Clicar num card marca aquela hospedagem no mapa; clicar de novo volta à
+  // visão dos três pontos.
+  (function () {
+    var frame = document.getElementById('hosp-mapa-frame');
+    var cap   = document.querySelector('.hosp-mapa-cap');
+    var reset = document.getElementById('hosp-mapa-reset');
+    var cards = document.querySelectorAll('.hotel-card[data-mapa]');
+    if (!frame || !cap || !reset || !cards.length) return;
+
+    var HL = { pt: 'pt-BR', en: 'en', es: 'es' };
+    var QUERY = {
+      all: 'saddr=BH+Jaragu%C3%A1+Hotel,+Belo+Horizonte' +
+           '&daddr=Escola+de+M%C3%BAsica+da+UFMG,+Belo+Horizonte' +
+           '+to:Pousada+Sossego+da+Pampulha,+Belo+Horizonte',
+      // dirflg=w -> rota a pé até a Escola de Música (vira !3e2 no embed)
+      h1:  'saddr=BH+Jaragu%C3%A1+Hotel,+R.+Boaventura,+987,+Belo+Horizonte,+MG' +
+           '&daddr=Escola+de+M%C3%BAsica+da+UFMG,+Belo+Horizonte&dirflg=w',
+      h2:  'saddr=Pousada+Sossego+da+Pampulha,+Av.+Cel.+Jos%C3%A9+Dias+Bicalho,+1258,+Belo+Horizonte,+MG' +
+           '&daddr=Escola+de+M%C3%BAsica+da+UFMG,+Belo+Horizonte&dirflg=w',
+      h3:  'q=Pampulha,+Belo+Horizonte,+MG&z=14'
+    };
+    var CAP_KEY = {
+      all: 'hosp.mapa.cap', h1: 'hosp.mapa.cap.h1',
+      h2:  'hosp.mapa.cap.h2', h3: 'hosp.mapa.cap.h3'
+    };
+    var sel = 'all';
+
+    function render() {
+      var src = 'https://maps.google.com/maps?' + QUERY[sel] +
+                '&hl=' + (HL[currentLang] || 'pt-BR') + '&output=embed';
+      // só recarrega o iframe se a URL mudou de fato
+      if (frame.getAttribute('src') !== src) frame.setAttribute('src', src);
+      // troca a CHAVE de tradução — assim setLang() reaplica a legenda sozinho
+      cap.dataset.i18n = CAP_KEY[sel];
+      var t = TRANSLATIONS[currentLang] || TRANSLATIONS['pt'];
+      if (t[CAP_KEY[sel]] !== undefined) cap.innerHTML = t[CAP_KEY[sel]];
+      reset.hidden = (sel === 'all');
+      cards.forEach(function (c) {
+        c.setAttribute('aria-pressed', String(c.dataset.mapa === sel));
+      });
+    }
+
+    cards.forEach(function (card) {
+      card.setAttribute('role', 'button');
+      card.setAttribute('tabindex', '0');
+      card.setAttribute('aria-pressed', 'false');
+      card.addEventListener('click', function (e) {
+        if (e.target.closest('a')) return; // não sequestra o link de reserva
+        sel = (sel === card.dataset.mapa) ? 'all' : card.dataset.mapa;
+        render();
+        if (window.matchMedia('(max-width: 900px)').matches) {
+          document.getElementById('hosp-mapa')
+                  .scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+      });
+      card.addEventListener('keydown', function (e) {
+        if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); card.click(); }
+      });
+    });
+
+    reset.addEventListener('click', function () { sel = 'all'; render(); });
+
+    // Ao trocar de idioma, o mapa acompanha (parâmetro hl)
+    var applyLang = setLang;
+    setLang = function (lang) { applyLang(lang); render(); };
+
+    render();
+  })();
   // ─────────────────────────────────────────────────────────────────────────
 
   // ─── MOBILE MENU ──────────────────────────────────────────────────────────
@@ -2589,7 +3260,7 @@ Os aplicativos de corrida, como Uber e 99 funcionam bem, além dos taxis tradici
       '.local-fact',
       '.rest-name','.rest-local','.rest-desc',
       '.bh-card-title','.bh-card-text',
-      '.hotel-name','.hotel-dist','.hotel-desc',
+      '.hotel-name','.hotel-dist','.hotel-desc','.hotel-addr','.hotel-badge',
       '.preco-categoria','.preco-valor','.preco-periodo',
       'li','figcaption','.date-big','.date-month','blockquote'
     ].join(',');
