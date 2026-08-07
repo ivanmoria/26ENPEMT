@@ -772,6 +772,17 @@
     border-left: 3px solid var(--ouro);
   }
   .footer-creditos strong { color: var(--ouro-claro); }
+  /* Crédito do autor: passa despercebido no rodapé, mas é um mailto de verdade.
+     O href é montado em JS (ver bloco CRÉDITO DO AUTOR) para não ser raspado. */
+  .credito-autor {
+    color: inherit; text-decoration: none; cursor: pointer;
+    transition: color .2s, text-decoration-color .2s;
+    text-decoration-color: transparent;
+  }
+  .credito-autor:hover, .credito-autor:focus-visible {
+    color: var(--ouro-claro);
+    text-decoration: underline; text-underline-offset: 3px;
+  }
   .footer-bottom {
     border-top: 1px solid rgba(255,255,255,.1); padding-top: 24px;
     display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px;
@@ -2283,7 +2294,7 @@ Os aplicativos de corrida, como Uber e 99 funcionam bem, além dos taxis tradici
     <span class="section-label reveal" data-i18n="hosp.label">Onde Ficar</span>
     <h2 class="section-title reveal" data-i18n="hosp.title">Hospedagem <em>recomendada</em></h2>
     <div class="divider reveal"></div>
-    <p class="section-text reveal" data-i18n="hosp.intro">A comissão organizadora firmou parceria com estabelecimentos na região da Pampulha, próximos ao campus da UFMG. Identifique-se como participante do 26º ENPEMT ao fazer a reserva.</p>
+    <p class="section-text reveal" data-i18n="hosp.intro">A comissão organizadora firmou parceria com estabelecimentos na região da Pampulha, próximos ao campus da UFMG. Identifique-se como participante do 26º ENPEMT ao fazer a reserva. Listamos também outras opções da região, sem convênio com o evento.</p>
 
     <p class="hosp-hint reveal" data-i18n="hosp.hint">👆 Clique em um card para ver no mapa o trajeto a pé até a Escola de Música.</p>
 
@@ -2310,6 +2321,33 @@ Os aplicativos de corrida, como Uber e 99 funcionam bem, além dos taxis tradici
         <a class="hotel-link" href="https://www.sossegodapampulha.com.br/" target="_blank" rel="noopener" data-i18n="hosp.hotel2.link">Reservar no site oficial →</a>
       </div>
 
+      <div class="hotel-card reveal" data-mapa="h4">
+        <div class="hotel-stars">🏨</div>
+        <div class="hotel-name" data-i18n="hosp.hotel4.nome">Quality Hotel Pampulha e Convention</div>
+        <div class="hotel-dist" data-i18n="hosp.hotel4.dist">📍 São Luiz · na Av. Antônio Carlos, em frente ao campus da UFMG</div>
+        <div class="hotel-desc" data-i18n="hosp.hotel4.desc">Hotel com centro de convenções na avenida principal de acesso ao campus. Opção sem convênio com o evento — reserva direta com o estabelecimento.</div>
+        <div class="hotel-addr" data-i18n="hosp.hotel4.addr">Av. Pres. Antônio Carlos, 7456 — São Luiz, Belo Horizonte/MG · CEP 31270-672</div>
+        <div class="hotel-spacer"></div>
+      </div>
+
+      <div class="hotel-card reveal" data-mapa="h5">
+        <div class="hotel-stars">🏨</div>
+        <div class="hotel-name" data-i18n="hosp.hotel5.nome">Allia Gran Pampulha Suítes</div>
+        <div class="hotel-dist" data-i18n="hosp.hotel5.dist">📍 Liberdade · região da Pampulha, próximo ao campus da UFMG</div>
+        <div class="hotel-desc" data-i18n="hosp.hotel5.desc">Suítes tipo flat na região da Pampulha, a poucos minutos do campus. Opção sem convênio com o evento — reserva direta com o estabelecimento.</div>
+        <div class="hotel-addr" data-i18n="hosp.hotel5.addr">R. Intendente Câmara, 540 — Liberdade, Belo Horizonte/MG · CEP 31270-240</div>
+        <div class="hotel-spacer"></div>
+      </div>
+
+      <div class="hotel-card reveal" data-mapa="h6">
+        <div class="hotel-stars">🏨</div>
+        <div class="hotel-name" data-i18n="hosp.hotel6.nome">Nobile Inn Pampulha</div>
+        <div class="hotel-dist" data-i18n="hosp.hotel6.dist">📍 Região da Pampulha · próximo ao campus da UFMG</div>
+        <div class="hotel-desc" data-i18n="hosp.hotel6.desc">Hotel na região da Pampulha, perto do conjunto arquitetônico e do campus. Opção sem convênio com o evento — reserva direta com o estabelecimento.</div>
+        <div class="hotel-addr" data-i18n="hosp.hotel6.addr">Av. Prof. Magalhães Penido, 378 — Belo Horizonte/MG · CEP 31270-700 · (31) 3888-6100</div>
+        <div class="hotel-spacer"></div>
+      </div>
+
       <div class="hotel-card reveal" data-mapa="h3">
         <div class="hotel-stars">🏠</div>
         <div class="hotel-name" data-i18n="hosp.hotel3.nome">Airbnb — Pampulha</div>
@@ -2322,12 +2360,12 @@ Os aplicativos de corrida, como Uber e 99 funcionam bem, além dos taxis tradici
     <div class="hosp-mapa reveal" id="hosp-mapa">
       <div class="mapa-frame">
         <iframe id="hosp-mapa-frame"
-          src="https://maps.google.com/maps?saddr=BH+Jaragu%C3%A1+Hotel,+Belo+Horizonte&amp;daddr=Escola+de+M%C3%BAsica+da+UFMG,+Belo+Horizonte+to:Pousada+Sossego+da+Pampulha,+Belo+Horizonte&amp;hl=pt-BR&amp;output=embed"
-          title="Mapa com o BH Jaraguá Hotel, a Escola de Música da UFMG e a Pousada Sossego da Pampulha"
+          src="https://maps.google.com/maps?saddr=BH+Jaragu%C3%A1+Hotel,+Belo+Horizonte&amp;daddr=Quality+Hotel+Pampulha,+Belo+Horizonte+to:Nobile+Inn+Pampulha,+Belo+Horizonte+to:Allia+Gran+Pampulha+Su%C3%ADtes,+Belo+Horizonte+to:Escola+de+M%C3%BAsica+da+UFMG,+Belo+Horizonte+to:Pousada+Sossego+da+Pampulha,+Belo+Horizonte&amp;hl=pt-BR&amp;output=embed"
+          title="Mapa com as hospedagens sugeridas e a Escola de Música da UFMG"
           loading="lazy" allowfullscreen=""></iframe>
       </div>
-      <button type="button" id="hosp-mapa-reset" class="hosp-mapa-reset" hidden data-i18n="hosp.mapa.reset">↺ Ver os três pontos</button>
-      <p class="hosp-mapa-cap" data-i18n="hosp.mapa.cap">📍 Os três pontos marcados: <strong>BH Jaraguá Hotel</strong> (a leste), <strong>Escola de Música da UFMG</strong> — local do evento, ao centro — e <strong>Pousada Sossego da Pampulha</strong> (a oeste). Cada hospedagem fica a cerca de 2 km do evento.</p>
+      <button type="button" id="hosp-mapa-reset" class="hosp-mapa-reset" hidden data-i18n="hosp.mapa.reset">↺ Ver todos os pontos</button>
+      <p class="hosp-mapa-cap" data-i18n="hosp.mapa.cap">📍 O mapa mostra o local do evento — <strong>Escola de Música da UFMG</strong> — e as hospedagens sugeridas na região da Pampulha: <strong>BH Jaraguá Hotel</strong>, <strong>Quality Hotel Pampulha e Convention</strong>, <strong>Nobile Inn Pampulha</strong>, <strong>Allia Gran Pampulha Suítes</strong> e <strong>Pousada Sossego da Pampulha</strong>. Clique em um card para ver o trajeto a pé de cada uma.</p>
     </div>
 
     <div style="margin-top: 32px; padding: 24px; background: var(--creme); border-radius: 16px; border-left: 4px solid var(--ouro);">
@@ -2460,7 +2498,7 @@ Os aplicativos de corrida, como Uber e 99 funcionam bem, além dos taxis tradici
 
 
     <div class="footer-bottom">
-      <span data-i18n="footer.copy">© Ivan Moriá Borges 2026 · Belo Horizonte, Minas Gerais</span>
+      <span data-i18n="footer.copy">© <a class="credito-autor" href="#">Ivan Moriá Borges</a> 2026 · Belo Horizonte, Minas Gerais</span>
       <span data-i18n="footer.dates"> XXVI ENPEMT - 8–10 de Outubro de 2026 · Escola de Música da UFMG</span>
     </div>
   </div>
@@ -2642,7 +2680,7 @@ Os aplicativos de corrida, como Uber e 99 funcionam bem, além dos taxis tradici
       'footer.link.sobre':'Sobre o evento','footer.link.submissao':'Submissão de trabalhos',
       'footer.link.local':'Local & Mapa','footer.comissao':'Comissão Organizadora',
       'footer.apoio':'Apoio & Patrocínio',
-      'footer.copy':'© Ivan Moriá Borges 2026 · Belo Horizonte, Minas Gerais',
+      'footer.copy':'© <a class="credito-autor" href="#">Ivan Moriá Borges</a> 2026 · Belo Horizonte, Minas Gerais',
       'footer.dates':' XXVI ENPEMT - 8–10 de Outubro de 2026 · Escola de Música da UFMG',
       'tts.label':'Leitor de tela',
       'sobre.text1':'Após anos de encontros virtuais impostos pela pandemia, o ENPEMT retorna à sua essência: o encontro humano, o abraço, a escuta compartilhada. A 26ª edição acontece em Belo Horizonte, na histórica Escola de Música da UFMG.',
@@ -2741,7 +2779,7 @@ Os aplicativos de corrida, como Uber e 99 funcionam bem, além dos taxis tradici
       'gastro.tutu.nome':'Tutu à Mineira','gastro.tutu.desc':'Creme espesso de feijão com torresmo. Acompanhamento clássico nos restaurantes tradicionais.',
       'gastro.doce.nome':'Doce de Leite','gastro.doce.desc':'O doce que define Minas. Artesanal, cremoso, de colher. Perfeito com queijo coalho.',
       'gastro.cafe.nome':'Café com Pão de Queijo','gastro.cafe.desc':'O café da manhã mineiro por excelência. Café forte com pão de queijo quentinho.',
-      'hosp.intro':'A comissão organizadora firmou parceria com estabelecimentos na região da Pampulha, próximos ao campus da UFMG. Identifique-se como participante do 26º ENPEMT ao fazer a reserva.',
+      'hosp.intro':'A comissão organizadora firmou parceria com estabelecimentos na região da Pampulha, próximos ao campus da UFMG. Identifique-se como participante do 26º ENPEMT ao fazer a reserva. Listamos também outras opções da região, sem convênio com o evento.',
       'hosp.hotel1.nome':'BH Jaraguá Hotel','hosp.hotel1.dist':'📍 Indaiá · 14 min a pé do evento (1,0 km)',
       'hosp.hotel1.desc':'Hotel parceiro do evento, a poucos minutos da Escola de Música. Desconto exclusivo para participantes em reservas feitas pelo site oficial.',
       'hosp.hotel1.addr':'R. Boaventura, 987 — Indaiá, Belo Horizonte/MG · CEP 31270-020 · (31) 3232-9700',
@@ -2752,12 +2790,24 @@ Os aplicativos de corrida, como Uber e 99 funcionam bem, além dos taxis tradici
       'hosp.hotel2.badge':'Promoção a partir de 2 diárias','hosp.hotel2.link':'Reservar no site oficial →',
       'hosp.hotel3.nome':'Airbnb — Pampulha','hosp.hotel3.dist':'📍 Vizinho à UFMG',
       'hosp.hotel3.desc':'Diversas opções de apartamentos e casas no bairro da Pampulha, a 5–10 minutos a pé. Ideal para grupos!',
+      'hosp.hotel4.nome':'Quality Hotel Pampulha e Convention','hosp.hotel4.dist':'📍 São Luiz · na Av. Antônio Carlos, em frente ao campus da UFMG',
+      'hosp.hotel4.desc':'Hotel com centro de convenções na avenida principal de acesso ao campus. Opção sem convênio com o evento — reserva direta com o estabelecimento.',
+      'hosp.hotel4.addr':'Av. Pres. Antônio Carlos, 7456 — São Luiz, Belo Horizonte/MG · CEP 31270-672',
+      'hosp.hotel5.nome':'Allia Gran Pampulha Suítes','hosp.hotel5.dist':'📍 Liberdade · região da Pampulha, próximo ao campus da UFMG',
+      'hosp.hotel5.desc':'Suítes tipo flat na região da Pampulha, a poucos minutos do campus. Opção sem convênio com o evento — reserva direta com o estabelecimento.',
+      'hosp.hotel5.addr':'R. Intendente Câmara, 540 — Liberdade, Belo Horizonte/MG · CEP 31270-240',
+      'hosp.hotel6.nome':'Nobile Inn Pampulha','hosp.hotel6.dist':'📍 Região da Pampulha · próximo ao campus da UFMG',
+      'hosp.hotel6.desc':'Hotel na região da Pampulha, perto do conjunto arquitetônico e do campus. Opção sem convênio com o evento — reserva direta com o estabelecimento.',
+      'hosp.hotel6.addr':'Av. Prof. Magalhães Penido, 378 — Belo Horizonte/MG · CEP 31270-700 · (31) 3888-6100',
       'hosp.hint':'👆 Clique em um card para ver no mapa o trajeto a pé até a Escola de Música.',
-      'hosp.mapa.reset':'↺ Ver os três pontos',
+      'hosp.mapa.reset':'↺ Ver todos os pontos',
       'hosp.mapa.cap.h1':'🚶 Trajeto a pé do <strong>BH Jaraguá Hotel</strong> até a Escola de Música: <strong>1,0 km · cerca de 14 min</strong>. O percurso entra pelo campus da UFMG.',
       'hosp.mapa.cap.h2':'🚶 Trajeto a pé da <strong>Pousada Sossego da Pampulha</strong> até a Escola de Música: <strong>1,4 km · cerca de 19 min</strong>. O percurso entra pelo campus da UFMG.',
       'hosp.mapa.cap.h3':'📍 <strong>Região da Pampulha</strong> — o bairro em volta do campus da UFMG, onde ficam as opções de aluguel por temporada. Não é um endereço único.',
-      'hosp.mapa.cap':'📍 Os três pontos marcados: <strong>BH Jaraguá Hotel</strong> (a leste), <strong>Escola de Música da UFMG</strong> — local do evento, ao centro — e <strong>Pousada Sossego da Pampulha</strong> (a oeste). Cada hospedagem fica a cerca de 2 km do evento.',
+      'hosp.mapa.cap.h4':'🚶 Trajeto a pé do <strong>Quality Hotel Pampulha e Convention</strong> até a Escola de Música. O percurso entra pelo campus da UFMG.',
+      'hosp.mapa.cap.h5':'🚶 Trajeto a pé do <strong>Allia Gran Pampulha Suítes</strong> até a Escola de Música. O percurso entra pelo campus da UFMG.',
+      'hosp.mapa.cap.h6':'🚶 Trajeto a pé do <strong>Nobile Inn Pampulha</strong> até a Escola de Música. O percurso entra pelo campus da UFMG.',
+      'hosp.mapa.cap':'📍 O mapa mostra o local do evento — <strong>Escola de Música da UFMG</strong> — e as hospedagens sugeridas na região da Pampulha: <strong>BH Jaraguá Hotel</strong>, <strong>Quality Hotel Pampulha e Convention</strong>, <strong>Nobile Inn Pampulha</strong>, <strong>Allia Gran Pampulha Suítes</strong> e <strong>Pousada Sossego da Pampulha</strong>. Clique em um card para ver o trajeto a pé de cada uma.',
       'hosp.dica':'💡 <strong>Dica:</strong> O evento acontece nos dias 8–10/out, véspera do feriado de 12/10. Reserve com antecedência pois o período é muito procurado em BH! As tarifas e condições são definidas pelos próprios estabelecimentos e podem sofrer alteração — confirme os valores diretamente com o hotel no momento da reserva.',
       'insc.intro':'Garanta sua vaga no maior encontro de pesquisa em musicoterapia do Brasil. Clique na categoria que melhor se aplica a você para acessar o formulário de inscrição:',
       'insc.passo1':'Clique na sua categoria acima e preencha o formulário de inscrição com seus dados',
@@ -2810,7 +2860,7 @@ Os aplicativos de corrida, como Uber e 99 funcionam bem, além dos taxis tradici
       'footer.link.sobre':'About the event','footer.link.submissao':'Paper submission',
       'footer.link.local':'Venue & Map','footer.comissao':'Organizing Committee',
       'footer.apoio':'Support & Sponsorship',
-      'footer.copy':'© Ivan Moriá Borges 2026 · Belo Horizonte, Minas Gerais',
+      'footer.copy':'© <a class="credito-autor" href="#">Ivan Moriá Borges</a> 2026 · Belo Horizonte, Minas Gerais',
       'footer.dates':' XXVI ENPEMT – 8–10 October 2026 · School of Music UFMG',
       'tts.label':'Screen reader',
       'sobre.text1':'After years of virtual meetings imposed by the pandemic, ENPEMT returns to its essence: the human encounter, the embrace, the shared listening. The 26th edition takes place in Belo Horizonte, at the historic School of Music of UFMG.',
@@ -2909,7 +2959,7 @@ Os aplicativos de corrida, como Uber e 99 funcionam bem, além dos taxis tradici
       'gastro.tutu.nome':'Tutu à Mineira','gastro.tutu.desc':'Thick bean cream with pork crackling. Classic side dish in traditional restaurants.',
       'gastro.doce.nome':'Doce de Leite','gastro.doce.desc':'The sweet that defines Minas. Artisanal, creamy, spoon-worthy. Perfect with curd cheese.',
       'gastro.cafe.nome':'Coffee with Pão de Queijo','gastro.cafe.desc':'The quintessential Minas breakfast. Strong coffee with warm cheese bread.',
-      'hosp.intro':'The organizing committee has partnered with venues in the Pampulha area, close to the UFMG campus. Identify yourself as a 26th ENPEMT attendee when booking.',
+      'hosp.intro':'The organizing committee has partnered with venues in the Pampulha area, close to the UFMG campus. Identify yourself as a 26th ENPEMT attendee when booking. We also list other options in the area that are not official partners.',
       'hosp.hotel1.nome':'BH Jaraguá Hotel','hosp.hotel1.dist':'📍 Indaiá · 14 min walk to the venue (1.0 km)',
       'hosp.hotel1.desc':'Official partner hotel, a few minutes from the School of Music. Exclusive discount for attendees on bookings made through the official website.',
       'hosp.hotel1.addr':'R. Boaventura, 987 — Indaiá, Belo Horizonte/MG · ZIP 31270-020 · +55 31 3232-9700',
@@ -2920,12 +2970,24 @@ Os aplicativos de corrida, como Uber e 99 funcionam bem, além dos taxis tradici
       'hosp.hotel2.badge':'Special rate from 2 nights','hosp.hotel2.link':'Book on the official website →',
       'hosp.hotel3.nome':'Airbnb — Pampulha','hosp.hotel3.dist':'📍 Next to UFMG',
       'hosp.hotel3.desc':'Various apartment and house options in the Pampulha neighbourhood, 5–10 minutes on foot. Ideal for groups!',
+      'hosp.hotel4.nome':'Quality Hotel Pampulha e Convention','hosp.hotel4.dist':'📍 São Luiz · on Av. Antônio Carlos, across from the UFMG campus',
+      'hosp.hotel4.desc':'Hotel with a convention centre on the main avenue leading to the campus. Not an official partner — book directly with the hotel.',
+      'hosp.hotel4.addr':'Av. Pres. Antônio Carlos, 7456 — São Luiz, Belo Horizonte/MG · ZIP 31270-672',
+      'hosp.hotel5.nome':'Allia Gran Pampulha Suítes','hosp.hotel5.dist':'📍 Liberdade · Pampulha area, close to the UFMG campus',
+      'hosp.hotel5.desc':'Flat-style suites in the Pampulha area, a few minutes from the campus. Not an official partner — book directly with the hotel.',
+      'hosp.hotel5.addr':'R. Intendente Câmara, 540 — Liberdade, Belo Horizonte/MG · ZIP 31270-240',
+      'hosp.hotel6.nome':'Nobile Inn Pampulha','hosp.hotel6.dist':'📍 Pampulha area · close to the UFMG campus',
+      'hosp.hotel6.desc':'Hotel in the Pampulha area, near the architectural complex and the campus. Not an official partner — book directly with the hotel.',
+      'hosp.hotel6.addr':'Av. Prof. Magalhães Penido, 378 — Belo Horizonte/MG · ZIP 31270-700 · +55 31 3888-6100',
       'hosp.hint':'👆 Tap a card to see the walking route to the School of Music on the map.',
-      'hosp.mapa.reset':'↺ Show all three points',
+      'hosp.mapa.reset':'↺ Show all points',
       'hosp.mapa.cap.h1':'🚶 Walking route from <strong>BH Jaraguá Hotel</strong> to the School of Music: <strong>1.0 km · about 14 min</strong>. The route goes through the UFMG campus.',
       'hosp.mapa.cap.h2':'🚶 Walking route from <strong>Pousada Sossego da Pampulha</strong> to the School of Music: <strong>1.4 km · about 19 min</strong>. The route goes through the UFMG campus.',
       'hosp.mapa.cap.h3':'📍 <strong>Pampulha area</strong> — the neighbourhood around the UFMG campus, where the short-term rentals are. Not a single address.',
-      'hosp.mapa.cap':'📍 The three marked points: <strong>BH Jaraguá Hotel</strong> (east), <strong>School of Music — UFMG</strong>, the event venue, in the middle, and <strong>Pousada Sossego da Pampulha</strong> (west). Each is about 2 km from the venue.',
+      'hosp.mapa.cap.h4':'🚶 Walking route from <strong>Quality Hotel Pampulha e Convention</strong> to the School of Music. The route goes through the UFMG campus.',
+      'hosp.mapa.cap.h5':'🚶 Walking route from <strong>Allia Gran Pampulha Suítes</strong> to the School of Music. The route goes through the UFMG campus.',
+      'hosp.mapa.cap.h6':'🚶 Walking route from <strong>Nobile Inn Pampulha</strong> to the School of Music. The route goes through the UFMG campus.',
+      'hosp.mapa.cap':'📍 The map shows the venue — <strong>School of Music — UFMG</strong> — and the suggested places to stay in the Pampulha area: <strong>BH Jaraguá Hotel</strong>, <strong>Quality Hotel Pampulha e Convention</strong>, <strong>Nobile Inn Pampulha</strong>, <strong>Allia Gran Pampulha Suítes</strong> and <strong>Pousada Sossego da Pampulha</strong>. Tap a card to see the walking route from each one.',
       'hosp.dica':'💡 <strong>Tip:</strong> The event takes place on 8–10/Oct, the eve of the 12/10 holiday. Book early as the period is very popular in BH! Rates and conditions are set by the venues themselves and are subject to change — please confirm prices directly with the hotel when booking.',
       'insc.intro':'Secure your spot at Brazil\'s largest music therapy research meeting. Click on the category that best applies to you to access the registration form:',
       'insc.passo1':'Click on your category above and fill in the registration form with your details',
@@ -2978,7 +3040,7 @@ Os aplicativos de corrida, como Uber e 99 funcionam bem, além dos taxis tradici
       'footer.link.sobre':'Sobre el evento','footer.link.submissao':'Envío de trabajos',
       'footer.link.local':'Local y Mapa','footer.comissao':'Comisión Organizadora',
       'footer.apoio':'Apoyo y Patrocinio',
-      'footer.copy':'© Ivan Moriá Borges 2026 · Belo Horizonte, Minas Gerais',
+      'footer.copy':'© <a class="credito-autor" href="#">Ivan Moriá Borges</a> 2026 · Belo Horizonte, Minas Gerais',
       'footer.dates':' XXVI ENPEMT – 8–10 de octubre de 2026 · Escuela de Música UFMG',
       'tts.label':'Lector de pantalla',
       'sobre.text1':'Tras años de encuentros virtuales impuestos por la pandemia, el ENPEMT regresa a su esencia: el encuentro humano, el abrazo, la escucha compartida. La 26ª edición tiene lugar en Belo Horizonte, en la histórica Escuela de Música de la UFMG.',
@@ -3077,7 +3139,7 @@ Os aplicativos de corrida, como Uber e 99 funcionam bem, além dos taxis tradici
       'gastro.tutu.nome':'Tutu à Mineira','gastro.tutu.desc':'Crema espesa de frijoles con chicharrón. Acompañamiento clásico en los restaurantes tradicionales.',
       'gastro.doce.nome':'Dulce de Leche','gastro.doce.desc':'El dulce que define Minas. Artesanal, cremoso, para comer con cuchara. Perfecto con queso fresco.',
       'gastro.cafe.nome':'Café con Pão de Queijo','gastro.cafe.desc':'El desayuno minero por excelencia. Café fuerte con panecillo de queso caliente.',
-      'hosp.intro':'El comité organizador estableció alianzas con establecimientos en la región de Pampulha, próximos al campus de la UFMG. Identifíquese como participante del 26º ENPEMT al hacer la reserva.',
+      'hosp.intro':'El comité organizador estableció alianzas con establecimientos en la región de Pampulha, próximos al campus de la UFMG. Identifíquese como participante del 26º ENPEMT al hacer la reserva. También listamos otras opciones de la región, sin convenio con el evento.',
       'hosp.hotel1.nome':'BH Jaraguá Hotel','hosp.hotel1.dist':'📍 Indaiá · 14 min a pie del evento (1,0 km)',
       'hosp.hotel1.desc':'Hotel aliado del evento, a pocos minutos de la Escuela de Música. Descuento exclusivo para participantes en reservas hechas por el sitio oficial.',
       'hosp.hotel1.addr':'R. Boaventura, 987 — Indaiá, Belo Horizonte/MG · CP 31270-020 · +55 31 3232-9700',
@@ -3088,12 +3150,24 @@ Os aplicativos de corrida, como Uber e 99 funcionam bem, além dos taxis tradici
       'hosp.hotel2.badge':'Promoción desde 2 noches','hosp.hotel2.link':'Reservar en el sitio oficial →',
       'hosp.hotel3.nome':'Airbnb — Pampulha','hosp.hotel3.dist':'📍 Junto a la UFMG',
       'hosp.hotel3.desc':'Diversas opciones de apartamentos y casas en el barrio de Pampulha, a 5–10 minutos a pie. ¡Ideal para grupos!',
+      'hosp.hotel4.nome':'Quality Hotel Pampulha e Convention','hosp.hotel4.dist':'📍 São Luiz · en la Av. Antônio Carlos, frente al campus de la UFMG',
+      'hosp.hotel4.desc':'Hotel con centro de convenciones en la avenida principal de acceso al campus. Opción sin convenio con el evento — reserva directa con el establecimiento.',
+      'hosp.hotel4.addr':'Av. Pres. Antônio Carlos, 7456 — São Luiz, Belo Horizonte/MG · CP 31270-672',
+      'hosp.hotel5.nome':'Allia Gran Pampulha Suítes','hosp.hotel5.dist':'📍 Liberdade · región de Pampulha, cerca del campus de la UFMG',
+      'hosp.hotel5.desc':'Suites tipo flat en la región de Pampulha, a pocos minutos del campus. Opción sin convenio con el evento — reserva directa con el establecimiento.',
+      'hosp.hotel5.addr':'R. Intendente Câmara, 540 — Liberdade, Belo Horizonte/MG · CP 31270-240',
+      'hosp.hotel6.nome':'Nobile Inn Pampulha','hosp.hotel6.dist':'📍 Región de Pampulha · cerca del campus de la UFMG',
+      'hosp.hotel6.desc':'Hotel en la región de Pampulha, cerca del conjunto arquitectónico y del campus. Opción sin convenio con el evento — reserva directa con el establecimiento.',
+      'hosp.hotel6.addr':'Av. Prof. Magalhães Penido, 378 — Belo Horizonte/MG · CP 31270-700 · +55 31 3888-6100',
       'hosp.hint':'👆 Haga clic en una tarjeta para ver en el mapa el trayecto a pie a la Escuela de Música.',
-      'hosp.mapa.reset':'↺ Ver los tres puntos',
+      'hosp.mapa.reset':'↺ Ver todos los puntos',
       'hosp.mapa.cap.h1':'🚶 Trayecto a pie del <strong>BH Jaraguá Hotel</strong> a la Escuela de Música: <strong>1,0 km · unos 14 min</strong>. El recorrido entra por el campus de la UFMG.',
       'hosp.mapa.cap.h2':'🚶 Trayecto a pie de la <strong>Pousada Sossego da Pampulha</strong> a la Escuela de Música: <strong>1,4 km · unos 19 min</strong>. El recorrido entra por el campus de la UFMG.',
       'hosp.mapa.cap.h3':'📍 <strong>Región de Pampulha</strong> — el barrio alrededor del campus de la UFMG, donde están los alquileres temporarios. No es una dirección única.',
-      'hosp.mapa.cap':'📍 Los tres puntos marcados: <strong>BH Jaraguá Hotel</strong> (al este), <strong>Escuela de Música de la UFMG</strong> — sede del evento, al centro — y <strong>Pousada Sossego da Pampulha</strong> (al oeste). Cada alojamiento está a unos 2 km del evento.',
+      'hosp.mapa.cap.h4':'🚶 Trayecto a pie del <strong>Quality Hotel Pampulha e Convention</strong> a la Escuela de Música. El recorrido entra por el campus de la UFMG.',
+      'hosp.mapa.cap.h5':'🚶 Trayecto a pie del <strong>Allia Gran Pampulha Suítes</strong> a la Escuela de Música. El recorrido entra por el campus de la UFMG.',
+      'hosp.mapa.cap.h6':'🚶 Trayecto a pie del <strong>Nobile Inn Pampulha</strong> a la Escuela de Música. El recorrido entra por el campus de la UFMG.',
+      'hosp.mapa.cap':'📍 El mapa muestra la sede del evento — <strong>Escuela de Música de la UFMG</strong> — y los alojamientos sugeridos en la región de Pampulha: <strong>BH Jaraguá Hotel</strong>, <strong>Quality Hotel Pampulha e Convention</strong>, <strong>Nobile Inn Pampulha</strong>, <strong>Allia Gran Pampulha Suítes</strong> y <strong>Pousada Sossego da Pampulha</strong>. Haga clic en una tarjeta para ver el trayecto a pie de cada una.',
       'hosp.dica':'💡 <strong>Consejo:</strong> El evento tiene lugar los días 8–10/oct, víspera del feriado del 12/10. ¡Reserve con anticipación ya que el período es muy solicitado en BH! Las tarifas y condiciones son definidas por los propios establecimientos y pueden cambiar — confirme los valores directamente con el hotel al momento de reservar.',
       'insc.intro':'Asegure su lugar en el mayor encuentro de investigación en musicoterapia de Brasil. Haga clic en la categoría que mejor se aplique a usted para acceder al formulario de inscripción:',
       'insc.passo1':'Haga clic en su categoría anterior y complete el formulario de inscripción con sus datos',
@@ -3128,7 +3202,7 @@ Os aplicativos de corrida, como Uber e 99 funcionam bem, além dos taxis tradici
 
   // ─── MAPA DA HOSPEDAGEM ───────────────────────────────────────────────────
   // Clicar num card marca aquela hospedagem no mapa; clicar de novo volta à
-  // visão dos três pontos.
+  // visão geral com todos os pontos.
   (function () {
     var frame = document.getElementById('hosp-mapa-frame');
     var cap   = document.querySelector('.hosp-mapa-cap');
@@ -3139,18 +3213,29 @@ Os aplicativos de corrida, como Uber e 99 funcionam bem, além dos taxis tradici
     var HL = { pt: 'pt-BR', en: 'en', es: 'es' };
     var QUERY = {
       all: 'saddr=BH+Jaragu%C3%A1+Hotel,+Belo+Horizonte' +
-           '&daddr=Escola+de+M%C3%BAsica+da+UFMG,+Belo+Horizonte' +
+           '&daddr=Quality+Hotel+Pampulha,+Belo+Horizonte' +
+           '+to:Nobile+Inn+Pampulha,+Belo+Horizonte' +
+           '+to:Allia+Gran+Pampulha+Su%C3%ADtes,+Belo+Horizonte' +
+           '+to:Escola+de+M%C3%BAsica+da+UFMG,+Belo+Horizonte' +
            '+to:Pousada+Sossego+da+Pampulha,+Belo+Horizonte',
       // dirflg=w -> rota a pé até a Escola de Música (vira !3e2 no embed)
       h1:  'saddr=BH+Jaragu%C3%A1+Hotel,+R.+Boaventura,+987,+Belo+Horizonte,+MG' +
            '&daddr=Escola+de+M%C3%BAsica+da+UFMG,+Belo+Horizonte&dirflg=w',
       h2:  'saddr=Pousada+Sossego+da+Pampulha,+Av.+Cel.+Jos%C3%A9+Dias+Bicalho,+1258,+Belo+Horizonte,+MG' +
            '&daddr=Escola+de+M%C3%BAsica+da+UFMG,+Belo+Horizonte&dirflg=w',
-      h3:  'q=Pampulha,+Belo+Horizonte,+MG&z=14'
+      h3:  'q=Pampulha,+Belo+Horizonte,+MG&z=14',
+      h4:  'saddr=Quality+Hotel+Pampulha,+Av.+Pres.+Ant%C3%B4nio+Carlos,+7456,+Belo+Horizonte,+MG' +
+           '&daddr=Escola+de+M%C3%BAsica+da+UFMG,+Belo+Horizonte&dirflg=w',
+      h5:  'saddr=Allia+Gran+Pampulha+Su%C3%ADtes,+R.+Intendente+C%C3%A2mara,+540,+Belo+Horizonte,+MG' +
+           '&daddr=Escola+de+M%C3%BAsica+da+UFMG,+Belo+Horizonte&dirflg=w',
+      h6:  'saddr=Nobile+Inn+Pampulha,+Av.+Prof.+Magalh%C3%A3es+Penido,+378,+Belo+Horizonte,+MG' +
+           '&daddr=Escola+de+M%C3%BAsica+da+UFMG,+Belo+Horizonte&dirflg=w'
     };
     var CAP_KEY = {
       all: 'hosp.mapa.cap', h1: 'hosp.mapa.cap.h1',
-      h2:  'hosp.mapa.cap.h2', h3: 'hosp.mapa.cap.h3'
+      h2:  'hosp.mapa.cap.h2', h3: 'hosp.mapa.cap.h3',
+      h4:  'hosp.mapa.cap.h4', h5: 'hosp.mapa.cap.h5',
+      h6:  'hosp.mapa.cap.h6'
     };
     var sel = 'all';
 
@@ -3194,6 +3279,37 @@ Os aplicativos de corrida, como Uber e 99 funcionam bem, além dos taxis tradici
     setLang = function (lang) { applyLang(lang); render(); };
 
     render();
+  })();
+  // ─────────────────────────────────────────────────────────────────────────
+
+  // ─── CRÉDITO DO AUTOR ─────────────────────────────────────────────────────
+  // O nome no rodapé vira um mailto. O endereço não aparece no HTML: é montado
+  // aqui em tempo de execução, para não ser colhido por robôs de spam.
+  (function () {
+    var USER = 'ivanmoriabr', HOST = 'gmail.com';
+    var TITLE = {
+      pt: 'Site desenvolvido por Ivan Moriá Borges — clique para entrar em contato',
+      en: 'Website developed by Ivan Moriá Borges — click to get in touch',
+      es: 'Sitio desarrollado por Ivan Moriá Borges — haga clic para contactar'
+    };
+    var SUBJ = { pt: 'Site do 26º ENPEMT', en: '26th ENPEMT website', es: 'Sitio del 26º ENPEMT' };
+
+    function apply() {
+      var lang = TITLE[currentLang] ? currentLang : 'pt';
+      document.querySelectorAll('.credito-autor').forEach(function (a) {
+        a.href = 'mailto:' + USER + '@' + HOST +
+                 '?subject=' + encodeURIComponent(SUBJ[lang]);
+        a.title = TITLE[lang];
+        a.setAttribute('aria-label', TITLE[lang]);
+        a.rel = 'author';
+      });
+    }
+
+    // setLang reescreve o rodapé via innerHTML, então o href precisa ser reposto
+    var applyLang = setLang;
+    setLang = function (lang) { applyLang(lang); apply(); };
+
+    apply();
   })();
   // ─────────────────────────────────────────────────────────────────────────
 
