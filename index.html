@@ -365,7 +365,6 @@
 
   /* ─── PROGRAMAÇÃO ─── */
   #programacao { background: var(--creme); }
-  .prog-tabs { display: flex; gap: 8px; margin-bottom: 40px; flex-wrap: wrap; }
   .tab-btn {
     padding: 10px 24px; border-radius: 50px;
     border: 1.5px solid var(--verde-agua);
@@ -374,8 +373,9 @@
     cursor: pointer; transition: all .2s;
   }
   .tab-btn.active, .tab-btn:hover { background: var(--verde); color: #fff; border-color: var(--verde); }
-  .tab-content { display: none; }
-  .tab-content.active { display: block; }
+  .prog-dia { margin-bottom: 48px; scroll-margin-top: 84px; }
+  .prog-dia:last-of-type { margin-bottom: 0; }
+  .prog-dia[hidden], .tl-item[hidden] { display: none; }
   .timeline { border-left: 2px solid var(--verde-agua); padding-left: 32px; display: flex; flex-direction: column; gap: 28px; }
   .tl-item { position: relative; }
   .tl-item::before {
@@ -386,7 +386,18 @@
   }
   .tl-time { font-size: .78rem; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: var(--ouro); margin-bottom: 4px; }
   .tl-title { font-family: 'Playfair Display', serif; font-size: 1.05rem; font-weight: 700; color: var(--marrom); margin-bottom: 4px; }
+  .tl-subtitle { margin: 0 0 8px; font-size: .85rem; font-style: italic; color: #8f8f8f; line-height: 1.4; }
+  .tl-subtitle:empty { display: none; }
   .tl-desc { font-size: .9rem; color: #666; line-height: 1.5; }
+  .tl-pessoas { list-style: none; margin: .55rem 0 0; padding: 0; display: grid; gap: .35rem; }
+  .tl-pessoas li { position: relative; padding-left: .9rem; font-size: .875rem; line-height: 1.45; }
+  .tl-pessoas li::before { content: ''; position: absolute; left: 0; top: .58em; width: 4px; height: 4px; border-radius: 50%; background: var(--terracota); opacity: .6; }
+  .tl-pessoas strong { color: #444; font-weight: 600; }
+  .tl-pessoas .tl-cargo { font-size: .8rem; color: #8a8a8a; }
+  .tl-pessoas .tl-cargo::before { content: ' · '; color: #c4c4c4; }
+  .tl-pessoas-paises li { padding-left: 0; }
+  .tl-pessoas-paises li::before { display: none; }
+  .tl-flag { margin-right: 6px; }
   .tl-link { color: var(--verde); font-weight: 600; text-decoration: none; border-bottom: 1px solid rgba(45,106,79,.3); }
   .tl-link:hover { border-bottom-color: var(--verde); }
   .tl-meta { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 10px; margin-top: 8px; }
@@ -831,9 +842,16 @@
     z-index: 200; transition: width .1s;
   }
 
-  /* ─── PROGRAMAÇÃO: HEADER WRAPPER ─── */
-  .prog-header { margin-top: 36px; }
-  .prog-header .prog-tabs { margin-bottom: 12px; }
+  /* ─── PROGRAMAÇÃO: BARRA FIXA (formato · dias · filtro) ─── */
+  .prog-barra {
+    position: sticky; top: 0; z-index: 30;
+    display: flex; flex-wrap: wrap; align-items: center; gap: 10px 16px;
+    margin: 0 0 22px; padding: 14px 0 12px;
+    background: var(--creme); border-bottom: 1px solid var(--creme-escuro);
+  }
+  .prog-atalhos { display: flex; flex-wrap: wrap; gap: 8px; }
+  .prog-atalhos .tab-btn { padding: 8px 16px; font-size: .82rem; }
+  .prog-barra .prog-filtro { margin: 0 0 0 auto; }
 
   /* ─── FILTRO DE ATIVIDADES ─── */
   .prog-filtro {
@@ -851,7 +869,7 @@
     border: 1.5px solid var(--creme-escuro);
     background-color: #fff; color: var(--marrom);
     font-family: 'DM Sans', sans-serif; font-size: .85rem; font-weight: 500;
-    cursor: pointer; outline: none; min-width: 220px;
+    cursor: pointer; outline: none; min-width: 196px;
     appearance: none; -webkit-appearance: none;
     background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='7' viewBox='0 0 12 7'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%233D2B1F' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
     background-repeat: no-repeat; background-position: right 14px center;
@@ -881,6 +899,146 @@
     padding: 9px 20px; border-radius: 12px; margin-bottom: 24px;
     display: inline-flex; align-items: center; gap: 8px;
     border-left: 3px solid var(--verde-agua);
+  }
+
+  /* ─── CHAVE: GRADE ⇄ LISTA ─── */
+  .prog-switch {
+    display: inline-flex; padding: 4px; gap: 4px;
+    background: var(--creme-escuro); border-radius: 50px;
+  }
+  .prog-switch-btn {
+    padding: 9px 20px; border: none; border-radius: 50px; cursor: pointer;
+    background: transparent; color: var(--marrom);
+    font-family: 'DM Sans', sans-serif; font-size: .84rem; font-weight: 600;
+    white-space: nowrap; transition: background .2s, color .2s;
+  }
+  .prog-switch-btn:hover { color: var(--verde); }
+  .prog-switch-btn.active { background: var(--verde); color: #fff; }
+  .prog-switch-btn:focus-visible { outline: 2px solid var(--verde); outline-offset: 2px; }
+  .prog-dica { margin: 0 0 18px; font-size: .84rem; color: #9a9a9a; }
+
+  /* ─── PROGRAMAÇÃO AT A GLANCE ─── */
+  .gl-fonte { margin: 0 0 14px; font-size: .74rem; color: #a5a5a5; }
+  .gl-dia { margin-bottom: 40px; scroll-margin-top: 84px; }
+  .gl-dia:last-child { margin-bottom: 0; }
+  .gl-dia-titulo {
+    margin: 0 0 14px;
+    font-family: 'Playfair Display', serif; font-size: 1rem; font-weight: 700;
+    color: var(--verde); background: var(--creme-escuro);
+    padding: 9px 20px; border-radius: 12px;
+    display: inline-flex; align-items: center; gap: 8px;
+    border-left: 3px solid var(--verde-agua);
+  }
+  .gl-fonte a { color: inherit; }
+
+  .gl-wrap { overflow-x: auto; border: 1px solid var(--creme-escuro); border-radius: 16px; background: #fff; }
+  .gl-wrap:focus-visible { outline: 2px solid var(--verde); outline-offset: 2px; }
+  .gl-table { width: 100%; border-collapse: separate; border-spacing: 0; }
+  .gl-table caption { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+  .gl-table th, .gl-table td { border-bottom: 1px solid var(--creme-escuro); padding: 5px; vertical-align: top; }
+  .gl-table thead th:not(:first-child), .gl-table td { min-width: 158px; }
+  .gl-table thead th:first-child { position: sticky; left: 0; z-index: 3; background: var(--creme); }
+  .gl-table tr:last-child th, .gl-table tr:last-child td { border-bottom: none; }
+  .gl-table thead th {
+    background: var(--creme); text-align: left; padding: 12px 12px;
+    font-family: 'DM Sans', sans-serif; font-size: .72rem; font-weight: 700;
+    letter-spacing: 1px; text-transform: uppercase; color: var(--marrom);
+  }
+  .gl-hora {
+    position: sticky; left: 0; z-index: 1; background: #fff;
+    box-shadow: 1px 0 0 var(--creme-escuro);
+    white-space: nowrap; width: 1%; min-width: 0; padding: 14px 12px !important;
+    font-size: .74rem; font-weight: 700; letter-spacing: .5px; color: var(--ouro); text-align: left;
+  }
+  .gl-hora span { display: block; font-weight: 500; color: #b9b9b9; }
+
+  .gl-cel {
+    display: block; width: 100%; text-align: left; cursor: pointer;
+    font-family: inherit; border: none; border-left: 3px solid var(--verde-agua);
+    border-radius: 9px; padding: 8px 11px; background: var(--creme);
+    transition: transform .15s, box-shadow .15s;
+  }
+  .gl-cel:hover { transform: translateY(-1px); box-shadow: 0 4px 14px rgba(0,0,0,.08); }
+  .gl-cel:focus-visible { outline: 2px solid var(--verde); outline-offset: 2px; }
+  .gl-cel-titulo { font-family: 'Playfair Display', serif; font-size: .82rem; font-weight: 700; color: var(--marrom); line-height: 1.28; }
+  .gl-cel-quem { display: block; margin-top: 3px; font-size: .72rem; color: #8f8f8f; line-height: 1.3; }
+
+  /* famílias de cor, espelhando os badges da linha do tempo */
+  .gl-cel[data-cor="verde"]     { border-left-color: var(--verde);     background: rgba(45,106,79,.07); }
+  .gl-cel[data-cor="ouro"]      { border-left-color: var(--ouro);      background: rgba(201,148,58,.09); }
+  .gl-cel[data-cor="terracota"] { border-left-color: var(--terracota); background: rgba(181,83,74,.08); }
+  .gl-cel[data-cor="agua"]      { border-left-color: var(--verde-agua);background: rgba(116,198,157,.14); }
+
+
+  .gl-aviso { text-align: center; color: #aaa; padding: 40px 0; font-size: .92rem; }
+
+  /* ─── DETALHE DA ATIVIDADE ─── */
+  .gl-modal {
+    width: min(600px, calc(100vw - 32px));
+    border: none; border-radius: 20px; padding: 0; overflow: visible;
+    background: var(--branco); color: var(--cinza-texto);
+    box-shadow: 0 24px 70px rgba(0,0,0,.28);
+  }
+  .gl-modal[open] { position: fixed; inset: 0; margin: auto; }
+  .gl-modal:not([open]) { display: none; }
+  .gl-modal::backdrop { background: rgba(61,43,31,.45); backdrop-filter: blur(2px); }
+  .gl-modal-inner { padding: 30px 32px 32px; max-height: min(86vh, 760px); overflow-y: auto; border-radius: 20px; }
+  .gl-modal-fechar {
+    position: absolute; top: 14px; right: 14px; z-index: 2; width: 34px; height: 34px;
+    border: none; border-radius: 50%; background: var(--creme-escuro); color: var(--marrom);
+    font-size: 1.2rem; line-height: 1; cursor: pointer; transition: background .2s;
+  }
+  .gl-modal-fechar:hover { background: var(--creme); }
+  .gl-modal-tipo {
+    display: inline-block; padding: 4px 12px; border-radius: 50px;
+    font-size: .68rem; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 12px;
+  }
+  .gl-modal-titulo { font-family: 'Playfair Display', serif; font-size: 1.25rem; font-weight: 700; color: var(--marrom); line-height: 1.3; margin: 0 0 14px; }
+  .gl-modal-meta { display: flex; flex-wrap: wrap; gap: 6px 20px; margin-bottom: 16px; font-size: .82rem; color: var(--verde); font-weight: 600; }
+  .gl-modal-desc { font-size: .9rem; line-height: 1.6; color: #666; }
+  .gl-modal-inner .gl-modal-desc + .tl-pessoas { margin-top: 10px; }
+  .gl-modal-inner .tl-pessoas { margin: 0 0 14px; }
+  .gl-modal-inner .tl-subtitle { margin-top: -6px; }
+
+  .gl-trabalhos-tit {
+    margin: 22px 0 10px; font-size: .72rem; font-weight: 700; letter-spacing: 1.2px;
+    text-transform: uppercase; color: var(--ouro);
+  }
+  .gl-trabalhos { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; }
+  .gl-trabalhos li {
+    border-left: 2px solid var(--creme-escuro); padding: 2px 0 2px 12px;
+    font-size: .86rem; line-height: 1.45;
+  }
+  .gl-trab-titulo { color: var(--marrom); font-weight: 600; }
+  .gl-trab-autores { display: block; font-size: .78rem; color: #9a9a9a; margin-top: 2px; }
+  .gl-trab-link {
+    display: inline-flex; align-items: center; gap: 5px; margin-top: 5px;
+    font-size: .76rem; font-weight: 600; color: var(--verde); text-decoration: none;
+    border-bottom: 1px solid rgba(45,106,79,.3);
+  }
+  .gl-trab-link:hover { border-bottom-color: var(--verde); }
+
+  .gl-agenda { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 12px; margin-top: 24px; padding-top: 20px; border-top: 1px solid var(--creme-escuro); }
+  .gl-agenda-dica { font-size: .74rem; color: #a5a5a5; }
+  .gl-agenda-btn {
+    display: inline-flex; align-items: center; gap: 7px;
+    padding: 8px 16px; border-radius: 50px; cursor: pointer;
+    border: 1.5px solid var(--verde-agua); background: transparent; color: var(--verde);
+    font-family: 'DM Sans', sans-serif; font-size: .78rem; font-weight: 600;
+    text-decoration: none; transition: all .2s;
+  }
+  .gl-agenda-btn:hover { background: var(--verde); color: #fff; border-color: var(--verde); }
+  .gl-agenda-btn svg { width: 14px; height: 14px; fill: currentColor; flex-shrink: 0; }
+
+  @media (max-width: 1025px) {
+    /* a nav fixa ocupa o topo no celular; o seletor gruda logo abaixo dela */
+    .prog-barra { top: 62px; }
+    .gl-dia, .prog-dia { scroll-margin-top: 132px; }
+  }
+
+  @media (max-width: 600px) {
+    .gl-fonte { margin-left: 0; width: 100%; }
+    .gl-modal-inner { padding: 26px 22px 28px; }
   }
 
   /* ─── FILTROS CSS ─── */
@@ -1287,26 +1445,11 @@
      3. margin-left:auto no btn-download quebra scroll → zeramos aqui
   ═══════════════════════════════════════ */
   @media (max-width: 768px) {
-    /* Limpar o wrapper — sem margem negativa nem sticky */
-    .prog-header {
-      position: static;
-      margin: 0;
-      padding: 0;
-      background: none;
-    }
-
-    /* Linha 1: abas de dias — quebram linha para não cortar */
-    .prog-tabs {
-      display: flex;
-      flex-wrap: wrap !important;
-      gap: 8px;
-      margin-bottom: 16px !important;
-      width: 100%;
-    }
-    .prog-tabs::-webkit-scrollbar { display: none; }
-
-    /* Filtro de atividades */
-    .prog-filtro { flex-wrap: wrap; gap: 8px; margin-bottom: 20px; }
+    /* A barra fixa empilha: formato, dias e filtro, cada um em sua linha */
+    .prog-barra { gap: 10px; padding: 12px 0 10px; }
+    .prog-switch, .prog-atalhos, .prog-barra .prog-filtro { width: 100%; margin: 0; }
+    .prog-switch-btn { flex: 1; padding: 9px 12px; font-size: .8rem; }
+    .prog-filtro { flex-wrap: nowrap; gap: 8px; }
     .prog-filtro select { min-width: 0; width: 100%; border-radius: 12px; }
 
     /* Botões de dias — texto curto no mobile */
@@ -1318,13 +1461,6 @@
       font-size: .8rem;
       min-height: 40px;
       border-radius: 20px;
-    }
-
-    /* FIX CRÍTICO: margin-left:auto em flex com overflow-x:auto
-       empurra o botão para o infinito. Substituímos por margem fixa. */
-    .prog-tabs .btn-download-pdf {
-      margin-left: 8px !important;
-      flex-shrink: 0;
     }
 
     .btn-download-pdf {
@@ -1571,8 +1707,8 @@
       background: rgba(45,106,79,.5);
     }
     * { scrollbar-width: thin; scrollbar-color: rgba(45,106,79,.25) transparent; }
-    .prog-tabs, .rest-tabs, .mapa-tabs { scrollbar-width: none; }
-    .prog-tabs::-webkit-scrollbar, .rest-tabs::-webkit-scrollbar, .mapa-tabs::-webkit-scrollbar { display: none; }
+    .rest-tabs, .mapa-tabs { scrollbar-width: none; }
+    .rest-tabs::-webkit-scrollbar, .mapa-tabs::-webkit-scrollbar { display: none; }
   }
 </style>
 </head>
@@ -1622,7 +1758,7 @@
   <div class="nav-brands">
     <div class="nav-ubam">
       <img src="img/ubam.png" alt="UBAM — União Brasileira das Associações de Musicoterapia">
-      <img src="img/Fapemig.png" class="nav-ubam-fapemig" alt="FAPEMIG">
+      <img src="img/apememg.png" class="nav-ubam-fapemig" alt="APEMEMG">
     </div>
     <div class="nav-apoio">
       <img src="img/ufmg.png" alt="UFMG">
@@ -1772,19 +1908,17 @@
     <span class="section-label reveal" data-i18n="prog.label">Agenda</span>
     <h2 class="section-title reveal" data-i18n="prog.title">Programação <em>preliminar</em></h2>
     <div class="divider reveal"></div>
-    <p class="section-text reveal" data-i18n="prog.aviso">Três dias de imersão em pesquisa, prática clínica e vivência musical. Programação sujeita a atualizações.</p>
+    <p class="section-text reveal" data-i18n="prog.aviso">Três dias de imersão em pesquisa, prática clínica e vivência musical no <strong>XXVI ENPEMT</strong>, de 8 a 10 de outubro. Programação sujeita a atualizações. No domingo, 11/10, a Escola de Música recebe ainda o XII ENEMT — Encontro Nacional de Estudantes de Musicoterapia, com programação a ser divulgada posteriormente. Você também pode <a href="programacao-enpemt2026.pdf" download class="tl-link">baixar a programação em PDF</a>.</p>
 
-    <div class="prog-header">
-      <div class="prog-tabs">
-        <button class="tab-btn active" onclick="switchTab(event,'dia1')">8/out <span class="tab-dia" data-i18n="prog.dia1.label">· Quinta</span></button>
-        <button class="tab-btn" onclick="switchTab(event,'dia2')">9/out <span class="tab-dia" data-i18n="prog.dia2.label">· Sexta</span></button>
-        <button class="tab-btn" onclick="switchTab(event,'dia3')">10/out <span class="tab-dia" data-i18n="prog.dia3.label">· Sábado</span></button>
-        <button class="tab-btn" onclick="switchTab(event,'dia4')">11/out <span class="tab-dia" data-i18n="prog.dia4.label">· Domingo</span></button>
-        <a href="programacao-enpemt2026.pdf" download class="btn-download-pdf" title="Baixar programação em PDF">
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg>
-          <span data-i18n="prog.pdf">Baixar PDF</span>
-        </a>
+    <div id="prog-resultado" role="status" hidden><p class="prog-vazio" data-i18n="prog.vazio">Nenhuma atividade encontrada para este filtro.</p></div>
+
+    <!-- BARRA FIXA: formato, dias e filtro, comum às duas vistas -->
+    <div class="prog-barra">
+      <div class="prog-switch" role="group" data-i18n-aria="prog.vista.aria" aria-label="Formato da programação">
+        <button class="prog-switch-btn active" type="button" data-vista="grade" aria-pressed="true" data-i18n="prog.vista.grade">Grade por sala</button>
+        <button class="prog-switch-btn" type="button" data-vista="lista" aria-pressed="false" data-i18n="prog.vista.lista">Lista por dia</button>
       </div>
+      <div class="prog-atalhos" id="prog-atalhos" role="group" data-i18n-aria="prog.vista.dias" aria-label="Ir para o dia"></div>
       <div class="prog-filtro">
         <label for="prog-filtro-select" class="prog-filtro-label" data-i18n="prog.filtrar">Filtrar:</label>
         <select id="prog-filtro-select" onchange="filtrarProg(this.value)">
@@ -1804,35 +1938,48 @@
       </div>
     </div>
 
-    <div id="dia1" class="tab-content active">
+    <!-- VISTA 1: grade horário × sala -->
+    <div id="vista-grade">
+      <p class="prog-dica" data-i18n="gl.intro">Grade de horários por sala. Clique em uma atividade para ver os detalhes.</p>
+      <p class="gl-fonte" id="gl-fonte" hidden></p>
+      <div id="gl-dias"></div>
+    </div>
+
+    <!-- VISTA 2: linha do tempo por dia -->
+    <div id="vista-lista" hidden>
+    <div id="dia1" class="prog-dia">
+      <h3 class="gl-dia-titulo" data-i18n="prog.dia1.head">8/out · Quinta</h3>
       <div class="timeline">
 
-       <div class="tl-item" data-tipo="curso">
+        <div class="tl-item" data-tipo="abertura">
+          <div class="tl-time">08:00</div>
+          <div class="tl-title" data-i18n="tl.d1.credpre.title">Credenciamento</div>
+          <div class="tl-desc" data-i18n="tl.d1.credpre.desc">Credenciamento dos participantes dos workshops do Pré-ENPEMT.</div>
+          <div class="tl-meta">
+            <span class="tl-badge badge-abertura" data-i18n="tl.badge.preenpemt">Pré-ENPEMT</span>
+            <span class="tl-local" data-i18n="tl.local.hall">📍 Hall de entrada da Escola de Música</span>
+          </div>
+        </div>
+
+        <div class="tl-item" data-tipo="curso">
           <div class="tl-time">09:00 – 12:00</div>
-          <div class="tl-title" data-i18n="tl.curso.title">Cursos Pré-Congresso e Oficinas</div>
-          <div class="tl-desc" data-i18n="tl.curso.desc">Cursos e oficinas simultâneos, em salas diferentes. Títulos e ministrantes a confirmar.</div>
+          <div class="tl-title" data-i18n="tl.d1.wsmat.title">Workshops do Período Matutino</div>
+          <div class="tl-desc" data-i18n="tl.d1.ws.desc">Workshops simultâneos, em salas diferentes. Títulos e ministrantes a confirmar.</div>
           <div class="tl-meta">
-            <span class="tl-badge badge-abertura" data-i18n="tl.badge.curso">Cursos Pré-congresso</span>
+            <span class="tl-badge badge-abertura" data-i18n="tl.badge.preenpemt">Pré-ENPEMT</span>
             <span class="tl-local" data-i18n="tl.local.confirmar">📍 Local a confirmar</span>
           </div>
         </div>
 
-
-
-       <div class="tl-item" data-tipo="curso">
+        <div class="tl-item" data-tipo="curso">
           <div class="tl-time">14:00 – 17:00</div>
-          <div class="tl-title" data-i18n="tl.curso.title">Cursos Pré-Congresso e Oficinas</div>
-          <div class="tl-desc" data-i18n="tl.curso.desc">Cursos e oficinas simultâneos, em salas diferentes. Títulos e ministrantes a confirmar.</div>
+          <div class="tl-title" data-i18n="tl.d1.wsvesp.title">Workshops do Período Vespertino</div>
+          <div class="tl-desc" data-i18n="tl.d1.ws.desc">Workshops simultâneos, em salas diferentes. Títulos e ministrantes a confirmar.</div>
           <div class="tl-meta">
-            <span class="tl-badge badge-abertura" data-i18n="tl.badge.curso">Cursos Pré-congresso</span>
+            <span class="tl-badge badge-abertura" data-i18n="tl.badge.preenpemt">Pré-ENPEMT</span>
             <span class="tl-local" data-i18n="tl.local.confirmar">📍 Local a confirmar</span>
           </div>
         </div>
-
-
-
-
-
 
         <div class="tl-item" data-tipo="abertura">
           <div class="tl-time">18:00 – 19:00</div>
@@ -1843,38 +1990,43 @@
             <span class="tl-local" data-i18n="tl.local.hall">📍 Hall de entrada da Escola de Música</span>
           </div>
         </div>
+
         <div class="tl-item" data-tipo="abertura">
           <div class="tl-time">19:00 – 19:30</div>
-          <div class="tl-title" data-i18n="tl.cerimonia.abertura.title">Cerimônia de Abertura</div>
-          <div class="tl-desc" data-i18n="tl.cerimonia.abertura.desc">Abertura oficial do XXVI ENPEMT com a fala das comissões organizadoras.</div>
+          <div class="tl-title" data-i18n="tl.cerimonia.abertura.title">Abertura Oficial</div>
+          <div class="tl-desc" data-i18n="tl.cerimonia.abertura.desc">Abertura oficial do XXVI ENPEMT, com:<ul class="tl-pessoas"><li><strong>Luiz Carlos Belizário Filho</strong><span class="tl-cargo">Presidente da UBAM</span></li><li><strong>Leila Bergold</strong><span class="tl-cargo">Coordenadora da Comissão de Pesquisa da UBAM</span></li><li><strong>Verônica Rosário</strong><span class="tl-cargo">Coordenadora da Comissão de Organização do XXVI ENPEMT</span></li></ul></div>
           <div class="tl-meta">
             <span class="tl-badge badge-abertura" data-i18n="tl.badge.abertura">Abertura</span>
             <span class="tl-local" data-i18n="tl.local.auditorio">📍 Auditório da Escola de Música</span>
           </div>
         </div>
+
         <div class="tl-item" data-tipo="palestra">
           <div class="tl-time">19:30 – 20:30</div>
-          <div class="tl-title" data-i18n="tl.palestra.abertura.title">Palestra de Abertura — Nsamu Moonga</div>
-          <div class="tl-desc" data-i18n="tl.palestra.abertura.desc">Palestra magna de abertura do XXVI ENPEMT, com Nsamu Moonga.</div>
+          <div class="tl-title" data-i18n="tl.palestra.abertura.title">Palestra de Abertura: “Conexões Soberanas: Artes Musicais Indígenas e a Recusa à Audição na Musicoterapia Global”</div>
+          <div class="tl-subtitle" data-i18n="tl.palestra.abertura.orig">Sovereign Connections: Indigenous Musical Arts and the Refusal to Audition in Global Music Therapy</div>
+          <div class="tl-desc" data-i18n="tl.palestra.abertura.desc"><ul class="tl-pessoas"><li><strong>Nsamu Moonga</strong><span class="tl-cargo">Universidade de Pretória (África do Sul) · IAMM · WFMT/IDEA · IACAET</span></li></ul></div>
           <div class="tl-meta">
             <span class="tl-badge badge-palestra" data-i18n="tl.badge.palestra.magna">Palestra Magna</span>
             <span class="tl-local" data-i18n="tl.local.auditorio">📍 Auditório da Escola de Música</span>
           </div>
         </div>
+
         <div class="tl-item" data-tipo="cultural">
           <div class="tl-time">20:30 – 22:00</div>
-          <div class="tl-title" data-i18n="tl.cultural.title">Atividade Cultural de Abertura</div>
+          <div class="tl-title" data-i18n="tl.cultural.title">Atividade Cultural</div>
           <div class="tl-desc" data-i18n="tl.cultural.desc">Apresentação artística aberta ao público, celebrando a abertura do encontro. Atração a confirmar.</div>
           <div class="tl-meta">
             <span class="tl-badge badge-social" data-i18n="tl.badge.cultural">Atividade Cultural</span>
-            <span class="tl-local" data-i18n="tl.local.confirmar">📍 Local a confirmar</span>
+            <span class="tl-local" data-i18n="tl.local.auditorio">📍 Auditório da Escola de Música</span>
           </div>
         </div>
 
       </div>
     </div>
 
-    <div id="dia2" class="tab-content">
+    <div id="dia2" class="prog-dia">
+      <h3 class="gl-dia-titulo" data-i18n="prog.dia2.head">9/out · Sexta</h3>
       <div class="timeline">
         <div class="tl-item" data-tipo="abertura">
           <div class="tl-time">08:30 – 09:00</div>
@@ -1889,19 +2041,19 @@
         <div class="tl-item" data-tipo="mesa-redonda">
           <div class="tl-time">09:00 – 10:30</div>
           <div class="tl-title" data-i18n="tl.mesa3.title">Mesa Redonda: Fortalecimento da Cooperação Sul-Sul</div>
-          <div class="tl-desc" data-i18n="tl.mesa3.desc">Com Andressa Arndt (UNESPAR) e Nsamu Moonga (Zâmbia). Demais participantes a confirmar.</div>
+          <div class="tl-desc" data-i18n="tl.mesa3.desc"><ul class="tl-pessoas tl-pessoas-paises"><li><span class="tl-flag">🇧🇷</span><strong>Andressa Dias Arndt</strong><span class="tl-cargo">UNESPAR — Paraná, Brasil</span></li><li><span class="tl-flag">🇿🇲</span><strong>Nsamu Moonga</strong><span class="tl-cargo">Zâmbia · Universidade de Pretória (África do Sul)</span></li><li><span class="tl-flag">🇨🇴</span><strong>Juanita Eslava-Mejía</strong><span class="tl-cargo">Doutora em Musicoterapia — Colômbia</span></li></ul></div>
           <div class="tl-meta">
             <span class="tl-badge badge-palestra" data-i18n="tl.badge.mesa">Mesa Redonda</span>
             <span class="tl-local" data-i18n="tl.local.auditorio">📍 Auditório da Escola de Música</span>
           </div>
         </div>
 
-        <div class="tl-item" data-tipo="livre">
+        <div class="tl-item" data-tipo="livre cultural">
           <div class="tl-time">10:30 – 11:00</div>
-          <div class="tl-title" data-i18n="tl.coffee.palco.title">Coffee Break com Palco Aberto</div>
+          <div class="tl-title" data-i18n="tl.coffee.palco.title">Cafezinho com Palco Aberto</div>
           <div class="tl-desc" data-i18n="tl.coffee.palco.desc">Intervalo com palco aberto às apresentações artísticas dos participantes.</div>
           <div class="tl-meta">
-            <span class="tl-badge badge-oficina" data-i18n="tl.badge.coffee">Coffeebreak</span>
+            <span class="tl-badge badge-oficina" data-i18n="tl.badge.coffee">Cafezinho</span>
             <span class="tl-local" data-i18n="tl.local.hall">📍 Hall de entrada da Escola de Música</span>
           </div>
         </div>
@@ -1925,20 +2077,20 @@
 
         <div class="tl-item" data-tipo="palestra">
           <div class="tl-time">14:00 – 15:30</div>
-          <div class="tl-title" data-i18n="tl.d2.palestra.title">Palestra sobre Pesquisa</div>
-          <div class="tl-desc" data-i18n="tl.d2.palestra.desc">Palestra sobre pesquisa em musicoterapia. Palestrante a confirmar.</div>
+          <div class="tl-title" data-i18n="tl.d2.palestra.title">Palestra: “Musicoterapeutas Brasileiros em Pós-Graduações Stricto Sensu: um estudo longitudinal e metacientífico”</div>
+          <div class="tl-desc" data-i18n="tl.d2.palestra.desc"><ul class="tl-pessoas"><li><strong>Claudia Zanini</strong></li><li><strong>Clara Piazzetta</strong><span class="tl-cargo">UNESPAR</span></li></ul></div>
           <div class="tl-meta">
             <span class="tl-badge badge-palestra" data-i18n="tl.badge.palestra">Palestra</span>
             <span class="tl-local" data-i18n="tl.local.auditorio">📍 Auditório da Escola de Música</span>
           </div>
         </div>
 
-        <div class="tl-item" data-tipo="livre">
+        <div class="tl-item" data-tipo="livre cultural">
           <div class="tl-time">15:30 – 16:00</div>
-          <div class="tl-title" data-i18n="tl.coffee.palco.title">Coffee Break com Palco Aberto</div>
+          <div class="tl-title" data-i18n="tl.coffee.palco.title">Cafezinho com Palco Aberto</div>
           <div class="tl-desc" data-i18n="tl.coffee.palco.desc">Intervalo com palco aberto às apresentações artísticas dos participantes.</div>
           <div class="tl-meta">
-            <span class="tl-badge badge-oficina" data-i18n="tl.badge.coffee">Coffeebreak</span>
+            <span class="tl-badge badge-oficina" data-i18n="tl.badge.coffee">Cafezinho</span>
             <span class="tl-local" data-i18n="tl.local.hall">📍 Hall de entrada da Escola de Música</span>
           </div>
         </div>
@@ -1946,7 +2098,7 @@
         <div class="tl-item" data-tipo="mesa-redonda">
           <div class="tl-time">16:00 – 17:30</div>
           <div class="tl-title" data-i18n="tl.mesa2.title">Mesa Redonda: Acessibilidade e Diversidade Metodológica</div>
-          <div class="tl-desc" data-i18n="tl.mesa2.desc">Com Queila Oliveira (SP) e Aline André (UFMG). Demais participantes a confirmar.</div>
+          <div class="tl-desc" data-i18n="tl.mesa2.desc"><ul class="tl-pessoas"><li><strong>Queila Oliveira</strong><span class="tl-cargo">São Paulo</span></li><li><strong>Aline André</strong><span class="tl-cargo">UFMG</span></li></ul></div>
           <div class="tl-meta">
             <span class="tl-badge badge-palestra" data-i18n="tl.badge.mesa">Mesa Redonda</span>
             <span class="tl-local" data-i18n="tl.local.auditorio">📍 Auditório da Escola de Música</span>
@@ -1955,7 +2107,7 @@
 
         <div class="tl-item" data-tipo="grupo-trabalho">
           <div class="tl-time">17:30 – 19:00</div>
-          <div class="tl-title" data-i18n="tl.d2.gt.title">Grupos de Trabalho</div>
+          <div class="tl-title" data-i18n="tl.d2.gt.title">Grupos de Trabalho sobre Contexto de Pesquisa</div>
           <div class="tl-desc" data-i18n="tl.d2.gt.desc">Temas definidos a partir de consulta aos inscritos. Formulário de escolha em elaboração.</div>
           <div class="tl-meta">
             <span class="tl-badge badge-palestra" data-i18n="tl.badge.grupos">Grupos de Trabalho</span>
@@ -1965,7 +2117,7 @@
 
         <div class="tl-item" data-tipo="cultural">
           <div class="tl-time">19:00</div>
-          <div class="tl-title" data-i18n="tl.d2.divers.title">Apresentação Comentada do Projeto Di-Versxs — Musicovivências Queers!</div>
+          <div class="tl-title" data-i18n="tl.d2.divers.title">Apresentação Cultural do Projeto DiVersxs — Musicovivências Queers</div>
           <div class="tl-desc" data-i18n="tl.d2.divers.desc">Apresentação do projeto seguida de conversa com o público. <a href="https://diversxs.com.br" target="_blank" rel="noopener" class="tl-link">Acesse aqui o site oficial do projeto</a></div>
           <div class="tl-meta">
             <span class="tl-badge badge-social" data-i18n="tl.badge.cultural">Atividade Cultural</span>
@@ -1975,7 +2127,8 @@
       </div>
     </div>
 
-    <div id="dia3" class="tab-content">
+    <div id="dia3" class="prog-dia">
+      <h3 class="gl-dia-titulo" data-i18n="prog.dia3.head">10/out · Sábado</h3>
       <div class="timeline">
         <div class="tl-item" data-tipo="abertura">
           <div class="tl-time">08:30 – 09:00</div>
@@ -1990,29 +2143,29 @@
         <div class="tl-item" data-tipo="mesa-redonda">
           <div class="tl-time">09:00 – 10:30</div>
           <div class="tl-title" data-i18n="tl.mesa1.title">Mesa Redonda: Sistematização e Práticas Baseadas em Evidências</div>
-          <div class="tl-desc" data-i18n="tl.mesa1.desc">Com Camila A. Costa (UFRJ), Frederico Pedrosa (UFMG) e Mayara Ribeiro (UFMG).</div>
+          <div class="tl-desc" data-i18n="tl.mesa1.desc"><ul class="tl-pessoas"><li><strong>Camila A. Costa</strong><span class="tl-cargo">UFRJ</span></li><li><strong>Frederico Pedrosa</strong><span class="tl-cargo">UFMG</span></li><li><strong>Mayara Ribeiro</strong><span class="tl-cargo">UFG</span></li></ul></div>
           <div class="tl-meta">
             <span class="tl-badge badge-palestra" data-i18n="tl.badge.mesa">Mesa Redonda</span>
             <span class="tl-local" data-i18n="tl.local.auditorio">📍 Auditório da Escola de Música</span>
           </div>
         </div>
 
-        <div class="tl-item" data-tipo="livre">
+        <div class="tl-item" data-tipo="livre cultural">
           <div class="tl-time">10:30 – 11:00</div>
-          <div class="tl-title" data-i18n="tl.coffee.palco.title">Coffee Break com Palco Aberto</div>
+          <div class="tl-title" data-i18n="tl.coffee.palco.title">Cafezinho com Palco Aberto</div>
           <div class="tl-desc" data-i18n="tl.coffee.palco.desc">Intervalo com palco aberto às apresentações artísticas dos participantes.</div>
           <div class="tl-meta">
-            <span class="tl-badge badge-oficina" data-i18n="tl.badge.coffee">Coffeebreak</span>
+            <span class="tl-badge badge-oficina" data-i18n="tl.badge.coffee">Cafezinho</span>
             <span class="tl-local" data-i18n="tl.local.hall">📍 Hall de entrada da Escola de Música</span>
           </div>
         </div>
 
         <div class="tl-item" data-tipo="mesa-redonda">
           <div class="tl-time">11:00 – 12:30</div>
-          <div class="tl-title" data-i18n="tl.mesa.brjmt.title">Mesa Redonda: 30 Anos da BRJMT — Trajetória e Inovação da Publicação em Musicoterapia no Brasil</div>
-          <div class="tl-desc" data-i18n="tl.mesa.brjmt.desc">Com Clara Piazzeta (UNESPAR) e Marco Antônio (Fiocruz).</div>
+          <div class="tl-title" data-i18n="tl.mesa.brjmt.title">Painel 30 Anos da BRJMT: Trajetória e Inovação da Publicação em Musicoterapia no Brasil</div>
+          <div class="tl-desc" data-i18n="tl.mesa.brjmt.desc"><ul class="tl-pessoas"><li><strong>Clara Piazzetta</strong><span class="tl-cargo">UNESPAR</span></li><li><strong>Marco Antônio Carvalho Santos</strong><span class="tl-cargo">Fiocruz</span></li></ul></div>
           <div class="tl-meta">
-            <span class="tl-badge badge-palestra" data-i18n="tl.badge.mesa">Mesa Redonda</span>
+            <span class="tl-badge badge-palestra" data-i18n="tl.badge.painel">Painel</span>
             <span class="tl-local" data-i18n="tl.local.auditorio">📍 Auditório da Escola de Música</span>
           </div>
         </div>
@@ -2034,12 +2187,12 @@
           </div>
         </div>
 
-        <div class="tl-item" data-tipo="livre">
+        <div class="tl-item" data-tipo="livre cultural">
           <div class="tl-time">16:00 – 16:30</div>
-          <div class="tl-title" data-i18n="tl.coffee.palco.title">Coffee Break com Palco Aberto</div>
+          <div class="tl-title" data-i18n="tl.coffee.palco.title">Cafezinho com Palco Aberto</div>
           <div class="tl-desc" data-i18n="tl.coffee.palco.desc">Intervalo com palco aberto às apresentações artísticas dos participantes.</div>
           <div class="tl-meta">
-            <span class="tl-badge badge-oficina" data-i18n="tl.badge.coffee">Coffeebreak</span>
+            <span class="tl-badge badge-oficina" data-i18n="tl.badge.coffee">Cafezinho</span>
             <span class="tl-local" data-i18n="tl.local.hall">📍 Hall de entrada da Escola de Música</span>
           </div>
         </div>
@@ -2057,7 +2210,7 @@
         <div class="tl-item" data-tipo="assembleia">
           <div class="tl-time">17:00 – 18:30</div>
           <div class="tl-title" data-i18n="tl.d3.assembleia.title">Assembleia de Pesquisadores da UBAM</div>
-          <div class="tl-desc" data-i18n="tl.d3.assembleia.desc">Reunião dos pesquisadores vinculados à União Brasileira das Associações de Musicoterapia.</div>
+          <div class="tl-desc" data-i18n="tl.d3.assembleia.desc">Reunião dos pesquisadores vinculados à União Brasileira das Associações de Musicoterapia, com discussão sobre as propostas dos Grupos de Trabalho.</div>
           <div class="tl-meta">
             <span class="tl-badge badge-abertura" data-i18n="tl.badge.ubam">UBAM</span>
             <span class="tl-local" data-i18n="tl.local.auditorioconf">📍 Auditório da Escola de Música (a confirmar)</span>
@@ -2065,7 +2218,17 @@
         </div>
 
         <div class="tl-item" data-tipo="abertura">
-          <div class="tl-time">18:30 – 19:00</div>
+          <div class="tl-time">18:30 – 18:45</div>
+          <div class="tl-title" data-i18n="tl.d3.homenagens.title">Homenagens a Musicoterapeutas Pioneiras de Minas Gerais</div>
+          <div class="tl-desc" data-i18n="tl.d3.homenagens.desc">Reconhecimento às musicoterapeutas que abriram caminho para a área no estado.</div>
+          <div class="tl-meta">
+            <span class="tl-badge badge-abertura" data-i18n="tl.badge.homenagem">Homenagem</span>
+            <span class="tl-local" data-i18n="tl.local.auditorio">📍 Auditório da Escola de Música</span>
+          </div>
+        </div>
+
+        <div class="tl-item" data-tipo="abertura">
+          <div class="tl-time">18:45 – 19:00</div>
           <div class="tl-title" data-i18n="tl.encerramento.title">Entrega de Prêmios e Encerramento</div>
           <div class="tl-desc" data-i18n="tl.encerramento.desc">Entrega dos prêmios Cybelle Loureiro e Lia Rejane Mendes Barcellos, agradecimentos e encerramento do XXVI ENPEMT.</div>
           <div class="tl-meta">
@@ -2086,12 +2249,13 @@
       </div>
     </div>
 
-    <div id="dia4" class="tab-content">
+    <div id="dia4" class="prog-dia">
+      <h3 class="gl-dia-titulo" data-i18n="prog.dia4.head">11/out · Domingo</h3>
       <div class="timeline">
         <div class="tl-item" data-tipo="estudantes">
           <div class="tl-time" data-i18n="tl.d4.enemt.hora">Dia todo</div>
-          <div class="tl-title" data-i18n="tl.d4.enemt.title">ENEMT — Encontro Nacional dos Estudantes de Musicoterapia</div>
-          <div class="tl-desc" data-i18n="tl.d4.enemt.desc">Programação a confirmar com a comissão de estudantes.</div>
+          <div class="tl-title" data-i18n="tl.d4.enemt.title">XII ENEMT — Encontro Nacional de Estudantes de Musicoterapia</div>
+          <div class="tl-desc" data-i18n="tl.d4.enemt.desc">Encontro organizado pela comissão de estudantes. Programação a ser divulgada posteriormente.</div>
           <div class="tl-meta">
             <span class="tl-badge badge-social" data-i18n="tl.badge.estudantes">Estudantes</span>
             <span class="tl-local" data-i18n="tl.local.escola">📍 Escola de Música da UFMG</span>
@@ -2100,7 +2264,12 @@
       </div>
     </div>
 
-    <div id="prog-resultado" hidden></div>
+    </div>
+
+    <dialog class="gl-modal" id="gl-modal" aria-labelledby="gl-modal-titulo">
+      <button class="gl-modal-fechar" id="gl-modal-fechar" data-i18n-aria="gl.aria.fechar" aria-label="Fechar detalhes">&times;</button>
+      <div class="gl-modal-inner" id="gl-modal-inner"></div>
+    </dialog>
   </div>
 </section>
 
@@ -2703,70 +2872,133 @@ Os aplicativos de corrida, como Uber e 99 funcionam bem, além dos taxis tradici
     sections.forEach(s => spy.observe(s));
   })();
 
-  // Tabs programação
-  function switchTab(e, id) {
-    const select = document.getElementById('prog-filtro-select');
-    select.value = '';
-    filtrarProg('');
-    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-    document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
-    e.currentTarget.classList.add('active');
-    document.getElementById(id).classList.add('active');
+  /* ─── BARRA DA PROGRAMAÇÃO ─────────────────────────────────────────────────
+     Uma barra fixa serve às duas vistas: escolhe o formato, lista os dias da
+     vista ativa e filtra por tipo de atividade. Os atalhos são montados a
+     partir dos blocos de dia presentes na vista — a grade os cria a partir da
+     planilha, a lista já os traz no HTML —, então os dois lados se mantêm em
+     sincronia sem duplicar nada.                                            */
+  var PROG_BARRA = (function () {
+    var atalhos = document.getElementById('prog-atalhos');
+    var seletor = document.getElementById('prog-filtro-select');
+    var vistas  = { grade: document.getElementById('vista-grade'),
+                    lista: document.getElementById('vista-lista') };
+    var botoes  = document.querySelectorAll('.prog-switch-btn');
+    if (!atalhos || !vistas.grade || !vistas.lista) return { atualizar: function () {} };
+
+    var atual = 'grade', spy = null;
+
+    function blocosDaVista() {
+      return vistas[atual].querySelectorAll('.gl-dia, .prog-dia');
+    }
+
+    function montarAtalhos() {
+      var blocos = blocosDaVista();
+      atalhos.innerHTML = '';
+      if (spy) { spy.disconnect(); spy = null; }
+      if (!blocos.length) return;
+
+      var criados = [];
+      blocos.forEach(function (bloco) {
+        var titulo = bloco.querySelector('.gl-dia-titulo');
+        var completo = (titulo ? titulo.textContent : bloco.id).trim();
+        // No botão fica só a data ("8/out"); o dia da semana continua no
+        // cabeçalho do bloco e no nome acessível, para a barra caber numa linha
+        var curto = completo.split('·')[0].trim() || completo;
+
+        var b = document.createElement('button');
+        b.className = 'tab-btn';
+        b.type = 'button';
+        b.textContent = curto;
+        b.title = completo;
+        if (curto !== completo) b.setAttribute('aria-label', completo);
+        b.addEventListener('click', function () {
+          bloco.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        });
+        atalhos.appendChild(b);
+        criados.push(b);
+      });
+
+      // Destaca o dia que está na tela
+      spy = new IntersectionObserver(function (entradas) {
+        entradas.forEach(function (e) {
+          if (!e.isIntersecting) return;
+          var i = Array.prototype.indexOf.call(blocos, e.target);
+          criados.forEach(function (b, n) {
+            b.classList.toggle('active', n === i);
+            if (n === i) b.setAttribute('aria-current', 'true'); else b.removeAttribute('aria-current');
+          });
+        });
+      }, { rootMargin: '-15% 0px -70% 0px', threshold: 0 });
+      blocos.forEach(function (b) { spy.observe(b); });
+    }
+
+    function mostrar(qual) {
+      atual = qual;
+      Object.keys(vistas).forEach(function (k) { vistas[k].hidden = (k !== qual); });
+      botoes.forEach(function (b) {
+        var ativo = b.dataset.vista === qual;
+        b.classList.toggle('active', ativo);
+        b.setAttribute('aria-pressed', ativo ? 'true' : 'false');
+      });
+      montarAtalhos();
+      filtrarProg(seletor ? seletor.value : '');
+      try { localStorage.setItem('enpemt-vista', qual); } catch (e) {}
+    }
+
+    botoes.forEach(function (b) {
+      b.addEventListener('click', function () { mostrar(b.dataset.vista); });
+    });
+
+    var salva;
+    try { salva = localStorage.getItem('enpemt-vista'); } catch (e) {}
+    if (salva && vistas[salva]) mostrar(salva); else montarAtalhos();
+
+    return { atualizar: montarAtalhos, vista: function () { return atual; } };
+  })();
+
+  /* Filtra por tipo escondendo o que não bate, onde está. Nada sai do DOM, então
+     Ctrl+F e leitores de tela seguem alcançando tudo o que está visível.      */
+  /* Uma atividade pode ter mais de um tipo, separados por espaço. O cafezinho,
+     por exemplo, é "livre cultural": conta como intervalo e como atividade
+     cultural, porque tem palco aberto. O primeiro tipo é o que define a cor.  */
+  function temTipo(lista, procurado) {
+    return (' ' + (lista || '').trim() + ' ').indexOf(' ' + procurado + ' ') > -1;
   }
 
   function filtrarProg(tipo) {
-    const tabBtns     = document.querySelectorAll('.tab-btn');
-    const tabContents = document.querySelectorAll('.tab-content');
-    const resultado   = document.getElementById('prog-resultado');
+    var achou = 0;
 
-    if (!tipo) {
-      // Volta à vista por dias
-      tabContents.forEach(c => c.style.display = '');
-      // Reativa a aba que estava ativa
-      const active = document.querySelector('.tab-btn.active');
-      tabContents.forEach(c => c.classList.remove('active'));
-      if (active) {
-        const id = active.getAttribute('onclick').match(/'([^']+)'/)[1];
-        document.getElementById(id).classList.add('active');
-      } else {
-        document.getElementById('dia1').classList.add('active');
-      }
-      resultado.hidden = true;
-      return;
-    }
-
-    // Modo filtro: mantém botões de dia visíveis mas sem seleção; mostra lista unificada
-    tabBtns.forEach(b => b.classList.remove('active'));
-    tabContents.forEach(c => c.style.display = 'none');
-    resultado.hidden = false;
-    resultado.innerHTML = '';
-
-    const dias = [
-      { id: 'dia1', label: '8/out · Quinta-feira' },
-      { id: 'dia2', label: '9/out · Sexta-feira' },
-      { id: 'dia3', label: '10/out · Sábado' },
-      { id: 'dia4', label: '11/out · Domingo' },
-    ];
-
-    let encontrou = false;
-    dias.forEach(({ id, label }) => {
-      const items = document.querySelectorAll('#' + id + ' .tl-item[data-tipo="' + tipo + '"]');
-      if (!items.length) return;
-      encontrou = true;
-
-      const grupo = document.createElement('div');
-      grupo.className = 'prog-dia-grupo';
-      grupo.innerHTML = '<div class="prog-dia-header">' + label + '</div>';
-      const tl = document.createElement('div');
-      tl.className = 'timeline';
-      items.forEach(item => tl.appendChild(item.cloneNode(true)));
-      grupo.appendChild(tl);
-      resultado.appendChild(grupo);
+    // Vista lista: esconde a atividade e o dia que ficar sem nenhuma
+    document.querySelectorAll('#vista-lista > .prog-dia').forEach(function (dia) {
+      var visiveis = 0;
+      dia.querySelectorAll('.tl-item').forEach(function (item) {
+        var mostra = !tipo || temTipo(item.dataset.tipo, tipo);
+        item.hidden = !mostra;
+        if (mostra) visiveis++;
+      });
+      dia.hidden = !!tipo && visiveis === 0;
+      if (!dia.hidden) achou += visiveis;
     });
 
-    if (!encontrou) {
-      resultado.innerHTML = '<p class="prog-vazio">Nenhuma atividade encontrada para este filtro.</p>';
-    }
+    // Vista grade: esconde a célula, a linha de horário que esvaziar e o dia inteiro
+    document.querySelectorAll('#vista-grade .gl-dia').forEach(function (dia) {
+      var visiveis = 0;
+      dia.querySelectorAll('tbody tr').forEach(function (tr) {
+        var naLinha = 0;
+        tr.querySelectorAll('.gl-cel').forEach(function (cel) {
+          var mostra = !tipo || temTipo(cel.dataset.tipo, tipo);
+          cel.hidden = !mostra;
+          if (mostra) naLinha++;
+        });
+        tr.hidden = !!tipo && naLinha === 0;
+        visiveis += naLinha;
+      });
+      dia.hidden = !!tipo && visiveis === 0;
+      if (!dia.hidden) achou += visiveis;
+    });
+
+    document.getElementById('prog-resultado').hidden = !(tipo && achou === 0);
   }
 
   // Tabs mapa
@@ -2789,25 +3021,37 @@ Os aplicativos de corrida, como Uber e 99 funcionam bem, além dos taxis tradici
   var currentLang = localStorage.getItem('enpemt-lang') || 'pt';
   var TTS_LANGS   = { pt: 'pt-BR', en: 'en-US', es: 'es-ES' };
   var LANG_EMOJIS = { pt: '🇧🇷', en: '🇿🇦', es: '🇨🇴' };
+  var LANG_CODES  = { pt: 'pt-BR', en: 'en', es: 'es' };
   var LANG_ORDER  = ['pt', 'en', 'es'];
 
   var TRANSLATIONS = {
     pt: {
       'tl.local.confirmar':'📍 Local a confirmar','tl.local.auditorio':'📍 Auditório da Escola de Música','tl.local.hall':'📍 Hall de entrada da Escola de Música','tl.local.salas':'📍 Salas da Escola de Música (a confirmar)','tl.local.salasind':'📍 Salas individuais da Escola de Música (a confirmar)','tl.local.auditorioconf':'📍 Auditório da Escola de Música (a confirmar)','tl.local.escola':'📍 Escola de Música da UFMG',
-      'tl.d4.enemt.hora':'Dia todo','tl.d4.enemt.title':'ENEMT — Encontro Nacional dos Estudantes de Musicoterapia','tl.d4.enemt.desc':'Programação a confirmar com a comissão de estudantes.','tl.badge.estudantes':'Estudantes',
-      'tl.mesa.brjmt.title':'Mesa Redonda: 30 Anos da BRJMT — Trajetória e Inovação da Publicação em Musicoterapia no Brasil','tl.mesa.brjmt.desc':'Com Clara Piazzeta (UNESPAR) e Marco Antônio (Fiocruz).',
+      'tl.d4.enemt.hora':'Dia todo','tl.d4.enemt.title':'XII ENEMT — Encontro Nacional de Estudantes de Musicoterapia','tl.d4.enemt.desc':'Encontro organizado pela comissão de estudantes. Programação a ser divulgada posteriormente.','tl.badge.estudantes':'Estudantes',
+      'tl.mesa.brjmt.title':'Painel 30 Anos da BRJMT: Trajetória e Inovação da Publicação em Musicoterapia no Brasil','tl.mesa.brjmt.desc':'<ul class="tl-pessoas"><li><strong>Clara Piazzetta</strong><span class="tl-cargo">UNESPAR</span></li><li><strong>Marco Antônio Carvalho Santos</strong><span class="tl-cargo">Fiocruz</span></li></ul>',
       'tl.d3.comunicacoes.title':'Sessões Simultâneas de Comunicação Oral','tl.d3.comunicacoes.desc':'Apresentação dos trabalhos aprovados na modalidade comunicação oral, em salas simultâneas.',
       'tl.d3.lancamento.title':'Lançamento de Livros','tl.d3.lancamento.desc':'Lançamento das obras selecionadas na chamada, com apresentação e sessão de autógrafos.',
-      'tl.d3.assembleia.title':'Assembleia de Pesquisadores da UBAM','tl.d3.assembleia.desc':'Reunião dos pesquisadores vinculados à União Brasileira das Associações de Musicoterapia.',
+      'tl.d3.assembleia.title':'Assembleia de Pesquisadores da UBAM','tl.d3.assembleia.desc':'Reunião dos pesquisadores vinculados à União Brasileira das Associações de Musicoterapia, com discussão sobre as propostas dos Grupos de Trabalho.',
       'tl.d3.militar.title':'Apresentação do Grupo de Musicoterapia do Colégio Militar de BH','tl.d3.militar.desc':'Apresentação musical de encerramento do encontro.',
       'tl.d2.cred.title':'Credenciamento','tl.d2.cred.desc':'Continuação do credenciamento e retirada de materiais.',
-      'tl.coffee.palco.title':'Coffee Break com Palco Aberto','tl.coffee.palco.desc':'Intervalo com palco aberto às apresentações artísticas dos participantes.',
+      'tl.coffee.palco.title':'Cafezinho com Palco Aberto','tl.coffee.palco.desc':'Intervalo com palco aberto às apresentações artísticas dos participantes.',
       'tl.d2.posteres.title':'Painel de Pôsteres','tl.d2.posteres.desc':'Exposição dos pôsteres aprovados, com interação direta entre autores e participantes.',
-      'tl.d2.palestra.title':'Palestra sobre Pesquisa','tl.d2.palestra.desc':'Palestra sobre pesquisa em musicoterapia. Palestrante a confirmar.',
+      'tl.d2.palestra.title':'Palestra: “Musicoterapeutas Brasileiros em Pós-Graduações Stricto Sensu: um estudo longitudinal e metacientífico”','tl.d2.palestra.desc':'<ul class="tl-pessoas"><li><strong>Claudia Zanini</strong></li><li><strong>Clara Piazzetta</strong><span class="tl-cargo">UNESPAR</span></li></ul>',
       'tl.badge.palestra':'Palestra',
-      'tl.d2.gt.title':'Grupos de Trabalho','tl.d2.gt.desc':'Temas definidos a partir de consulta aos inscritos. Formulário de escolha em elaboração.',
-      'tl.d2.divers.title':'Apresentação Comentada do Projeto Di-Versxs — Musicovivências Queers!','tl.d2.divers.desc':'Apresentação do projeto seguida de conversa com o público. <a href="https://diversxs.com.br" target="_blank" rel="noopener" class="tl-link">Acesse aqui o site oficial do projeto</a>',
+      'tl.d2.gt.title':'Grupos de Trabalho sobre Contexto de Pesquisa','tl.d2.gt.desc':'Temas definidos a partir de consulta aos inscritos. Formulário de escolha em elaboração.',
+      'tl.d2.divers.title':'Apresentação Cultural do Projeto DiVersxs — Musicovivências Queers','tl.d2.divers.desc':'Apresentação do projeto seguida de conversa com o público. <a href="https://diversxs.com.br" target="_blank" rel="noopener" class="tl-link">Acesse aqui o site oficial do projeto</a>',
       'nav.evento':'Evento','nav.trabalhos':'Trabalhos','nav.chamadas':'Chamadas Abertas','nav.programacao':'Programação',
+      'prog.vista.grade':'Grade por sala','prog.vista.lista':'Lista por dia',
+      'prog.vista.dias':'Ir para o dia',
+      'prog.vista.aria':'Formato da programação',
+
+      'gl.trabalhos':'Trabalhos da sessão','gl.abrir':'Abrir arquivo',
+      'gl.agenda':'Adicionar à agenda','gl.agenda.dica':'abre no Google Agenda, Apple ou Outlook',
+      'gl.intro':'Grade de horários por sala. Clique em uma atividade para ver os detalhes.',
+      'gl.hora':'Horário','gl.local':'Local','gl.cap':'grade de horários por sala',
+      'gl.vazio':'Programação deste dia ainda não disponível.',
+      'gl.fonte':'Atualizado a partir da planilha da comissão organizadora.',
+      'gl.aria.fechar':'Fechar detalhes',
       'nav.local':'Local','nav.restaurantes':'Restaurantes','nav.bh':'Belo Horizonte',
       'nav.hospedagem':'Hospedagem','nav.inscricoes':'Inscrições',
       'sobre.label':'O Encontro',
@@ -2865,42 +3109,51 @@ Os aplicativos de corrida, como Uber e 99 funcionam bem, além dos taxis tradici
       'sobre.text1':'Após anos de encontros virtuais impostos pela pandemia, o ENPEMT retorna à sua essência: o encontro humano, o abraço, a escuta compartilhada. A 26ª edição acontece em Belo Horizonte, na histórica Escola de Música da UFMG.',
       'sobre.text2':'Três dias de pesquisa, arte, conexão e celebração da musicoterapia brasileira. Venha fazer parte deste momento histórico!',
       'sobre.text3':'Uma data especial: véspera do feriado nacional de 12 de outubro, permitindo que participantes de todo o Brasil aproveitem o fim de semana prolongado em BH.',
-      'prog.aviso':'Três dias de imersão em pesquisa, prática clínica e vivência musical. Programação sujeita a atualizações.',
+      'prog.aviso':'Três dias de imersão em pesquisa, prática clínica e vivência musical no <strong>XXVI ENPEMT</strong>, de 8 a 10 de outubro. Programação sujeita a atualizações. No domingo, 11/10, a Escola de Música recebe ainda o XII ENEMT — Encontro Nacional de Estudantes de Musicoterapia, com programação a ser divulgada posteriormente. Você também pode <a href="programacao-enpemt2026.pdf" download class="tl-link">baixar a programação em PDF</a>.',
       'prog.dia1.label':'· Quinta','prog.dia2.label':'· Sexta','prog.dia3.label':'· Sábado','prog.dia4.label':'· Domingo',
-      'prog.pdf':'Baixar PDF','prog.filtrar':'Filtrar:',
+      'prog.dia1.head':'8/out · Quinta','prog.dia2.head':'9/out · Sexta','prog.dia3.head':'10/out · Sábado','prog.dia4.head':'11/out · Domingo',
+      'prog.vazio':'Nenhuma atividade encontrada para este filtro.',
+      'prog.filtrar':'Filtrar:',
       'prog.f.todas':'Todas as atividades','prog.f.palestra':'Palestras',
       'prog.f.mesa':'Mesas Redondas','prog.f.comunicacoes':'Comunicações Orais',
       'prog.f.grupo':'Grupos de Trabalho','prog.f.poster':'Pôsteres',
       'prog.f.curso':'Cursos Pré-Congresso & Oficinas','prog.f.assembleia':'Assembleia de Pesquisadores',
       'prog.f.cultural':'Atividades Culturais','prog.f.abertura':'Abertura & Encerramento',
       'prog.f.livre':'Intervalos & Alimentação','prog.f.estudantes':'ENEMT · Estudantes',
-      'tl.curso.title':'Cursos Pré-Congresso e Oficinas','tl.curso.desc':'Cursos e oficinas simultâneos, em salas diferentes. Títulos e ministrantes a confirmar.',
-      'tl.badge.curso':'Cursos Pré-congresso',
+      'tl.d1.credpre.title':'Credenciamento','tl.d1.credpre.desc':'Credenciamento dos participantes dos workshops do Pré-ENPEMT.',
+      'tl.badge.preenpemt':'Pré-ENPEMT',
+      'tl.d1.wsmat.title':'Workshops do Período Matutino','tl.d1.wsvesp.title':'Workshops do Período Vespertino',
+      'tl.d1.ws.desc':'Workshops simultâneos, em salas diferentes. Títulos e ministrantes a confirmar.',
       'tl.credenciamento.title':'Credenciamento e recepção',
       'tl.credenciamento.desc':'Boas-vindas e retirada de materiais.',
       'tl.badge.recepcao':'Recepção',
-      'tl.cerimonia.abertura.title':'Cerimônia de Abertura',
-      'tl.cerimonia.abertura.desc':'Abertura oficial do XXVI ENPEMT com a fala das comissões organizadoras.',
+      'tl.cerimonia.abertura.title':'Abertura Oficial',
+      'tl.cerimonia.abertura.desc':'Abertura oficial do XXVI ENPEMT, com:<ul class="tl-pessoas"><li><strong>Luiz Carlos Belizário Filho</strong><span class="tl-cargo">Presidente da UBAM</span></li><li><strong>Leila Bergold</strong><span class="tl-cargo">Coordenadora da Comissão de Pesquisa da UBAM</span></li><li><strong>Verônica Rosário</strong><span class="tl-cargo">Coordenadora da Comissão de Organização do XXVI ENPEMT</span></li></ul>',
       'tl.badge.abertura':'Abertura',
-      'tl.palestra.abertura.title':'Palestra de Abertura — Nsamu Moonga',
-      'tl.palestra.abertura.desc':'Palestra magna de abertura do XXVI ENPEMT, com Nsamu Moonga.',
+      'tl.palestra.abertura.title':'Palestra de Abertura: “Conexões Soberanas: Artes Musicais Indígenas e a Recusa à Audição na Musicoterapia Global”',
+      'tl.palestra.abertura.orig':'Sovereign Connections: Indigenous Musical Arts and the Refusal to Audition in Global Music Therapy',
+      'tl.palestra.abertura.desc':'<ul class="tl-pessoas"><li><strong>Nsamu Moonga</strong><span class="tl-cargo">Universidade de Pretória (África do Sul) · IAMM · WFMT/IDEA · IACAET</span></li></ul>',
       'tl.badge.palestra.magna':'Palestra Magna',
-      'tl.cultural.title':'Atividade Cultural de Abertura',
+      'tl.cultural.title':'Atividade Cultural',
       'tl.cultural.desc':'Apresentação artística aberta ao público, celebrando a abertura do encontro. Atração a confirmar.','tl.badge.cultural':'Atividade Cultural',
       'tl.mesa1.title':'Mesa Redonda: Sistematização e Práticas Baseadas em Evidências',
-      'tl.mesa1.desc':'Com Camila A. Costa (UFRJ), Frederico Pedrosa (UFMG) e Mayara Ribeiro (UFMG).',
+      'tl.mesa1.desc':'<ul class="tl-pessoas"><li><strong>Camila A. Costa</strong><span class="tl-cargo">UFRJ</span></li><li><strong>Frederico Pedrosa</strong><span class="tl-cargo">UFMG</span></li><li><strong>Mayara Ribeiro</strong><span class="tl-cargo">UFG</span></li></ul>',
       'tl.badge.mesa':'Mesa Redonda',
+      'tl.badge.painel':'Painel',
+      'tl.d3.homenagens.title':'Homenagens a Musicoterapeutas Pioneiras de Minas Gerais',
+      'tl.d3.homenagens.desc':'Reconhecimento às musicoterapeutas que abriram caminho para a área no estado.',
+      'tl.badge.homenagem':'Homenagem',
       'tl.badge.comunicacoes':'Comunicações',
       'tl.almoco.title':'🍽️ Almoço',
       'tl.almoco.desc':'Restaurantes universitários disponíveis no campus: Praça de Serviços (perto do RU central), Restaurante da FAE e Restaurante da Faculdade de Letras. Veja a seção Restaurantes para detalhes.',
       'tl.almoco.sabado.desc':'Os restaurantes universitários estão fechados no sábado. Veja a seção Restaurantes para sugestões de lugares abertos na Pampulha e região do campus.',
       'tl.badge.almoco':'Almoço livre',
-      'tl.badge.coffee':'Coffeebreak',
+      'tl.badge.coffee':'Cafezinho',
       'tl.mesa2.title':'Mesa Redonda: Acessibilidade e Diversidade Metodológica',
-      'tl.mesa2.desc':'Com Queila Oliveira (SP) e Aline André (UFMG). Demais participantes a confirmar.',
+      'tl.mesa2.desc':'<ul class="tl-pessoas"><li><strong>Queila Oliveira</strong><span class="tl-cargo">São Paulo</span></li><li><strong>Aline André</strong><span class="tl-cargo">UFMG</span></li></ul>',
       'tl.badge.ubam':'UBAM',
       'tl.mesa3.title':'Mesa Redonda: Fortalecimento da Cooperação Sul-Sul',
-      'tl.mesa3.desc':'Com Andressa Arndt (UNESPAR) e Nsamu Moonga (Zâmbia). Demais participantes a confirmar.',
+      'tl.mesa3.desc':'<ul class="tl-pessoas tl-pessoas-paises"><li><span class="tl-flag">🇧🇷</span><strong>Andressa Dias Arndt</strong><span class="tl-cargo">UNESPAR — Paraná, Brasil</span></li><li><span class="tl-flag">🇿🇲</span><strong>Nsamu Moonga</strong><span class="tl-cargo">Zâmbia · Universidade de Pretória (África do Sul)</span></li><li><span class="tl-flag">🇨🇴</span><strong>Juanita Eslava-Mejía</strong><span class="tl-cargo">Doutora em Musicoterapia — Colômbia</span></li></ul>',
       'tl.badge.grupos':'Grupos de Trabalho',
       'tl.badge.posteres':'Pôsteres',
       'tl.encerramento.title':'Entrega de Prêmios e Encerramento',
@@ -2989,20 +3242,31 @@ Os aplicativos de corrida, como Uber e 99 funcionam bem, além dos taxis tradici
     },
     en: {
       'tl.local.confirmar':'📍 Venue to be confirmed','tl.local.auditorio':'📍 School of Music auditorium','tl.local.hall':'📍 School of Music entrance hall','tl.local.salas':'📍 School of Music classrooms (to be confirmed)','tl.local.salasind':'📍 Individual School of Music rooms (to be confirmed)','tl.local.auditorioconf':'📍 School of Music auditorium (to be confirmed)','tl.local.escola':'📍 UFMG School of Music',
-      'tl.d4.enemt.hora':'All day','tl.d4.enemt.title':'ENEMT — National Meeting of Music Therapy Students','tl.d4.enemt.desc':'Programme to be confirmed with the students committee.','tl.badge.estudantes':'Students',
-      'tl.mesa.brjmt.title':'Round Table: 30 Years of the BRJMT — History and Innovation in Music Therapy Publishing in Brazil','tl.mesa.brjmt.desc':'With Clara Piazzeta (UNESPAR) and Marco Antônio (Fiocruz).',
+      'tl.d4.enemt.hora':'All day','tl.d4.enemt.title':'XII ENEMT — National Meeting of Music Therapy Students','tl.d4.enemt.desc':'Meeting organized by the students committee. Programme to be announced later.','tl.badge.estudantes':'Students',
+      'tl.mesa.brjmt.title':'Panel — 30 Years of the BRJMT: History and Innovation in Music Therapy Publishing in Brazil','tl.mesa.brjmt.desc':'<ul class="tl-pessoas"><li><strong>Clara Piazzetta</strong><span class="tl-cargo">UNESPAR</span></li><li><strong>Marco Antônio Carvalho Santos</strong><span class="tl-cargo">Fiocruz</span></li></ul>',
       'tl.d3.comunicacoes.title':'Parallel Oral Presentation Sessions','tl.d3.comunicacoes.desc':'Presentation of the papers accepted as oral communications, in parallel rooms.',
       'tl.d3.lancamento.title':'Book Launches','tl.d3.lancamento.desc':'Launch of the works selected in the open call, with a presentation and book signing.',
-      'tl.d3.assembleia.title':'UBAM Researchers Assembly','tl.d3.assembleia.desc':'Meeting of researchers affiliated with the Brazilian Union of Music Therapy Associations.',
+      'tl.d3.assembleia.title':'UBAM Researchers Assembly','tl.d3.assembleia.desc':'Meeting of researchers affiliated with the Brazilian Union of Music Therapy Associations, with discussion of the Working Group proposals.',
       'tl.d3.militar.title':'Performance by the Music Therapy Group of the Belo Horizonte Military School','tl.d3.militar.desc':'Closing musical performance of the meeting.',
       'tl.d2.cred.title':'Check-in','tl.d2.cred.desc':'Check-in continues, along with materials pick-up.',
       'tl.coffee.palco.title':'Coffee Break with Open Stage','tl.coffee.palco.desc':'Break with an open stage for artistic performances by attendees.',
       'tl.d2.posteres.title':'Poster Panel','tl.d2.posteres.desc':'Display of the accepted posters, with direct interaction between authors and attendees.',
-      'tl.d2.palestra.title':'Lecture on Research','tl.d2.palestra.desc':'Lecture on music therapy research. Speaker to be confirmed.',
+      'tl.d2.palestra.title':'Lecture: “Musicoterapeutas Brasileiros em Pós-Graduações Stricto Sensu: um estudo longitudinal e metacientífico” (Brazilian Music Therapists in Stricto Sensu Graduate Programmes: a longitudinal and metascientific study)','tl.d2.palestra.desc':'<ul class="tl-pessoas"><li><strong>Claudia Zanini</strong></li><li><strong>Clara Piazzetta</strong><span class="tl-cargo">UNESPAR</span></li></ul>',
       'tl.badge.palestra':'Lecture',
-      'tl.d2.gt.title':'Working Groups','tl.d2.gt.desc':'Topics defined from a survey of registered attendees. Selection form in preparation.',
-      'tl.d2.divers.title':'Commented Presentation of the Di-Versxs Project — Musicovivências Queers!','tl.d2.divers.desc':'Presentation of the project followed by a conversation with the audience. <a href="https://diversxs.com.br" target="_blank" rel="noopener" class="tl-link">Visit the official project website</a>',
+      'tl.d2.gt.title':'Working Groups on Research Contexts','tl.d2.gt.desc':'Topics defined from a survey of registered attendees. Selection form in preparation.',
+      'tl.d2.divers.title':'Cultural Presentation of the DiVersxs Project — Musicovivências Queers','tl.d2.divers.desc':'Presentation of the project followed by a conversation with the audience. <a href="https://diversxs.com.br" target="_blank" rel="noopener" class="tl-link">Visit the official project website</a>',
       'nav.evento':'Event','nav.trabalhos':'Papers','nav.chamadas':'Open Calls','nav.programacao':'Schedule',
+      'prog.vista.grade':'Grid by room','prog.vista.lista':'Day by day',
+      'prog.vista.dias':'Jump to a day',
+      'prog.vista.aria':'Schedule format',
+
+      'gl.trabalhos':'Session papers','gl.abrir':'Open file',
+      'gl.agenda':'Add to calendar','gl.agenda.dica':'opens in Google Calendar, Apple or Outlook',
+      'gl.intro':'Grid of time slots by room. Click an activity to see the details.',
+      'gl.hora':'Time','gl.local':'Venue','gl.cap':'grid of time slots by room',
+      'gl.vazio':'Programme for this day not available yet.',
+      'gl.fonte':'Updated from the organizing committee spreadsheet.',
+      'gl.aria.fechar':'Close details',
       'nav.local':'Venue','nav.restaurantes':'Restaurants','nav.bh':'Belo Horizonte',
       'nav.hospedagem':'Accommodation','nav.inscricoes':'Registration',
       'sobre.label':'The Meeting',
@@ -3060,31 +3324,40 @@ Os aplicativos de corrida, como Uber e 99 funcionam bem, além dos taxis tradici
       'sobre.text1':'After years of virtual meetings imposed by the pandemic, ENPEMT returns to its essence: the human encounter, the embrace, the shared listening. The 26th edition takes place in Belo Horizonte, at the historic School of Music of UFMG.',
       'sobre.text2':'Three days of research, art, connection and celebration of Brazilian music therapy. Come be part of this historic moment!',
       'sobre.text3':'A special date: the eve of the national holiday of October 12th, allowing participants from all over Brazil to enjoy the extended weekend in BH.',
-      'prog.aviso':'Three days of immersion in research, clinical practice and musical experience. Schedule subject to updates.',
+      'prog.aviso':'Three days of immersion in research, clinical practice and musical experience at the <strong>XXVI ENPEMT</strong>, from October 8 to 10. Schedule subject to updates. On Sunday, October 11, the School of Music also hosts the XII ENEMT — National Meeting of Music Therapy Students, with its programme to be announced later. You can also <a href="programacao-enpemt2026.pdf" download class="tl-link">download the schedule as a PDF</a>.',
       'prog.dia1.label':'· Thursday','prog.dia2.label':'· Friday','prog.dia3.label':'· Saturday','prog.dia4.label':'· Sunday',
-      'prog.pdf':'Download PDF','prog.filtrar':'Filter:',
+      'prog.dia1.head':'Oct 8 · Thursday','prog.dia2.head':'Oct 9 · Friday','prog.dia3.head':'Oct 10 · Saturday','prog.dia4.head':'Oct 11 · Sunday',
+      'prog.vazio':'No activities found for this filter.',
+      'prog.filtrar':'Filter:',
       'prog.f.todas':'All activities','prog.f.palestra':'Lectures',
       'prog.f.mesa':'Round Tables','prog.f.comunicacoes':'Oral Presentations',
       'prog.f.grupo':'Working Groups','prog.f.poster':'Posters',
       'prog.f.curso':'Pre-Congress Courses & Workshops','prog.f.assembleia':'Researchers Assembly',
       'prog.f.cultural':'Cultural Activities','prog.f.abertura':'Opening & Closing',
       'prog.f.livre':'Breaks & Meals','prog.f.estudantes':'ENEMT · Students',
-      'tl.curso.title':'Pre-Congress Courses and Workshops','tl.curso.desc':'Simultaneous courses and workshops in different rooms. Titles and instructors to be confirmed.',
-      'tl.badge.curso':'Pre-Congress Courses',
+      'tl.d1.credpre.title':'Registration','tl.d1.credpre.desc':'Registration for participants in the Pre-ENPEMT workshops.',
+      'tl.badge.preenpemt':'Pre-ENPEMT',
+      'tl.d1.wsmat.title':'Morning Workshops','tl.d1.wsvesp.title':'Afternoon Workshops',
+      'tl.d1.ws.desc':'Simultaneous workshops in different rooms. Titles and instructors to be confirmed.',
       'tl.credenciamento.title':'Registration & Welcome Reception',
       'tl.credenciamento.desc':'Welcome and materials pick-up.',
       'tl.badge.recepcao':'Reception',
-      'tl.cerimonia.abertura.title':'Opening Ceremony',
-      'tl.cerimonia.abertura.desc':'Official opening of the XXVI ENPEMT with remarks from the organizing committees.',
+      'tl.cerimonia.abertura.title':'Official Opening',
+      'tl.cerimonia.abertura.desc':'Official opening of the XXVI ENPEMT, with:<ul class="tl-pessoas"><li><strong>Luiz Carlos Belizário Filho</strong><span class="tl-cargo">President of UBAM</span></li><li><strong>Leila Bergold</strong><span class="tl-cargo">Coordinator of the UBAM Research Committee</span></li><li><strong>Verônica Rosário</strong><span class="tl-cargo">Coordinator of the XXVI ENPEMT Organizing Committee</span></li></ul>',
       'tl.badge.abertura':'Opening',
-      'tl.palestra.abertura.title':'Opening Keynote — Nsamu Moonga',
-      'tl.palestra.abertura.desc':'Opening keynote lecture of the XXVI ENPEMT, with Nsamu Moonga.',
+      'tl.palestra.abertura.title':'Opening Keynote: “Sovereign Connections: Indigenous Musical Arts and the Refusal to Audition in Global Music Therapy”',
+      'tl.palestra.abertura.orig':'',
+      'tl.palestra.abertura.desc':'<ul class="tl-pessoas"><li><strong>Nsamu Moonga</strong><span class="tl-cargo">University of Pretoria (South Africa) · IAMM · WFMT/IDEA · IACAET</span></li></ul>',
       'tl.badge.palestra.magna':'Keynote Lecture',
-      'tl.cultural.title':'Opening Cultural Activity',
+      'tl.cultural.title':'Cultural Activity',
       'tl.cultural.desc':'Artistic performance open to the public, celebrating the opening of the meeting. Act to be confirmed.','tl.badge.cultural':'Cultural Activity',
       'tl.mesa1.title':'Round Table: Systematization and Evidence-Based Practices',
-      'tl.mesa1.desc':'With Camila A. Costa (UFRJ), Frederico Pedrosa (UFMG) and Mayara Ribeiro (UFMG).',
+      'tl.mesa1.desc':'<ul class="tl-pessoas"><li><strong>Camila A. Costa</strong><span class="tl-cargo">UFRJ</span></li><li><strong>Frederico Pedrosa</strong><span class="tl-cargo">UFMG</span></li><li><strong>Mayara Ribeiro</strong><span class="tl-cargo">UFG</span></li></ul>',
       'tl.badge.mesa':'Round Table',
+      'tl.badge.painel':'Panel',
+      'tl.d3.homenagens.title':'Tributes to Pioneer Music Therapists of Minas Gerais',
+      'tl.d3.homenagens.desc':'Recognition of the music therapists who opened the way for the field in the state.',
+      'tl.badge.homenagem':'Tribute',
       'tl.badge.comunicacoes':'Presentations',
       'tl.almoco.title':'🍽️ Lunch',
       'tl.almoco.desc':'University restaurants available on campus: Praça de Serviços (near the central cafeteria), FAE Restaurant and Faculty of Letters Restaurant. See the Restaurants section for details.',
@@ -3092,10 +3365,10 @@ Os aplicativos de corrida, como Uber e 99 funcionam bem, além dos taxis tradici
       'tl.badge.almoco':'Free Lunch',
       'tl.badge.coffee':'Coffee Break',
       'tl.mesa2.title':'Round Table: Accessibility and Methodological Diversity',
-      'tl.mesa2.desc':'With Queila Oliveira (SP) and Aline André (UFMG). Further participants to be confirmed.',
+      'tl.mesa2.desc':'<ul class="tl-pessoas"><li><strong>Queila Oliveira</strong><span class="tl-cargo">São Paulo, Brazil</span></li><li><strong>Aline André</strong><span class="tl-cargo">UFMG</span></li></ul>',
       'tl.badge.ubam':'UBAM',
       'tl.mesa3.title':'Round Table: Strengthening South-South Cooperation',
-      'tl.mesa3.desc':'With Andressa Arndt (UNESPAR) and Nsamu Moonga (Zambia). Further participants to be confirmed.',
+      'tl.mesa3.desc':'<ul class="tl-pessoas tl-pessoas-paises"><li><span class="tl-flag">🇧🇷</span><strong>Andressa Dias Arndt</strong><span class="tl-cargo">UNESPAR — Paraná, Brazil</span></li><li><span class="tl-flag">🇿🇲</span><strong>Nsamu Moonga</strong><span class="tl-cargo">Zambia · University of Pretoria (South Africa)</span></li><li><span class="tl-flag">🇨🇴</span><strong>Juanita Eslava-Mejía</strong><span class="tl-cargo">PhD in Music Therapy — Colombia</span></li></ul>',
       'tl.badge.grupos':'Working Groups',
       'tl.badge.posteres':'Posters',
       'tl.encerramento.title':'Awards Ceremony and Closing',
@@ -3184,20 +3457,31 @@ Os aplicativos de corrida, como Uber e 99 funcionam bem, além dos taxis tradici
     },
     es: {
       'tl.local.confirmar':'📍 Lugar a confirmar','tl.local.auditorio':'📍 Auditorio de la Escuela de Música','tl.local.hall':'📍 Hall de entrada de la Escuela de Música','tl.local.salas':'📍 Salas de la Escuela de Música (a confirmar)','tl.local.salasind':'📍 Salas individuales de la Escuela de Música (a confirmar)','tl.local.auditorioconf':'📍 Auditorio de la Escuela de Música (a confirmar)','tl.local.escola':'📍 Escuela de Música de la UFMG',
-      'tl.d4.enemt.hora':'Todo el día','tl.d4.enemt.title':'ENEMT — Encuentro Nacional de los Estudiantes de Musicoterapia','tl.d4.enemt.desc':'Programa a confirmar con la comisión de estudiantes.','tl.badge.estudantes':'Estudiantes',
-      'tl.mesa.brjmt.title':'Mesa Redonda: 30 Años de la BRJMT — Trayectoria e Innovación de la Publicación en Musicoterapia en Brasil','tl.mesa.brjmt.desc':'Con Clara Piazzeta (UNESPAR) y Marco Antônio (Fiocruz).',
+      'tl.d4.enemt.hora':'Todo el día','tl.d4.enemt.title':'XII ENEMT — Encuentro Nacional de Estudiantes de Musicoterapia','tl.d4.enemt.desc':'Encuentro organizado por la comisión de estudiantes. Programa a divulgarse posteriormente.','tl.badge.estudantes':'Estudiantes',
+      'tl.mesa.brjmt.title':'Panel 30 Años de la BRJMT: Trayectoria e Innovación de la Publicación en Musicoterapia en Brasil','tl.mesa.brjmt.desc':'<ul class="tl-pessoas"><li><strong>Clara Piazzetta</strong><span class="tl-cargo">UNESPAR</span></li><li><strong>Marco Antônio Carvalho Santos</strong><span class="tl-cargo">Fiocruz</span></li></ul>',
       'tl.d3.comunicacoes.title':'Sesiones Simultáneas de Comunicación Oral','tl.d3.comunicacoes.desc':'Presentación de los trabajos aprobados en la modalidad comunicación oral, en salas simultáneas.',
       'tl.d3.lancamento.title':'Lanzamiento de Libros','tl.d3.lancamento.desc':'Lanzamiento de las obras seleccionadas en la convocatoria, con presentación y sesión de autógrafos.',
-      'tl.d3.assembleia.title':'Asamblea de Investigadores de la UBAM','tl.d3.assembleia.desc':'Reunión de los investigadores vinculados a la Unión Brasileña de las Asociaciones de Musicoterapia.',
+      'tl.d3.assembleia.title':'Asamblea de Investigadores de la UBAM','tl.d3.assembleia.desc':'Reunión de los investigadores vinculados a la Unión Brasileña de las Asociaciones de Musicoterapia, con discusión sobre las propuestas de los Grupos de Trabajo.',
       'tl.d3.militar.title':'Presentación del Grupo de Musicoterapia del Colegio Militar de BH','tl.d3.militar.desc':'Presentación musical de cierre del encuentro.',
       'tl.d2.cred.title':'Acreditación','tl.d2.cred.desc':'Continuación de la acreditación y retirada de materiales.',
       'tl.coffee.palco.title':'Coffee Break con Escenario Abierto','tl.coffee.palco.desc':'Intervalo con escenario abierto a las presentaciones artísticas de los participantes.',
       'tl.d2.posteres.title':'Panel de Pósteres','tl.d2.posteres.desc':'Exposición de los pósteres aprobados, con interacción directa entre autores y participantes.',
-      'tl.d2.palestra.title':'Conferencia sobre Investigación','tl.d2.palestra.desc':'Conferencia sobre investigación en musicoterapia. Conferencista a confirmar.',
+      'tl.d2.palestra.title':'Conferencia: “Musicoterapeutas Brasileiros em Pós-Graduações Stricto Sensu: um estudo longitudinal e metacientífico” (Musicoterapeutas Brasileños en Posgrados Stricto Sensu: un estudio longitudinal y metacientífico)','tl.d2.palestra.desc':'<ul class="tl-pessoas"><li><strong>Claudia Zanini</strong></li><li><strong>Clara Piazzetta</strong><span class="tl-cargo">UNESPAR</span></li></ul>',
       'tl.badge.palestra':'Conferencia',
-      'tl.d2.gt.title':'Grupos de Trabajo','tl.d2.gt.desc':'Temas definidos a partir de una consulta a los inscritos. Formulario de elección en elaboración.',
-      'tl.d2.divers.title':'Presentación Comentada del Proyecto Di-Versxs — Musicovivências Queers!','tl.d2.divers.desc':'Presentación del proyecto seguida de conversación con el público. <a href="https://diversxs.com.br" target="_blank" rel="noopener" class="tl-link">Acceda aquí al sitio oficial del proyecto</a>',
+      'tl.d2.gt.title':'Grupos de Trabajo sobre Contexto de Investigación','tl.d2.gt.desc':'Temas definidos a partir de una consulta a los inscritos. Formulario de elección en elaboración.',
+      'tl.d2.divers.title':'Presentación Cultural del Proyecto DiVersxs — Musicovivências Queers','tl.d2.divers.desc':'Presentación del proyecto seguida de conversación con el público. <a href="https://diversxs.com.br" target="_blank" rel="noopener" class="tl-link">Acceda aquí al sitio oficial del proyecto</a>',
       'nav.evento':'Evento','nav.trabalhos':'Trabajos','nav.chamadas':'Convocatorias','nav.programacao':'Programa',
+      'prog.vista.grade':'Cuadro por sala','prog.vista.lista':'Lista por día',
+      'prog.vista.dias':'Ir al día',
+      'prog.vista.aria':'Formato del programa',
+
+      'gl.trabalhos':'Trabajos de la sesión','gl.abrir':'Abrir archivo',
+      'gl.agenda':'Añadir al calendario','gl.agenda.dica':'se abre en Google Calendar, Apple u Outlook',
+      'gl.intro':'Cuadro de horarios por sala. Haga clic en una actividad para ver los detalles.',
+      'gl.hora':'Horario','gl.local':'Lugar','gl.cap':'cuadro de horarios por sala',
+      'gl.vazio':'Programa de este día aún no disponible.',
+      'gl.fonte':'Actualizado a partir de la hoja de cálculo de la comisión organizadora.',
+      'gl.aria.fechar':'Cerrar detalles',
       'nav.local':'Local','nav.restaurantes':'Restaurantes','nav.bh':'Belo Horizonte',
       'nav.hospedagem':'Alojamiento','nav.inscricoes':'Inscripciones',
       'sobre.label':'El Encuentro',
@@ -3255,31 +3539,40 @@ Os aplicativos de corrida, como Uber e 99 funcionam bem, além dos taxis tradici
       'sobre.text1':'Tras años de encuentros virtuales impuestos por la pandemia, el ENPEMT regresa a su esencia: el encuentro humano, el abrazo, la escucha compartida. La 26ª edición tiene lugar en Belo Horizonte, en la histórica Escuela de Música de la UFMG.',
       'sobre.text2':'Tres días de investigación, arte, conexión y celebración de la musicoterapia brasileña. ¡Venga a ser parte de este momento histórico!',
       'sobre.text3':'Una fecha especial: víspera del feriado nacional del 12 de octubre, lo que permite a participantes de todo Brasil disfrutar del fin de semana largo en BH.',
-      'prog.aviso':'Tres días de inmersión en investigación, práctica clínica y vivencia musical. Programa sujeto a actualizaciones.',
+      'prog.aviso':'Tres días de inmersión en investigación, práctica clínica y vivencia musical en el <strong>XXVI ENPEMT</strong>, del 8 al 10 de octubre. Programa sujeto a actualizaciones. El domingo 11/10, la Escuela de Música recibe además el XII ENEMT — Encuentro Nacional de Estudiantes de Musicoterapia, con programa a divulgarse posteriormente. También puede <a href="programacao-enpemt2026.pdf" download class="tl-link">descargar el programa en PDF</a>.',
       'prog.dia1.label':'· Jueves','prog.dia2.label':'· Viernes','prog.dia3.label':'· Sábado','prog.dia4.label':'· Domingo',
-      'prog.pdf':'Descargar PDF','prog.filtrar':'Filtrar:',
+      'prog.dia1.head':'8/oct · Jueves','prog.dia2.head':'9/oct · Viernes','prog.dia3.head':'10/oct · Sábado','prog.dia4.head':'11/oct · Domingo',
+      'prog.vazio':'Ninguna actividad encontrada para este filtro.',
+      'prog.filtrar':'Filtrar:',
       'prog.f.todas':'Todas las actividades','prog.f.palestra':'Conferencias',
       'prog.f.mesa':'Mesas Redondas','prog.f.comunicacoes':'Comunicaciones Orales',
       'prog.f.grupo':'Grupos de Trabajo','prog.f.poster':'Pósteres',
       'prog.f.curso':'Cursos Pre-Congreso y Talleres','prog.f.assembleia':'Asamblea de Investigadores',
       'prog.f.cultural':'Actividades Culturales','prog.f.abertura':'Apertura y Cierre',
       'prog.f.livre':'Pausas y Alimentación','prog.f.estudantes':'ENEMT · Estudiantes',
-      'tl.curso.title':'Cursos Pre-Congreso y Talleres','tl.curso.desc':'Cursos y talleres simultáneos, en salas diferentes. Títulos y docentes a confirmar.',
-      'tl.badge.curso':'Cursos Pre-Congreso',
+      'tl.d1.credpre.title':'Acreditación','tl.d1.credpre.desc':'Acreditación de los participantes de los talleres del Pre-ENPEMT.',
+      'tl.badge.preenpemt':'Pre-ENPEMT',
+      'tl.d1.wsmat.title':'Talleres del Período Matutino','tl.d1.wsvesp.title':'Talleres del Período Vespertino',
+      'tl.d1.ws.desc':'Talleres simultáneos, en salas diferentes. Títulos y docentes a confirmar.',
       'tl.credenciamento.title':'Acreditación y recepción',
       'tl.credenciamento.desc':'Bienvenida y recogida de materiales.',
       'tl.badge.recepcao':'Recepción',
-      'tl.cerimonia.abertura.title':'Ceremonia de Apertura',
-      'tl.cerimonia.abertura.desc':'Apertura oficial del XXVI ENPEMT con palabras de las comisiones organizadoras.',
+      'tl.cerimonia.abertura.title':'Apertura Oficial',
+      'tl.cerimonia.abertura.desc':'Apertura oficial del XXVI ENPEMT, con:<ul class="tl-pessoas"><li><strong>Luiz Carlos Belizário Filho</strong><span class="tl-cargo">Presidente de la UBAM</span></li><li><strong>Leila Bergold</strong><span class="tl-cargo">Coordinadora de la Comisión de Investigación de la UBAM</span></li><li><strong>Verônica Rosário</strong><span class="tl-cargo">Coordinadora de la Comisión de Organización del XXVI ENPEMT</span></li></ul>',
       'tl.badge.abertura':'Apertura',
-      'tl.palestra.abertura.title':'Conferencia de Apertura — Nsamu Moonga',
-      'tl.palestra.abertura.desc':'Conferencia magistral de apertura del XXVI ENPEMT, con Nsamu Moonga.',
+      'tl.palestra.abertura.title':'Conferencia de Apertura: “Conexiones Soberanas: Artes Musicales Indígenas y el Rechazo a la Audición en la Musicoterapia Global”',
+      'tl.palestra.abertura.orig':'Sovereign Connections: Indigenous Musical Arts and the Refusal to Audition in Global Music Therapy',
+      'tl.palestra.abertura.desc':'<ul class="tl-pessoas"><li><strong>Nsamu Moonga</strong><span class="tl-cargo">Universidad de Pretoria (Sudáfrica) · IAMM · WFMT/IDEA · IACAET</span></li></ul>',
       'tl.badge.palestra.magna':'Conferencia Magistral',
-      'tl.cultural.title':'Actividad Cultural de Apertura',
+      'tl.cultural.title':'Actividad Cultural',
       'tl.cultural.desc':'Presentación artística abierta al público, celebrando la apertura del encuentro. Atracción a confirmar.','tl.badge.cultural':'Actividad Cultural',
       'tl.mesa1.title':'Mesa Redonda: Sistematización y Prácticas Basadas en Evidencias',
-      'tl.mesa1.desc':'Con Camila A. Costa (UFRJ), Frederico Pedrosa (UFMG) y Mayara Ribeiro (UFMG).',
+      'tl.mesa1.desc':'<ul class="tl-pessoas"><li><strong>Camila A. Costa</strong><span class="tl-cargo">UFRJ</span></li><li><strong>Frederico Pedrosa</strong><span class="tl-cargo">UFMG</span></li><li><strong>Mayara Ribeiro</strong><span class="tl-cargo">UFG</span></li></ul>',
       'tl.badge.mesa':'Mesa Redonda',
+      'tl.badge.painel':'Panel',
+      'tl.d3.homenagens.title':'Homenajes a Musicoterapeutas Pioneras de Minas Gerais',
+      'tl.d3.homenagens.desc':'Reconocimiento a las musicoterapeutas que abrieron camino para el área en el estado.',
+      'tl.badge.homenagem':'Homenaje',
       'tl.badge.comunicacoes':'Comunicaciones',
       'tl.almoco.title':'🍽️ Almuerzo',
       'tl.almoco.desc':'Restaurantes universitarios disponibles en el campus: Praça de Serviços (cerca de la cafetería central), Restaurante de la FAE y Restaurante de la Facultad de Letras. Consulte la sección Restaurantes para más detalles.',
@@ -3287,10 +3580,10 @@ Os aplicativos de corrida, como Uber e 99 funcionam bem, além dos taxis tradici
       'tl.badge.almoco':'Almuerzo libre',
       'tl.badge.coffee':'Coffee Break',
       'tl.mesa2.title':'Mesa Redonda: Accesibilidad y Diversidad Metodológica',
-      'tl.mesa2.desc':'Con Queila Oliveira (SP) y Aline André (UFMG). Demás participantes a confirmar.',
+      'tl.mesa2.desc':'<ul class="tl-pessoas"><li><strong>Queila Oliveira</strong><span class="tl-cargo">São Paulo, Brasil</span></li><li><strong>Aline André</strong><span class="tl-cargo">UFMG</span></li></ul>',
       'tl.badge.ubam':'UBAM',
       'tl.mesa3.title':'Mesa Redonda: Fortalecimiento de la Cooperación Sur-Sur',
-      'tl.mesa3.desc':'Con Andressa Arndt (UNESPAR) y Nsamu Moonga (Zambia). Demás participantes a confirmar.',
+      'tl.mesa3.desc':'<ul class="tl-pessoas tl-pessoas-paises"><li><span class="tl-flag">🇧🇷</span><strong>Andressa Dias Arndt</strong><span class="tl-cargo">UNESPAR — Paraná, Brasil</span></li><li><span class="tl-flag">🇿🇲</span><strong>Nsamu Moonga</strong><span class="tl-cargo">Zambia · Universidad de Pretoria (Sudáfrica)</span></li><li><span class="tl-flag">🇨🇴</span><strong>Juanita Eslava-Mejía</strong><span class="tl-cargo">Doctora en Musicoterapia — Colombia</span></li></ul>',
       'tl.badge.grupos':'Grupos de Trabajo',
       'tl.badge.posteres':'Pósteres',
       'tl.encerramento.title':'Entrega de Premios y Cierre',
@@ -3386,6 +3679,10 @@ Os aplicativos de corrida, como Uber e 99 funcionam bem, além dos taxis tradici
       var v = t[el.dataset.i18n];
       if (v !== undefined) el.innerHTML = v;
     });
+    document.querySelectorAll('[data-i18n-aria]').forEach(function (el) {
+      var v = t[el.dataset.i18nAria];
+      if (v !== undefined) el.setAttribute('aria-label', v);
+    });
     document.querySelectorAll('.lang-flag, .nav-lang-flag').forEach(function(btn) {
       btn.classList.toggle('lang-active', btn.dataset.lang === lang);
     });
@@ -3393,8 +3690,18 @@ Os aplicativos de corrida, como Uber e 99 funcionam bem, além dos taxis tradici
     if (lbl) lbl.textContent = t['tts.label'] || 'Leitor de tela';
     var toggle = document.getElementById('tts-lang-btn');
     if (toggle) toggle.textContent = LANG_EMOJIS[lang] || '🌐';
+    document.documentElement.lang = LANG_CODES[lang] || 'pt-BR';
     localStorage.setItem('enpemt-lang', lang);
   }
+
+  // Disponível para blocos que montam conteúdo em tempo de execução
+  window.ENPEMT_I18N = {
+    lang: function () { return currentLang; },
+    t: function (chave) {
+      var d = TRANSLATIONS[currentLang] || TRANSLATIONS['pt'];
+      return (d && d[chave]) || TRANSLATIONS['pt'][chave] || chave;
+    }
+  };
 
   // Aplica idioma salvo
   setLang(currentLang);
@@ -3608,6 +3915,486 @@ Os aplicativos de corrida, como Uber e 99 funcionam bem, além dos taxis tradici
   window.addEventListener('resize', placeNavBrands);
   // ─────────────────────────────────────────────────────────────────────────
 
+
+  // ─── CHAVE ENTRE AS DUAS VISTAS DA PROGRAMAÇÃO ───────────────────────────
+  (function () {
+    var botoes = document.querySelectorAll('.prog-switch-btn');
+    var vistas = { grade: document.getElementById('vista-grade'),
+                   lista: document.getElementById('vista-lista') };
+    if (!botoes.length || !vistas.grade || !vistas.lista) return;
+
+    function mostrar(qual) {
+      Object.keys(vistas).forEach(function (k) { vistas[k].hidden = (k !== qual); });
+      botoes.forEach(function (b) {
+        var ativo = b.dataset.vista === qual;
+        b.classList.toggle('active', ativo);
+        b.setAttribute('aria-pressed', ativo ? 'true' : 'false');
+      });
+      try { localStorage.setItem('enpemt-vista', qual); } catch (e) {}
+    }
+
+    botoes.forEach(function (b) {
+      b.addEventListener('click', function () { mostrar(b.dataset.vista); });
+    });
+
+    var salva;
+    try { salva = localStorage.getItem('enpemt-vista'); } catch (e) {}
+    if (salva && vistas[salva]) mostrar(salva);
+  })();
+
+  /* ═══════════════════════════════════════════════════════════════════════
+     PROGRAMAÇÃO AT A GLANCE — grade horário × sala, alimentada por planilha
+
+     Esta grade e os cards que ela abre vêm da planilha. A lista por dia, logo
+     abaixo na página, é escrita à mão no HTML e não depende daqui.
+
+     COMO LIGAR A PLANILHA (uma vez só)
+     ────────────────────────────────────────────────────────────────────
+     No Google Sheets: Arquivo → Compartilhar → Publicar na web → escolher a
+     página → formato "Valores separados por vírgula (.csv)" → Publicar.
+     Faça isso para "sessoes" e para "trabalhos" e cole os links abaixo.
+     Depois disso, editar a planilha atualiza o site sozinho.
+
+     ── PÁGINA "sessoes" — uma linha por atividade ──────────────────────
+     id            código curto e único (só obrigatório se houver trabalhos)
+     data          2026-10-08  → habilita o botão "Adicionar à agenda"
+     dia           rótulo do dia, ex.: 8/out · Quinta   (agrupa e ordena;
+                   no botão de atalho aparece só o que vem antes do "·")
+     inicio / fim  09:00 e 12:00   (o fim pode ficar vazio)
+     sala          nome curto, vira coluna da grade.
+                   VAZIO = atividade ocupa a largura toda (almoço, plenárias)
+     local         texto do 📍 no card, ex.: Auditório da Escola de Música
+                   (se vazio, usa "sala")
+     titulo        nome da atividade
+     subtitulo     linha secundária em itálico, ex.: título original em inglês
+     tipo          palestra | mesa-redonda | comunicacoes | grupo-trabalho |
+                   poster | curso | assembleia | cultural | abertura |
+                   livre | estudantes        → define a cor e o filtro
+     badge         etiqueta do card, ex.: Palestra Magna, Painel, Recepção
+                   (se vazio, usa o nome do tipo)
+     responsaveis  separados por ponto e vírgula, no formato Nome — Afiliação.
+                   Pode começar com bandeira:
+                   🇧🇷 Ana Silva — UFMG; 🇨🇴 Juana Pérez — Bogotá
+     descricao     texto livre
+     link          endereço de uma página externa ligada à atividade
+     link_texto    texto do link, ex.: Acesse o site oficial do projeto
+
+     Traduções (opcionais, usadas quando preenchidas; senão cai no português):
+     titulo_en/_es, subtitulo_en/_es, descricao_en/_es, badge_en/_es,
+     local_en/_es, dia_en/_es
+
+     ── PÁGINA "trabalhos" — uma linha por pôster ou comunicação ────────
+     sessao_id     o mesmo valor da coluna "id" da sessão correspondente
+     titulo        título do trabalho
+     autores       autoria, texto livre
+     link          URL do PDF do pôster ou do resumo
+     rotulo        texto do link, ex.: Ver pôster (PDF) / Ler resumo
+
+     ── VÁRIAS SALAS AO MESMO TEMPO ────────────────────────────────────
+     Para 8 salas simultâneas, crie 8 linhas em "sessoes": mesma data e
+     horário, mudando só "sala" e "id". As colunas surgem sozinhas.
+
+     Sem os links preenchidos — ou se a planilha não responder — a grade
+     usa a cópia embutida em FALLBACK_SESSOES.
+     ═══════════════════════════════════════════════════════════════════ */
+  (function () {
+    // Planilha da comissão organizadora — páginas "sessoes" e "trabalhos"
+    var CSV_SESSOES   = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSiSQFgYB0pMaO2AWFNfewMCiz9U8ijZ4rECspRPZBAwesW1nxvmtCkJs_eCQCgNoXvE4vE3ifoeXhm/pub?gid=187586152&single=true&output=csv';
+    var CSV_TRABALHOS = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSiSQFgYB0pMaO2AWFNfewMCiz9U8ijZ4rECspRPZBAwesW1nxvmtCkJs_eCQCgNoXvE4vE3ifoeXhm/pub?gid=1383408156&single=true&output=csv';
+
+    var FALLBACK_SESSOES = 'id,data,dia,inicio,fim,sala,local,titulo,subtitulo,tipo,badge,responsaveis,descricao,link,link_texto,titulo_en,subtitulo_en,descricao_en,badge_en,local_en,dia_en,titulo_es,subtitulo_es,descricao_es,badge_es,local_es,dia_es\n\
+d08-01,2026-10-08,8/out · Quinta,08:00,,Hall de entrada,Hall de entrada da Escola de Música,Credenciamento,,abertura,Pré-ENPEMT,,Credenciamento dos participantes dos workshops do Pré-ENPEMT.,,,Registration,,Registration for participants in the Pre-ENPEMT workshops.,Pre-ENPEMT,School of Music entrance hall,Oct 8 · Thursday,Acreditación,,Acreditación de los participantes de los talleres del Pre-ENPEMT.,Pre-ENPEMT,Hall de entrada de la Escuela de Música,8/oct · Jueves\n\
+d08-02,2026-10-08,8/out · Quinta,09:00,12:00,A confirmar,Local a confirmar,Workshops do Período Matutino,,curso,Pré-ENPEMT,,"Workshops simultâneos, em salas diferentes. Títulos e ministrantes a confirmar.",,,Morning Workshops,,Simultaneous workshops in different rooms. Titles and instructors to be confirmed.,Pre-ENPEMT,Venue to be confirmed,Oct 8 · Thursday,Talleres del Período Matutino,,"Talleres simultáneos, en salas diferentes. Títulos y docentes a confirmar.",Pre-ENPEMT,Lugar a confirmar,8/oct · Jueves\n\
+d08-03,2026-10-08,8/out · Quinta,14:00,17:00,A confirmar,Local a confirmar,Workshops do Período Vespertino,,curso,Pré-ENPEMT,,"Workshops simultâneos, em salas diferentes. Títulos e ministrantes a confirmar.",,,Afternoon Workshops,,Simultaneous workshops in different rooms. Titles and instructors to be confirmed.,Pre-ENPEMT,Venue to be confirmed,Oct 8 · Thursday,Talleres del Período Vespertino,,"Talleres simultáneos, en salas diferentes. Títulos y docentes a confirmar.",Pre-ENPEMT,Lugar a confirmar,8/oct · Jueves\n\
+d08-04,2026-10-08,8/out · Quinta,18:00,19:00,Hall de entrada,Hall de entrada da Escola de Música,Credenciamento e recepção,,abertura,Recepção,,Boas-vindas e retirada de materiais.,,,Registration & Welcome Reception,,Welcome and materials pick-up.,Reception,School of Music entrance hall,Oct 8 · Thursday,Acreditación y recepción,,Bienvenida y recogida de materiales.,Recepción,Hall de entrada de la Escuela de Música,8/oct · Jueves\n\
+d08-05,2026-10-08,8/out · Quinta,19:00,19:30,Auditório,Auditório da Escola de Música,Abertura Oficial,,abertura,Abertura,Luiz Carlos Belizário Filho — Presidente da UBAM; Leila Bergold — Coordenadora da Comissão de Pesquisa da UBAM; Verônica Rosário — Coordenadora da Comissão de Organização do XXVI ENPEMT,"Abertura oficial do XXVI ENPEMT, com:",,,Official Opening,,"Official opening of the XXVI ENPEMT, with:",Opening,School of Music auditorium,Oct 8 · Thursday,Apertura Oficial,,"Apertura oficial del XXVI ENPEMT, con:",Apertura,Auditorio de la Escuela de Música,8/oct · Jueves\n\
+d08-06,2026-10-08,8/out · Quinta,19:30,20:30,Auditório,Auditório da Escola de Música,Palestra de Abertura: “Conexões Soberanas: Artes Musicais Indígenas e a Recusa à Audição na Musicoterapia Global”,Sovereign Connections: Indigenous Musical Arts and the Refusal to Audition in Global Music Therapy,palestra,Palestra Magna,Nsamu Moonga — Universidade de Pretória (África do Sul) · IAMM · WFMT/IDEA · IACAET,,,,Opening Keynote: “Sovereign Connections: Indigenous Musical Arts and the Refusal to Audition in Global Music Therapy”,,,Keynote Lecture,School of Music auditorium,Oct 8 · Thursday,Conferencia de Apertura: “Conexiones Soberanas: Artes Musicales Indígenas y el Rechazo a la Audición en la Musicoterapia Global”,Sovereign Connections: Indigenous Musical Arts and the Refusal to Audition in Global Music Therapy,,Conferencia Magistral,Auditorio de la Escuela de Música,8/oct · Jueves\n\
+d08-07,2026-10-08,8/out · Quinta,20:30,22:00,Auditório,Auditório da Escola de Música,Atividade Cultural,,cultural,Atividade Cultural,,"Apresentação artística aberta ao público, celebrando a abertura do encontro. Atração a confirmar.",,,Cultural Activity,,"Artistic performance open to the public, celebrating the opening of the meeting. Act to be confirmed.",Cultural Activity,School of Music auditorium,Oct 8 · Thursday,Actividad Cultural,,"Presentación artística abierta al público, celebrando la apertura del encuentro. Atracción a confirmar.",Actividad Cultural,Auditorio de la Escuela de Música,8/oct · Jueves\n\
+d09-01,2026-10-09,9/out · Sexta,08:30,09:00,Hall de entrada,Hall de entrada da Escola de Música,Credenciamento,,abertura,Recepção,,Continuação do credenciamento e retirada de materiais.,,,Check-in,,"Check-in continues, along with materials pick-up.",Reception,School of Music entrance hall,Oct 9 · Friday,Acreditación,,Continuación de la acreditación y retirada de materiales.,Recepción,Hall de entrada de la Escuela de Música,9/oct · Viernes\n\
+d09-02,2026-10-09,9/out · Sexta,09:00,10:30,Auditório,Auditório da Escola de Música,Mesa Redonda: Fortalecimento da Cooperação Sul-Sul,,mesa-redonda,Mesa Redonda,"🇧🇷 Andressa Dias Arndt — UNESPAR — Paraná, Brasil; 🇿🇲 Nsamu Moonga — Zâmbia · Universidade de Pretória (África do Sul); 🇨🇴 Juanita Eslava-Mejía — Doutora em Musicoterapia — Colômbia",,,,Round Table: Strengthening South-South Cooperation,,,Round Table,School of Music auditorium,Oct 9 · Friday,Mesa Redonda: Fortalecimiento de la Cooperación Sur-Sur,,,Mesa Redonda,Auditorio de la Escuela de Música,9/oct · Viernes\n\
+d09-03,2026-10-09,9/out · Sexta,10:30,11:00,Hall de entrada,Hall de entrada da Escola de Música,Cafezinho com Palco Aberto,,livre cultural,Cafezinho,,Intervalo com palco aberto às apresentações artísticas dos participantes.,,,Coffee Break with Open Stage,,Break with an open stage for artistic performances by attendees.,Coffee Break,School of Music entrance hall,Oct 9 · Friday,Coffee Break con Escenario Abierto,,Intervalo con escenario abierto a las presentaciones artísticas de los participantes.,Coffee Break,Hall de entrada de la Escuela de Música,9/oct · Viernes\n\
+d09-04,2026-10-09,9/out · Sexta,11:00,12:30,Hall de entrada,Hall de entrada da Escola de Música,Painel de Pôsteres,,poster,Pôsteres,,"Exposição dos pôsteres aprovados, com interação direta entre autores e participantes.",,,Poster Panel,,"Display of the accepted posters, with direct interaction between authors and attendees.",Posters,School of Music entrance hall,Oct 9 · Friday,Panel de Pósteres,,"Exposición de los pósteres aprobados, con interacción directa entre autores y participantes.",Pósteres,Hall de entrada de la Escuela de Música,9/oct · Viernes\n\
+d09-05,2026-10-09,9/out · Sexta,12:30,14:00,,,🍽️ Almoço,,livre,Almoço livre,,"Restaurantes universitários disponíveis no campus: Praça de Serviços (perto do RU central), Restaurante da FAE e Restaurante da Faculdade de Letras. Veja a seção Restaurantes para detalhes.",,,🍽️ Lunch,,"University restaurants available on campus: Praça de Serviços (near the central cafeteria), FAE Restaurant and Faculty of Letters Restaurant. See the Restaurants section for details.",Free Lunch,,Oct 9 · Friday,🍽️ Almuerzo,,"Restaurantes universitarios disponibles en el campus: Praça de Serviços (cerca de la cafetería central), Restaurante de la FAE y Restaurante de la Facultad de Letras. Consulte la sección Restaurantes para más detalles.",Almuerzo libre,,9/oct · Viernes\n\
+d09-06,2026-10-09,9/out · Sexta,14:00,15:30,Auditório,Auditório da Escola de Música,Palestra: “Musicoterapeutas Brasileiros em Pós-Graduações Stricto Sensu: um estudo longitudinal e metacientífico”,,palestra,Palestra,Claudia Zanini; Clara Piazzetta — UNESPAR,,,,Lecture: “Musicoterapeutas Brasileiros em Pós-Graduações Stricto Sensu: um estudo longitudinal e metacientífico” (Brazilian Music Therapists in Stricto Sensu Graduate Programmes: a longitudinal and metascientific study),,,Lecture,School of Music auditorium,Oct 9 · Friday,Conferencia: “Musicoterapeutas Brasileiros em Pós-Graduações Stricto Sensu: um estudo longitudinal e metacientífico” (Musicoterapeutas Brasileños en Posgrados Stricto Sensu: un estudio longitudinal y metacientífico),,,Conferencia,Auditorio de la Escuela de Música,9/oct · Viernes\n\
+d09-07,2026-10-09,9/out · Sexta,15:30,16:00,Hall de entrada,Hall de entrada da Escola de Música,Cafezinho com Palco Aberto,,livre cultural,Cafezinho,,Intervalo com palco aberto às apresentações artísticas dos participantes.,,,Coffee Break with Open Stage,,Break with an open stage for artistic performances by attendees.,Coffee Break,School of Music entrance hall,Oct 9 · Friday,Coffee Break con Escenario Abierto,,Intervalo con escenario abierto a las presentaciones artísticas de los participantes.,Coffee Break,Hall de entrada de la Escuela de Música,9/oct · Viernes\n\
+d09-08,2026-10-09,9/out · Sexta,16:00,17:30,Auditório,Auditório da Escola de Música,Mesa Redonda: Acessibilidade e Diversidade Metodológica,,mesa-redonda,Mesa Redonda,Queila Oliveira — São Paulo; Aline André — UFMG,,,,Round Table: Accessibility and Methodological Diversity,,,Round Table,School of Music auditorium,Oct 9 · Friday,Mesa Redonda: Accesibilidad y Diversidad Metodológica,,,Mesa Redonda,Auditorio de la Escuela de Música,9/oct · Viernes\n\
+d09-09,2026-10-09,9/out · Sexta,17:30,19:00,Salas (a confirmar),Salas da Escola de Música (a confirmar),Grupos de Trabalho sobre Contexto de Pesquisa,,grupo-trabalho,Grupos de Trabalho,,Temas definidos a partir de consulta aos inscritos. Formulário de escolha em elaboração.,,,Working Groups on Research Contexts,,Topics defined from a survey of registered attendees. Selection form in preparation.,Working Groups,School of Music classrooms (to be confirmed),Oct 9 · Friday,Grupos de Trabajo sobre Contexto de Investigación,,Temas definidos a partir de una consulta a los inscritos. Formulario de elección en elaboración.,Grupos de Trabajo,Salas de la Escuela de Música (a confirmar),9/oct · Viernes\n\
+d09-10,2026-10-09,9/out · Sexta,19:00,,Auditório,Auditório da Escola de Música,Apresentação Cultural do Projeto DiVersxs — Musicovivências Queers,,cultural,Atividade Cultural,,Apresentação do projeto seguida de conversa com o público.,https://diversxs.com.br,Acesse aqui o site oficial do projeto,Cultural Presentation of the DiVersxs Project — Musicovivências Queers,,Presentation of the project followed by a conversation with the audience.,Cultural Activity,School of Music auditorium,Oct 9 · Friday,Presentación Cultural del Proyecto DiVersxs — Musicovivências Queers,,Presentación del proyecto seguida de conversación con el público.,Actividad Cultural,Auditorio de la Escuela de Música,9/oct · Viernes\n\
+d10-01,2026-10-10,10/out · Sábado,08:30,09:00,Hall de entrada,Hall de entrada da Escola de Música,Credenciamento,,abertura,Recepção,,Continuação do credenciamento e retirada de materiais.,,,Check-in,,"Check-in continues, along with materials pick-up.",Reception,School of Music entrance hall,Oct 10 · Saturday,Acreditación,,Continuación de la acreditación y retirada de materiales.,Recepción,Hall de entrada de la Escuela de Música,10/oct · Sábado\n\
+d10-02,2026-10-10,10/out · Sábado,09:00,10:30,Auditório,Auditório da Escola de Música,Mesa Redonda: Sistematização e Práticas Baseadas em Evidências,,mesa-redonda,Mesa Redonda,Camila A. Costa — UFRJ; Frederico Pedrosa — UFMG; Mayara Ribeiro — UFG,,,,Round Table: Systematization and Evidence-Based Practices,,,Round Table,School of Music auditorium,Oct 10 · Saturday,Mesa Redonda: Sistematización y Prácticas Basadas en Evidencias,,,Mesa Redonda,Auditorio de la Escuela de Música,10/oct · Sábado\n\
+d10-03,2026-10-10,10/out · Sábado,10:30,11:00,Hall de entrada,Hall de entrada da Escola de Música,Cafezinho com Palco Aberto,,livre cultural,Cafezinho,,Intervalo com palco aberto às apresentações artísticas dos participantes.,,,Coffee Break with Open Stage,,Break with an open stage for artistic performances by attendees.,Coffee Break,School of Music entrance hall,Oct 10 · Saturday,Coffee Break con Escenario Abierto,,Intervalo con escenario abierto a las presentaciones artísticas de los participantes.,Coffee Break,Hall de entrada de la Escuela de Música,10/oct · Sábado\n\
+d10-04,2026-10-10,10/out · Sábado,11:00,12:30,Auditório,Auditório da Escola de Música,Painel 30 Anos da BRJMT: Trajetória e Inovação da Publicação em Musicoterapia no Brasil,,mesa-redonda,Painel,Clara Piazzetta — UNESPAR; Marco Antônio Carvalho Santos — Fiocruz,,,,Panel — 30 Years of the BRJMT: History and Innovation in Music Therapy Publishing in Brazil,,,Panel,School of Music auditorium,Oct 10 · Saturday,Panel 30 Años de la BRJMT: Trayectoria e Innovación de la Publicación en Musicoterapia en Brasil,,,Panel,Auditorio de la Escuela de Música,10/oct · Sábado\n\
+d10-05,2026-10-10,10/out · Sábado,12:30,14:00,,,🍽️ Almoço,,livre,Almoço livre,,Os restaurantes universitários estão fechados no sábado. Veja a seção Restaurantes para sugestões de lugares abertos na Pampulha e região do campus.,,,🍽️ Lunch,,University restaurants are closed on Saturday. See the Restaurants section for suggestions of places open in Pampulha and the campus area.,Free Lunch,,Oct 10 · Saturday,🍽️ Almuerzo,,Los restaurantes universitarios están cerrados el sábado. Consulte la sección Restaurantes para sugerencias de lugares abiertos en Pampulha y los alrededores del campus.,Almuerzo libre,,10/oct · Sábado\n\
+d10-06a,2026-10-10,10/out · Sábado,14:00,16:00,Sala 1,Sala 1 — Escola de Música (a confirmar),Comunicações Orais — Sala 1,,comunicacoes,Comunicações,,Apresentação dos trabalhos aprovados na modalidade comunicação oral.,,,Oral Presentations — Room 1,,Presentation of the papers accepted as oral communications.,Presentations,Room 1 — School of Music (to be confirmed),Oct 10 · Saturday,Comunicaciones Orales — Sala 1,,Presentación de los trabajos aprobados en la modalidad comunicación oral.,Comunicaciones,Sala 1 — Escuela de Música (a confirmar),10/oct · Sábado\n\
+d10-06b,2026-10-10,10/out · Sábado,14:00,16:00,Sala 2,Sala 2 — Escola de Música (a confirmar),Comunicações Orais — Sala 2,,comunicacoes,Comunicações,,Apresentação dos trabalhos aprovados na modalidade comunicação oral.,,,Oral Presentations — Room 2,,Presentation of the papers accepted as oral communications.,Presentations,Room 2 — School of Music (to be confirmed),Oct 10 · Saturday,Comunicaciones Orales — Sala 2,,Presentación de los trabajos aprobados en la modalidad comunicación oral.,Comunicaciones,Sala 2 — Escuela de Música (a confirmar),10/oct · Sábado\n\
+d10-06c,2026-10-10,10/out · Sábado,14:00,16:00,Sala 3,Sala 3 — Escola de Música (a confirmar),Comunicações Orais — Sala 3,,comunicacoes,Comunicações,,Apresentação dos trabalhos aprovados na modalidade comunicação oral.,,,Oral Presentations — Room 3,,Presentation of the papers accepted as oral communications.,Presentations,Room 3 — School of Music (to be confirmed),Oct 10 · Saturday,Comunicaciones Orales — Sala 3,,Presentación de los trabajos aprobados en la modalidad comunicación oral.,Comunicaciones,Sala 3 — Escuela de Música (a confirmar),10/oct · Sábado\n\
+d10-06d,2026-10-10,10/out · Sábado,14:00,16:00,Sala 4,Sala 4 — Escola de Música (a confirmar),Comunicações Orais — Sala 4,,comunicacoes,Comunicações,,Apresentação dos trabalhos aprovados na modalidade comunicação oral.,,,Oral Presentations — Room 4,,Presentation of the papers accepted as oral communications.,Presentations,Room 4 — School of Music (to be confirmed),Oct 10 · Saturday,Comunicaciones Orales — Sala 4,,Presentación de los trabajos aprobados en la modalidad comunicación oral.,Comunicaciones,Sala 4 — Escuela de Música (a confirmar),10/oct · Sábado\n\
+d10-06e,2026-10-10,10/out · Sábado,14:00,16:00,Sala 5,Sala 5 — Escola de Música (a confirmar),Comunicações Orais — Sala 5,,comunicacoes,Comunicações,,Apresentação dos trabalhos aprovados na modalidade comunicação oral.,,,Oral Presentations — Room 5,,Presentation of the papers accepted as oral communications.,Presentations,Room 5 — School of Music (to be confirmed),Oct 10 · Saturday,Comunicaciones Orales — Sala 5,,Presentación de los trabajos aprobados en la modalidad comunicación oral.,Comunicaciones,Sala 5 — Escuela de Música (a confirmar),10/oct · Sábado\n\
+d10-06f,2026-10-10,10/out · Sábado,14:00,16:00,Sala 6,Sala 6 — Escola de Música (a confirmar),Comunicações Orais — Sala 6,,comunicacoes,Comunicações,,Apresentação dos trabalhos aprovados na modalidade comunicação oral.,,,Oral Presentations — Room 6,,Presentation of the papers accepted as oral communications.,Presentations,Room 6 — School of Music (to be confirmed),Oct 10 · Saturday,Comunicaciones Orales — Sala 6,,Presentación de los trabajos aprobados en la modalidad comunicación oral.,Comunicaciones,Sala 6 — Escuela de Música (a confirmar),10/oct · Sábado\n\
+d10-06g,2026-10-10,10/out · Sábado,14:00,16:00,Sala 7,Sala 7 — Escola de Música (a confirmar),Comunicações Orais — Sala 7,,comunicacoes,Comunicações,,Apresentação dos trabalhos aprovados na modalidade comunicação oral.,,,Oral Presentations — Room 7,,Presentation of the papers accepted as oral communications.,Presentations,Room 7 — School of Music (to be confirmed),Oct 10 · Saturday,Comunicaciones Orales — Sala 7,,Presentación de los trabajos aprobados en la modalidad comunicación oral.,Comunicaciones,Sala 7 — Escuela de Música (a confirmar),10/oct · Sábado\n\
+d10-06h,2026-10-10,10/out · Sábado,14:00,16:00,Sala 8,Sala 8 — Escola de Música (a confirmar),Comunicações Orais — Sala 8,,comunicacoes,Comunicações,,Apresentação dos trabalhos aprovados na modalidade comunicação oral.,,,Oral Presentations — Room 8,,Presentation of the papers accepted as oral communications.,Presentations,Room 8 — School of Music (to be confirmed),Oct 10 · Saturday,Comunicaciones Orales — Sala 8,,Presentación de los trabajos aprobados en la modalidad comunicación oral.,Comunicaciones,Sala 8 — Escuela de Música (a confirmar),10/oct · Sábado\n\
+d10-07,2026-10-10,10/out · Sábado,16:00,16:30,Hall de entrada,Hall de entrada da Escola de Música,Cafezinho com Palco Aberto,,livre cultural,Cafezinho,,Intervalo com palco aberto às apresentações artísticas dos participantes.,,,Coffee Break with Open Stage,,Break with an open stage for artistic performances by attendees.,Coffee Break,School of Music entrance hall,Oct 10 · Saturday,Coffee Break con Escenario Abierto,,Intervalo con escenario abierto a las presentaciones artísticas de los participantes.,Coffee Break,Hall de entrada de la Escuela de Música,10/oct · Sábado\n\
+d10-08,2026-10-10,10/out · Sábado,16:30,17:00,Hall de entrada,Hall de entrada da Escola de Música,Lançamento de Livros,,cultural,Atividade Cultural,,"Lançamento das obras selecionadas na chamada, com apresentação e sessão de autógrafos.",,,Book Launches,,"Launch of the works selected in the open call, with a presentation and book signing.",Cultural Activity,School of Music entrance hall,Oct 10 · Saturday,Lanzamiento de Libros,,"Lanzamiento de las obras seleccionadas en la convocatoria, con presentación y sesión de autógrafos.",Actividad Cultural,Hall de entrada de la Escuela de Música,10/oct · Sábado\n\
+d10-09,2026-10-10,10/out · Sábado,17:00,18:30,Auditório,Auditório da Escola de Música (a confirmar),Assembleia de Pesquisadores da UBAM,,assembleia,UBAM,,"Reunião dos pesquisadores vinculados à União Brasileira das Associações de Musicoterapia, com discussão sobre as propostas dos Grupos de Trabalho.",,,UBAM Researchers Assembly,,"Meeting of researchers affiliated with the Brazilian Union of Music Therapy Associations, with discussion of the Working Group proposals.",UBAM,School of Music auditorium (to be confirmed),Oct 10 · Saturday,Asamblea de Investigadores de la UBAM,,"Reunión de los investigadores vinculados a la Unión Brasileña de las Asociaciones de Musicoterapia, con discusión sobre las propuestas de los Grupos de Trabajo.",UBAM,Auditorio de la Escuela de Música (a confirmar),10/oct · Sábado\n\
+d10-10,2026-10-10,10/out · Sábado,18:30,18:45,Auditório,Auditório da Escola de Música,Homenagens a Musicoterapeutas Pioneiras de Minas Gerais,,abertura,Homenagem,,Reconhecimento às musicoterapeutas que abriram caminho para a área no estado.,,,Tributes to Pioneer Music Therapists of Minas Gerais,,Recognition of the music therapists who opened the way for the field in the state.,Tribute,School of Music auditorium,Oct 10 · Saturday,Homenajes a Musicoterapeutas Pioneras de Minas Gerais,,Reconocimiento a las musicoterapeutas que abrieron camino para el área en el estado.,Homenaje,Auditorio de la Escuela de Música,10/oct · Sábado\n\
+d10-11,2026-10-10,10/out · Sábado,18:45,19:00,Auditório,Auditório da Escola de Música,Entrega de Prêmios e Encerramento,,abertura,Encerramento,,"Entrega dos prêmios Cybelle Loureiro e Lia Rejane Mendes Barcellos, agradecimentos e encerramento do XXVI ENPEMT.",,,Awards Ceremony and Closing,,"Presentation of the Cybelle Loureiro and Lia Rejane Mendes Barcellos awards, acknowledgements and closing of the XXVI ENPEMT.",Closing,School of Music auditorium,Oct 10 · Saturday,Entrega de Premios y Cierre,,"Entrega de los premios Cybelle Loureiro y Lia Rejane Mendes Barcellos, agradecimientos y cierre del XXVI ENPEMT.",Cierre,Auditorio de la Escuela de Música,10/oct · Sábado\n\
+d10-12,2026-10-10,10/out · Sábado,19:00,,Auditório,Auditório da Escola de Música,Apresentação do Grupo de Musicoterapia do Colégio Militar de BH,,cultural,Atividade Cultural,,Apresentação musical de encerramento do encontro.,,,Performance by the Music Therapy Group of the Belo Horizonte Military School,,Closing musical performance of the meeting.,Cultural Activity,School of Music auditorium,Oct 10 · Saturday,Presentación del Grupo de Musicoterapia del Colegio Militar de BH,,Presentación musical de cierre del encuentro.,Actividad Cultural,Auditorio de la Escuela de Música,10/oct · Sábado\n\
+d11-01,2026-10-11,11/out · Domingo,Dia todo,,Escola de Música,Escola de Música da UFMG,XII ENEMT — Encontro Nacional de Estudantes de Musicoterapia,,estudantes,Estudantes,,Encontro organizado pela comissão de estudantes. Programação a ser divulgada posteriormente.,,,XII ENEMT — National Meeting of Music Therapy Students,,Meeting organized by the students committee. Programme to be announced later.,Students,UFMG School of Music,Oct 11 · Sunday,XII ENEMT — Encuentro Nacional de Estudiantes de Musicoterapia,,Encuentro organizado por la comisión de estudiantes. Programa a divulgarse posteriormente.,Estudiantes,Escuela de Música de la UFMG,11/oct · Domingo';
+
+    // Cada tipo herda a família de cor do badge equivalente na linha do tempo
+    function tipoBase(t) { return (t || '').trim().split(/\s+/)[0]; }
+
+    var CORES = {
+      'palestra':'verde', 'mesa-redonda':'verde', 'comunicacoes':'verde',
+      'poster':'verde', 'grupo-trabalho':'verde',
+      'curso':'ouro', 'livre':'ouro',
+      'abertura':'terracota', 'assembleia':'terracota',
+      'cultural':'agua', 'estudantes':'agua'
+    };
+    var HEX = { verde:'#2D6A4F', ouro:'#C9943A', terracota:'#B5534A', agua:'#74C69D' };
+
+    var barra   = document.getElementById('gl-dias');
+    var fonte   = document.getElementById('gl-fonte');
+    var modal   = document.getElementById('gl-modal');
+    var inner   = document.getElementById('gl-modal-inner');
+    if (!barra) return;
+
+    var linhas = [], trabalhos = [];
+
+    function t(chave, padrao) {
+      var api = window.ENPEMT_I18N;
+      var v = api && api.t(chave);
+      return (v && v !== chave) ? v : padrao;
+    }
+
+    // Nome do tipo: lido do próprio filtro da programação, que setLang já traduziu
+    function nomeTipo(tipo) {
+      var op = document.querySelector('#prog-filtro-select option[value="' + tipo + '"]');
+      return op ? op.textContent.trim() : tipo;
+    }
+
+    function parseCSV(texto) {
+      var out = [], campo = '', linha = [], aspas = false, i, c;
+      for (i = 0; i < texto.length; i++) {
+        c = texto.charAt(i);
+        if (aspas) {
+          if (c === '"') {
+            if (texto.charAt(i + 1) === '"') { campo += '"'; i++; } else { aspas = false; }
+          } else { campo += c; }
+        } else if (c === '"') { aspas = true; }
+        else if (c === ',') { linha.push(campo); campo = ''; }
+        else if (c === '\n') { linha.push(campo); out.push(linha); linha = []; campo = ''; }
+        else if (c !== '\r') { campo += c; }
+      }
+      if (campo !== '' || linha.length) { linha.push(campo); out.push(linha); }
+      return out;
+    }
+
+    function normalizar(nome) {
+      return nome.trim().toLowerCase()
+        .normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+        .replace(/[^a-z_]/g, '');
+    }
+
+    function paraObjetos(matriz) {
+      if (!matriz.length) return [];
+      var cab = matriz[0].map(normalizar), itens = [];
+      matriz.slice(1).forEach(function (l) {
+        if (!l.join('').trim()) return;
+        var o = {};
+        cab.forEach(function (k, i) { o[k] = (l[i] || '').trim(); });
+        if (o.titulo) itens.push(o);
+      });
+      return itens;
+    }
+
+    // Usa a coluna do idioma atual quando ela existe e está preenchida
+    function campo(item, nome) {
+      var lang = (document.documentElement.lang || 'pt').slice(0, 2);
+      if (lang !== 'pt' && item[nome + '_' + lang]) return item[nome + '_' + lang];
+      return item[nome] || '';
+    }
+
+    function minutos(hora) {
+      var m = /(\d{1,2}):(\d{2})/.exec(hora || '');
+      return m ? (+m[1]) * 60 + (+m[2]) : 9999;   // "Dia todo" e afins vão para o fim
+    }
+
+    function esc(s) {
+      return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+    }
+
+    function dias() {
+      var vistos = [], ordem = [];
+      linhas.forEach(function (l) {
+        if (l.dia && vistos.indexOf(l.dia) === -1) { vistos.push(l.dia); ordem.push(l.dia); }
+      });
+      return ordem;
+    }
+
+    function montarTudo() {
+      var lista = dias();
+      barra.innerHTML = '';
+      if (!lista.length) {
+        barra.innerHTML = '<p class="gl-aviso">' + esc(t('gl.vazio', 'Programação ainda não disponível.')) + '</p>';
+        return;
+      }
+      lista.forEach(function (d, n) {
+        var bloco = document.createElement('div');
+        bloco.className = 'gl-dia';
+        bloco.id = 'gl-dia-' + (n + 1);
+        var amostra = linhas.filter(function (l) { return l.dia === d; })[0] || {};
+        bloco.innerHTML =
+          '<h3 class="gl-dia-titulo">' + esc(campo(amostra, 'dia') || d) + '</h3>' +
+          '<div class="gl-wrap" tabindex="0" role="region" aria-label="' +
+          esc(d + ' — ' + t('gl.cap', 'grade de horários por sala')) + '">' +
+          tabela(d) + '</div>';
+        barra.appendChild(bloco);
+      });
+      // a barra fixa remonta os atalhos e reaplica o filtro sobre a grade nova
+      if (window.PROG_BARRA) PROG_BARRA.atualizar();
+      var sel = document.getElementById('prog-filtro-select');
+      if (sel && sel.value) filtrarProg(sel.value);
+    }
+
+    function tabela(dia) {
+      var doDia = linhas.filter(function (l) { return l.dia === dia; });
+
+      // Colunas = salas daquele dia, na ordem em que aparecem na planilha
+      var salas = [];
+      doDia.forEach(function (l) { if (l.sala && salas.indexOf(l.sala) === -1) salas.push(l.sala); });
+      if (!salas.length) salas = [t('gl.local', 'Local')];
+
+      // Linhas = faixas de horário distintas, em ordem cronológica
+      var faixas = [], mapa = {};
+      doDia.forEach(function (l) {
+        var chave = l.inicio + '|' + l.fim;
+        if (!mapa[chave]) { mapa[chave] = { inicio: l.inicio, fim: l.fim, itens: [] }; faixas.push(mapa[chave]); }
+        mapa[chave].itens.push(l);
+      });
+      faixas.sort(function (a, b) { return minutos(a.inicio) - minutos(b.inicio) || minutos(a.fim) - minutos(b.fim); });
+
+      var html = '<table class="gl-table"><caption>' + esc(dia) + ' — ' +
+                 esc(t('gl.cap', 'grade de horários por sala')) + '</caption><thead><tr>' +
+                 '<th scope="col">' + esc(t('gl.hora', 'Horário')) + '</th>';
+      salas.forEach(function (s) { html += '<th scope="col">' + esc(s) + '</th>'; });
+      html += '</tr></thead><tbody>';
+
+      faixas.forEach(function (f) {
+        html += '<tr><th scope="row" class="gl-hora">' + esc(f.inicio) +
+                (f.fim ? '<span>' + esc(f.fim) + '</span>' : '') + '</th>';
+
+        var plenaria = f.itens.filter(function (i) { return !i.sala; })[0];
+        if (plenaria) {
+          html += '<td colspan="' + salas.length + '">' + celula(plenaria) + '</td>';
+        } else {
+          salas.forEach(function (s) {
+            var item = f.itens.filter(function (i) { return i.sala === s; })[0];
+            html += '<td>' + (item ? celula(item) : '') + '</td>';
+          });
+        }
+        html += '</tr>';
+      });
+
+      return html + '</tbody></table>';
+    }
+
+    // "🇧🇷 Ana Silva — UFMG" → { flag, nome, cargo }
+    function pessoa(txt) {
+      var flag = '';
+      var m = /^([\uD83C][\uDDE6-\uDDFF][\uD83C][\uDDE6-\uDDFF])\s*/.exec(txt);
+      if (m) { flag = m[1]; txt = txt.slice(m[0].length); }
+      var partes = txt.split('—');
+      return { flag: flag, nome: partes.shift().trim(), cargo: partes.join('—').trim() };
+    }
+
+    function pessoas(item) {
+      return campo(item, 'responsaveis').split(';')
+        .map(function (q) { return q.trim(); }).filter(Boolean).map(pessoa);
+    }
+
+    function celula(item) {
+      var quem = pessoas(item);
+      var id = linhas.indexOf(item);
+      return '<button class="gl-cel" type="button" data-item="' + id + '" data-tipo="' +
+             esc(item.tipo || '') + '" data-cor="' + esc(CORES[tipoBase(item.tipo)] || 'agua') + '">' +
+             '<span class="gl-cel-titulo">' + esc(campo(item, 'titulo')) + '</span>' +
+             (quem.length ? '<span class="gl-cel-quem">' +
+                esc(quem.map(function (q) { return (q.flag ? q.flag + ' ' : '') + q.nome; }).join(' · ')) +
+                '</span>' : '') +
+             '</button>';
+    }
+
+    // ── AGENDA ────────────────────────────────────────────────────────
+    // Só aparece quando a linha traz a coluna "data" em formato ISO
+    var TZ = 'America/Sao_Paulo';
+
+    function carimbo(iso, hora) {
+      var d = /^(\d{4})-(\d{2})-(\d{2})$/.exec(iso || '');
+      if (!d) return null;
+      var h = /(\d{1,2}):(\d{2})/.exec(hora || '');
+      if (!h) return d[1] + d[2] + d[3];                       // dia inteiro
+      return d[1] + d[2] + d[3] + 'T' + ('0' + h[1]).slice(-2) + h[2] + '00';
+    }
+
+    function diaSeguinte(iso) {
+      var d = new Date(iso + 'T12:00:00');
+      d.setDate(d.getDate() + 1);
+      return d.toISOString().slice(0, 10).replace(/-/g, '');
+    }
+
+    // Sem hora de término, assume uma hora de duração (virando o dia se preciso)
+    function maisUmaHora(marca) {
+      var d = new Date(marca.slice(0, 4) + '-' + marca.slice(4, 6) + '-' + marca.slice(6, 8) +
+                       'T' + marca.slice(9, 11) + ':' + marca.slice(11, 13) + ':00');
+      d.setHours(d.getHours() + 1);
+      var p = function (n) { return ('0' + n).slice(-2); };
+      return '' + d.getFullYear() + p(d.getMonth() + 1) + p(d.getDate()) +
+             'T' + p(d.getHours()) + p(d.getMinutes()) + '00';
+    }
+
+    function periodo(item) {
+      var ini = carimbo(item.data, item.inicio);
+      if (!ini) return null;
+      if (ini.indexOf('T') === -1) return { ini: ini, fim: diaSeguinte(item.data), diaTodo: true };
+      var fim = carimbo(item.data, item.fim);
+      return { ini: ini, fim: (fim && fim.indexOf('T') > -1) ? fim : maisUmaHora(ini), diaTodo: false };
+    }
+
+    function textoAgenda(item) {
+      var quem = campo(item, 'responsaveis').split(';').map(function (q) { return q.trim(); }).filter(Boolean);
+      return [campo(item, 'descricao'), quem.join(' · '), 'XXVI ENPEMT']
+             .filter(Boolean).join('\n\n');
+    }
+
+    function baixarIcs(item) {
+      var p = periodo(item);
+      if (!p) return;
+      var local = [item.sala, 'Escola de Música da UFMG, Belo Horizonte'].filter(Boolean).join(' — ');
+      var dt = p.diaTodo
+        ? 'DTSTART;VALUE=DATE:' + p.ini + '\r\nDTEND;VALUE=DATE:' + p.fim
+        : 'DTSTART;TZID=' + TZ + ':' + p.ini + '\r\nDTEND;TZID=' + TZ + ':' + p.fim;
+      function limpa(v) { return String(v).replace(/([,;\\])/g, '\\$1').replace(/\n/g, '\\n'); }
+      var ics = [
+        'BEGIN:VCALENDAR', 'VERSION:2.0', 'PRODID:-//XXVI ENPEMT//PT-BR', 'BEGIN:VEVENT',
+        'UID:' + (item.id || p.ini) + '@enpemt2026',
+        'DTSTAMP:' + new Date().toISOString().replace(/[-:]/g, '').slice(0, 15) + 'Z',
+        dt,
+        'SUMMARY:' + limpa(campo(item, 'titulo')),
+        'LOCATION:' + limpa(local),
+        'DESCRIPTION:' + limpa(textoAgenda(item)),
+        'END:VEVENT', 'END:VCALENDAR'
+      ].join('\r\n');
+
+      var url = URL.createObjectURL(new Blob([ics], { type: 'text/calendar;charset=utf-8' }));
+      var a = document.createElement('a');
+      a.href = url;
+      a.download = (campo(item, 'titulo').slice(0, 48).replace(/[^\wÀ-ÿ ]+/g, '').trim() || 'atividade') + '.ics';
+      document.body.appendChild(a); a.click(); document.body.removeChild(a);
+      setTimeout(function () { URL.revokeObjectURL(url); }, 2000);
+    }
+
+    // ── DETALHE DA ATIVIDADE ──────────────────────────────────────────
+    function listaTrabalhos(item) {
+      if (!item.id) return '';
+      var meus = trabalhos.filter(function (w) { return w.sessao_id === item.id; });
+      if (!meus.length) return '';
+      return '<p class="gl-trabalhos-tit">' + esc(t('gl.trabalhos', 'Trabalhos da sessão')) + '</p>' +
+        '<ul class="gl-trabalhos">' + meus.map(function (w) {
+          return '<li><span class="gl-trab-titulo">' + esc(w.titulo) + '</span>' +
+            (w.autores ? '<span class="gl-trab-autores">' + esc(w.autores) + '</span>' : '') +
+            (w.link ? '<a class="gl-trab-link" href="' + esc(w.link) + '" target="_blank" rel="noopener">↓ ' +
+                      esc(w.rotulo || t('gl.abrir', 'Abrir arquivo')) + '</a>' : '') +
+            '</li>';
+        }).join('') + '</ul>';
+    }
+
+    function abrir(item) {
+      var quem = pessoas(item);
+      var cor  = HEX[CORES[tipoBase(item.tipo)]] || HEX.agua;
+      var hora = item.inicio + (item.fim ? ' – ' + item.fim : '');
+      var desc = campo(item, 'descricao');
+      var sub  = campo(item, 'subtitulo');
+      var local = campo(item, 'local') || item.sala;
+      var etiqueta = campo(item, 'badge') || nomeTipo(tipoBase(item.tipo));
+      var link = (item.link || '').trim();
+      var temData = !!periodo(item);
+      var comBandeira = quem.some(function (q) { return !!q.flag; });
+
+      inner.innerHTML =
+        '<span class="gl-modal-tipo" style="background:' + cor + '1f;color:' + cor + '">' + esc(etiqueta) + '</span>' +
+        '<h3 class="gl-modal-titulo" id="gl-modal-titulo">' + esc(campo(item, 'titulo')) + '</h3>' +
+        (sub ? '<div class="tl-subtitle">' + esc(sub) + '</div>' : '') +
+        '<div class="gl-modal-meta"><span>🕑 ' + esc(hora) + '</span>' +
+        (local ? '<span>📍 ' + esc(local) + '</span>' : '') +
+        '<span>📅 ' + esc(campo(item, 'dia')) + '</span></div>' +
+        (desc ? '<p class="gl-modal-desc">' + esc(desc) + '</p>' : '') +
+        (quem.length ? '<ul class="tl-pessoas' + (comBandeira ? ' tl-pessoas-paises' : '') + '">' +
+          quem.map(function (q) {
+            return '<li>' + (q.flag ? '<span class="tl-flag">' + esc(q.flag) + '</span>' : '') +
+                   '<strong>' + esc(q.nome) + '</strong>' +
+                   (q.cargo ? '<span class="tl-cargo">' + esc(q.cargo) + '</span>' : '') + '</li>';
+          }).join('') + '</ul>' : '') +
+        (link ? '<p class="gl-modal-desc"><a class="tl-link" href="' + esc(link) + '" target="_blank" rel="noopener">' +
+                esc(campo(item, 'link_texto') || t('gl.abrir', 'Abrir arquivo')) + ' ↗</a></p>' : '') +
+        listaTrabalhos(item) +
+        (temData ?
+          '<div class="gl-agenda">' +
+            '<button class="gl-agenda-btn" type="button" id="gl-ics">' +
+              '<svg viewBox="0 0 24 24"><path d="M19 4h-1V2h-2v2H8V2H6v2H5a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2V6a2 2 0 00-2-2zm0 16H5V10h14v10zM7 12h5v5H7z"/></svg>' +
+              esc(t('gl.agenda', 'Adicionar à agenda')) +
+            '</button>' +
+            '<span class="gl-agenda-dica">' + esc(t('gl.agenda.dica', 'abre no Google Agenda, Apple ou Outlook')) + '</span>' +
+          '</div>' : '');
+
+      var btn = document.getElementById('gl-ics');
+      if (btn) btn.addEventListener('click', function () { baixarIcs(item); });
+
+      if (typeof modal.showModal === 'function') modal.showModal(); else modal.setAttribute('open', '');
+    }
+
+    barra.addEventListener('click', function (e) {
+      var botao = e.target.closest ? e.target.closest('.gl-cel') : null;
+      if (botao) abrir(linhas[+botao.dataset.item]);
+    });
+    document.getElementById('gl-modal-fechar').addEventListener('click', function () {
+      if (typeof modal.close === 'function') modal.close(); else modal.removeAttribute('open');
+    });
+    modal.addEventListener('click', function (e) { if (e.target === modal) modal.close(); });
+
+    function usar(csv, doSheet) {
+      linhas = paraObjetos(parseCSV(csv));
+      montarTudo();
+      fonte.hidden = !doSheet;
+      if (doSheet) fonte.textContent = t('gl.fonte', 'Atualizado a partir da planilha da comissão organizadora.');
+    }
+
+    function buscar(url) {
+      // O Google serve o CSV publicado com cache de 5 minutos. O parâmetro
+      // extra muda a cada carregamento, então nenhum cache no caminho
+      // devolve uma cópia velha — a demora fica só por conta do Google.
+      var fresco = url + (url.indexOf('?') > -1 ? '&' : '?') + '_=' + Date.now();
+      return fetch(fresco, { cache: 'no-store' })
+        .then(function (r) { if (!r.ok) throw new Error(r.status); return r.text(); })
+        .then(function (txt) { return (txt && txt.indexOf(',') > -1) ? txt : null; });
+    }
+
+    usar(FALLBACK_SESSOES, false);
+
+    // Os trabalhos entram primeiro: assim a grade já nasce com as listas prontas
+    (CSV_TRABALHOS ? buscar(CSV_TRABALHOS).catch(function () { return null; }) : Promise.resolve(null))
+      .then(function (txt) {
+        if (txt) trabalhos = paraObjetos(parseCSV(txt));
+        if (!CSV_SESSOES) return null;
+        return buscar(CSV_SESSOES).catch(function () { return null; });
+      })
+      .then(function (txt) { if (txt) usar(txt, true); });
+
+    // Redesenha ao trocar de idioma
+    new MutationObserver(function () { montarTudo(); })
+      .observe(document.documentElement, { attributes: true, attributeFilter: ['lang'] });
+  })();
+
   // ─── TTS READER ──────────────────────────────────────────────────────────
   (function () {
     var synth = window.speechSynthesis;
@@ -3617,7 +4404,7 @@ Os aplicativos de corrida, como Uber e 99 funcionam bem, além dos taxis tradici
     var BLOCK_SEL = [
       'h2','h3','h4','h5','p',
       '.sub-tipo-nome','.sub-tipo-desc',
-      '.tl-time','.tl-title','.tl-desc','.tl-local',
+      '.tl-time','.tl-title','.tl-subtitle','.tl-desc','.tl-local',
       '.local-fact',
       '.rest-name','.rest-local','.rest-desc',
       '.bh-card-title','.bh-card-text',
