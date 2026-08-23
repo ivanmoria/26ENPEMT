@@ -190,7 +190,6 @@
     width: 70%; max-width: 700px; opacity: 0;
     filter: brightness(0);
   }
-  
   .hero-pattern {
     position: absolute; inset: 0; opacity: .04; z-index: 1;
     background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='1'%3E%3Cpath d='M30 0 L32 28 L60 30 L32 32 L30 60 L28 32 L0 30 L28 28 Z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
@@ -730,11 +729,6 @@
   }
   .btn-inscricao-outline:hover { background: rgba(201,148,58,.15); transform: translateY(-2px); }
 
-  /* ─── SUBMISSÃO DE TRABALHOS ─── */
-  #submissao { background: var(--branco); position: relative; }
-  #submissao .container { position: relative; z-index: 1; }
-  #submissao .section-text { max-width: 960px; }
-  #submissao .sobre-bg-logo { top: -27%; transform: none; }
   .sub-tipos { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 28px; margin: 40px 0; }
   .sub-tipo {
     background: var(--creme); border: 2px solid var(--creme-escuro);
@@ -1408,7 +1402,6 @@
         background-size: cover !important;
        background-position: -520px center !important;
       }
-  
   }
 
   /* ═══════════════════════════════════════
@@ -1591,7 +1584,7 @@
   }
 
   /* ═══════════════════════════════════════
-     SUBMISSÃO — TIPOS
+     CARDS DE CHAMADAS — TIPOS
   ═══════════════════════════════════════ */
   @media (max-width: 600px) {
     .sub-tipos { grid-template-columns: 1fr; }
@@ -1730,7 +1723,6 @@
       <img src="img/ends.png" alt="XXVI ENPEMT">
     </li>
     <li><a href="#sobre" data-i18n="nav.evento">Evento</a></li>
-    <li><a href="#submissao" data-i18n="nav.trabalhos">Envio de Trabalhos</a></li>
     <li><a href="#chamadas" data-i18n="nav.chamadas">Chamadas Abertas</a></li>
     <li><a href="#programacao" data-i18n="nav.programacao">Programação</a></li>
     <li><a href="#local" data-i18n="nav.local">Local</a></li>
@@ -1826,35 +1818,6 @@
 
 
 
-<!-- SUBMISSÃO DE TRABALHOS -->
-<section id="submissao">
-  <img src="img/logo-enpemt-horizontal3.png" class="sobre-bg-logo" alt="">
-  <div class="container">
-    <span class="section-label reveal" data-i18n="sub.label">Apresente sua pesquisa</span>
-    <h2 class="section-title reveal" data-i18n="sub.title">Envio de <em>Trabalhos</em></h2>
-    <div class="divider reveal"></div>
-    <p class="section-text reveal" data-i18n="sub.intro">O XXVI ENPEMT recebe propostas em diferentes modalidades. Clique na modalidade desejada para acessar o formulário de submissão no Google Forms.</p>
-
-    <div class="sub-tipos reveal">
-      <div class="sub-tipo" onclick="window.open('https://forms.gle/teZ7L1jk9ygc1WrP7', '_blank')">
-        <span class="sub-tipo-icon">🎤</span>
-        <div class="sub-tipo-nome" data-i18n="sub.oral.nome">Comunicação Oral</div>
-        <div class="sub-tipo-desc" data-i18n="sub.oral.desc">Apresentação de resultados de pesquisa concluída ou em andamento. Tempo: 15 min + 5 min de perguntas.</div>
-        <span class="sub-tipo-prazo" data-i18n="sub.prazo">📅 Prazo: a confirmar</span>
-        <span class="sub-tipo-clique" data-i18n="sub.clique">👆 Clique no card para acessar o formulário de submissão</span>
-      </div>
-      <div class="sub-tipo" onclick="window.open('https://forms.gle/B9niSUKDehEvAmBd9', '_blank')">
-        <span class="sub-tipo-icon">📋</span>
-        <div class="sub-tipo-nome" data-i18n="sub.poster.nome">Pôster</div>
-        <div class="sub-tipo-desc" data-i18n="sub.poster.desc">Apresentação visual de pesquisa. Formato A1 impresso. Sessão de apresentação com interação direta com participantes.</div>
-        <span class="sub-tipo-prazo" data-i18n="sub.prazo">📅 Prazo: a confirmar</span>
-        <span class="sub-tipo-clique" data-i18n="sub.clique">👆 Clique no card para acessar o formulário de submissão</span>
-      </div>
-    </div>
-
-  </div>
-</section>
-
 <!-- CHAMADAS: monitoria, lançamento de livros e expositores -->
 <!-- ⬇ COLE AQUI OS LINKS DOS FORMULÁRIOS quando eles existirem: basta preencher
      o data-form de cada card. Enquanto ficar vazio, o card aparece como
@@ -1864,7 +1827,7 @@
     <span class="section-label reveal" data-i18n="cham.label">Participe do evento</span>
     <h2 class="section-title reveal" data-i18n="cham.title">Chamadas <em>abertas</em></h2>
     <div class="divider reveal"></div>
-    <p class="section-text reveal" data-i18n="cham.intro">Além do envio de trabalhos, o XXVI ENPEMT abre outras chamadas com formulários próprios. Clique no card para acessar o formulário correspondente.</p>
+    <p class="section-text reveal" data-i18n="cham.intro">O XXVI ENPEMT mantém chamadas abertas com formulários próprios. Clique no card para acessar o formulário correspondente.</p>
 
     <div class="sub-tipos reveal">
       <div class="sub-tipo" data-form="https://forms.gle/eVTGKceF4yzyYVau6">
@@ -2050,10 +2013,10 @@
 
         <div class="tl-item" data-tipo="livre cultural">
           <div class="tl-time">10:30 – 11:00</div>
-          <div class="tl-title" data-i18n="tl.coffee.palco.title">Cafezinho com Palco Aberto</div>
+          <div class="tl-title" data-i18n="tl.coffee.palco.title">Coffee Break com Palco Aberto</div>
           <div class="tl-desc" data-i18n="tl.coffee.palco.desc">Intervalo com palco aberto às apresentações artísticas dos participantes.</div>
           <div class="tl-meta">
-            <span class="tl-badge badge-oficina" data-i18n="tl.badge.coffee">Cafezinho</span>
+            <span class="tl-badge badge-oficina" data-i18n="tl.badge.coffee">Coffeebreak</span>
             <span class="tl-local" data-i18n="tl.local.hall">📍 Hall de entrada da Escola de Música</span>
           </div>
         </div>
@@ -2087,10 +2050,10 @@
 
         <div class="tl-item" data-tipo="livre cultural">
           <div class="tl-time">15:30 – 16:00</div>
-          <div class="tl-title" data-i18n="tl.coffee.palco.title">Cafezinho com Palco Aberto</div>
+          <div class="tl-title" data-i18n="tl.coffee.palco.title">Coffee Break com Palco Aberto</div>
           <div class="tl-desc" data-i18n="tl.coffee.palco.desc">Intervalo com palco aberto às apresentações artísticas dos participantes.</div>
           <div class="tl-meta">
-            <span class="tl-badge badge-oficina" data-i18n="tl.badge.coffee">Cafezinho</span>
+            <span class="tl-badge badge-oficina" data-i18n="tl.badge.coffee">Coffeebreak</span>
             <span class="tl-local" data-i18n="tl.local.hall">📍 Hall de entrada da Escola de Música</span>
           </div>
         </div>
@@ -2152,10 +2115,10 @@
 
         <div class="tl-item" data-tipo="livre cultural">
           <div class="tl-time">10:30 – 11:00</div>
-          <div class="tl-title" data-i18n="tl.coffee.palco.title">Cafezinho com Palco Aberto</div>
+          <div class="tl-title" data-i18n="tl.coffee.palco.title">Coffee Break com Palco Aberto</div>
           <div class="tl-desc" data-i18n="tl.coffee.palco.desc">Intervalo com palco aberto às apresentações artísticas dos participantes.</div>
           <div class="tl-meta">
-            <span class="tl-badge badge-oficina" data-i18n="tl.badge.coffee">Cafezinho</span>
+            <span class="tl-badge badge-oficina" data-i18n="tl.badge.coffee">Coffeebreak</span>
             <span class="tl-local" data-i18n="tl.local.hall">📍 Hall de entrada da Escola de Música</span>
           </div>
         </div>
@@ -2189,10 +2152,10 @@
 
         <div class="tl-item" data-tipo="livre cultural">
           <div class="tl-time">16:00 – 16:30</div>
-          <div class="tl-title" data-i18n="tl.coffee.palco.title">Cafezinho com Palco Aberto</div>
+          <div class="tl-title" data-i18n="tl.coffee.palco.title">Coffee Break com Palco Aberto</div>
           <div class="tl-desc" data-i18n="tl.coffee.palco.desc">Intervalo com palco aberto às apresentações artísticas dos participantes.</div>
           <div class="tl-meta">
-            <span class="tl-badge badge-oficina" data-i18n="tl.badge.coffee">Cafezinho</span>
+            <span class="tl-badge badge-oficina" data-i18n="tl.badge.coffee">Coffeebreak</span>
             <span class="tl-local" data-i18n="tl.local.hall">📍 Hall de entrada da Escola de Música</span>
           </div>
         </div>
@@ -2573,7 +2536,6 @@ Os aplicativos de corrida, como Uber e 99 funcionam bem, além dos taxis tradici
 
     </div>
 
-    
     <!-- FEIRA HIPPIE -->
     <div class="hippie-box reveal" style="margin-top:48px">
       <div class="hippie-icon">🎨</div>
@@ -2585,7 +2547,6 @@ Os aplicativos de corrida, como Uber e 99 funcionam bem, além dos taxis tradici
       </div>
     </div>
 
-    
 
     <!-- COMIDAS — desativado por enquanto -->
     <div style="margin-top: 72px; display:none;">
@@ -2760,7 +2721,6 @@ Os aplicativos de corrida, como Uber e 99 funcionam bem, além dos taxis tradici
       </div>
       <div class="inscricao-btns">
         <a href="https://forms.gle/Gh4KQv3kH4hw5nZ57" target="_blank" class="btn-inscricao-cta" data-i18n="insc.cta">REALIZAR INSCRIÇÃO</a>
-        <a href="#submissao" class="btn-inscricao-cta btn-inscricao-outline" data-i18n="insc.cta.trabalhos">ENVIAR TRABALHO</a>
       </div>
 <p style="margin-top:20px; font-size:.85rem; color:rgba(255,255,255,.55)" data-i18n="insc.aviso.monitoria">
   🙋 <strong>Quer ser monitor?</strong> São 20 vagas e os selecionados ficam isentos da taxa de inscrição — inscreva-se na seção <a href="#chamadas" style="color:var(--ouro-claro); text-decoration:none;">Chamadas Abertas</a>.
@@ -2799,7 +2759,6 @@ Os aplicativos de corrida, como Uber e 99 funcionam bem, além dos taxis tradici
         <ul class="footer-links">
           <li><a href="#sobre" data-i18n="footer.link.sobre">Sobre o evento</a></li>
           <li><a href="#programacao" data-i18n="nav.programacao">Programação</a></li>
-          <li><a href="#submissao" data-i18n="footer.link.submissao">Submissão de trabalhos</a></li>
           <li><a href="#chamadas" data-i18n="nav.chamadas">Chamadas Abertas</a></li>
           <li><a href="#bh" data-i18n="nav.bh">Belo Horizonte</a></li>
           <li><a href="#restaurantes" data-i18n="nav.restaurantes">Restaurantes</a></li>
@@ -3034,13 +2993,13 @@ Os aplicativos de corrida, como Uber e 99 funcionam bem, além dos taxis tradici
       'tl.d3.assembleia.title':'Assembleia de Pesquisadores da UBAM','tl.d3.assembleia.desc':'Reunião dos pesquisadores vinculados à União Brasileira das Associações de Musicoterapia, com discussão sobre as propostas dos Grupos de Trabalho.',
       'tl.d3.militar.title':'Apresentação do Grupo de Musicoterapia do Colégio Militar de BH','tl.d3.militar.desc':'Apresentação musical de encerramento do encontro.',
       'tl.d2.cred.title':'Credenciamento','tl.d2.cred.desc':'Continuação do credenciamento e retirada de materiais.',
-      'tl.coffee.palco.title':'Cafezinho com Palco Aberto','tl.coffee.palco.desc':'Intervalo com palco aberto às apresentações artísticas dos participantes.',
+      'tl.coffee.palco.title':'Coffee Break com Palco Aberto','tl.coffee.palco.desc':'Intervalo com palco aberto às apresentações artísticas dos participantes.',
       'tl.d2.posteres.title':'Painel de Pôsteres','tl.d2.posteres.desc':'Exposição dos pôsteres aprovados, com interação direta entre autores e participantes.',
       'tl.d2.palestra.title':'Palestra: “Musicoterapeutas Brasileiros em Pós-Graduações Stricto Sensu: um estudo longitudinal e metacientífico”','tl.d2.palestra.desc':'<ul class="tl-pessoas"><li><strong>Claudia Zanini</strong></li><li><strong>Clara Piazzetta</strong><span class="tl-cargo">UNESPAR</span></li></ul>',
       'tl.badge.palestra':'Palestra',
       'tl.d2.gt.title':'Grupos de Trabalho sobre Contexto de Pesquisa','tl.d2.gt.desc':'Temas definidos a partir de consulta aos inscritos. Formulário de escolha em elaboração.',
       'tl.d2.divers.title':'Apresentação Cultural do Projeto DiVersxs — Musicovivências Queers','tl.d2.divers.desc':'Apresentação do projeto seguida de conversa com o público. <a href="https://diversxs.com.br" target="_blank" rel="noopener" class="tl-link">Acesse aqui o site oficial do projeto</a>',
-      'nav.evento':'Evento','nav.trabalhos':'Trabalhos','nav.chamadas':'Chamadas Abertas','nav.programacao':'Programação',
+      'nav.evento':'Evento','nav.chamadas':'Chamadas Abertas','nav.programacao':'Programação',
       'prog.vista.grade':'Grade por sala','prog.vista.lista':'Lista por dia',
       'prog.vista.dias':'Ir para o dia',
       'prog.vista.aria':'Formato da programação',
@@ -3061,20 +3020,11 @@ Os aplicativos de corrida, como Uber e 99 funcionam bem, além dos taxis tradici
       'sobre.info1':'Escola de Música da UFMG','sobre.info2':'Pampulha, Belo Horizonte – MG',
       'sobre.info3':'Palestras, mesas e cursos','sobre.info4':'Apresentação de trabalhos',
       'sobre.info5':'Assembleia de Pesquisadores da UBAM','sobre.info6':'Vivências musicais',
-      'sub.intro':'O XXVI ENPEMT recebe propostas em diferentes modalidades. Os trabalhos completos enviados no formato de Comunicação Oral podem ser premiados com os prêmios Cybelle Loureiro (categoria estudante) e Lia Rejane Mendes Barcellos (categoria profissional). Clique no card abaixo para acessar o formulário externo e obter mais informações sobre a submissão e a formatação dos trabalhos.',
-      'sub.clique':'👆 Clique no card para acessar o formulário de submissão',
-      'sub.label':'Apresente sua pesquisa','sub.title':'Envio de <em>Trabalhos</em>',
-      'sub.oral.nome':'Comunicação Oral',
-      'sub.oral.desc':'Apresentação de resultados de pesquisa concluída ou em andamento. Tempo: 15 min + 5 min de perguntas.',
-      'sub.poster.nome':'Pôster',
-      'sub.poster.desc':'Apresentação visual de pesquisa. Formato A1 impresso. Sessão de apresentação com interação direta com participantes.',
       
       
       
-      
-      'sub.prazo':'📅 Prazo: até 15 de agosto de 2026',
       'cham.label':'Participe do evento','cham.title':'Chamadas <em>abertas</em>',
-      'cham.intro':'Além do envio de trabalhos, o XXVI ENPEMT abre outras chamadas com formulários próprios. Clique no card para acessar o formulário correspondente.',
+      'cham.intro':'O XXVI ENPEMT mantém chamadas abertas com formulários próprios. Clique no card para acessar o formulário correspondente.',
       'cham.monitoria.nome':'Seleção de Monitores',
       'cham.monitoria.desc':'Os monitores acompanham as salas durante as atividades, dão suporte aos apresentadores e à equipe de acessibilidade e auxiliam no credenciamento e na recepção dos participantes.',
       'cham.monitoria.badge':'20 vagas · selecionados ficam isentos da taxa de inscrição',
@@ -3100,7 +3050,7 @@ Os aplicativos de corrida, como Uber e 99 funcionam bem, além dos taxis tradici
       'insc.f9':'Mesas e painéis',
       'footer.links':'Links rápidos','footer.realizacao':'Realização',
       'footer.desc':'O Encontro Nacional de Pesquisa em Musicoterapia reúne pesquisadores, clínicos e estudantes para compartilhar produção científica e promover o desenvolvimento da musicoterapia no Brasil.',
-      'footer.link.sobre':'Sobre o evento','footer.link.submissao':'Submissão de trabalhos',
+      'footer.link.sobre':'Sobre o evento',
       'footer.link.local':'Local & Mapa','footer.comissao':'Comissão Organizadora',
       'footer.apoio':'Apoio & Patrocínio',
       'footer.copy':'© <a class="credito-autor" href="#">Ivan Moriá Borges</a> 2026 · Belo Horizonte, Minas Gerais',
@@ -3110,7 +3060,6 @@ Os aplicativos de corrida, como Uber e 99 funcionam bem, além dos taxis tradici
       'sobre.text2':'Três dias de pesquisa, arte, conexão e celebração da musicoterapia brasileira. Venha fazer parte deste momento histórico!',
       'sobre.text3':'Uma data especial: véspera do feriado nacional de 12 de outubro, permitindo que participantes de todo o Brasil aproveitem o fim de semana prolongado em BH.',
       'prog.aviso':'Três dias de imersão em pesquisa, prática clínica e vivência musical no <strong>XXVI ENPEMT</strong>, de 8 a 10 de outubro. Programação sujeita a atualizações. No domingo, 11/10, a Escola de Música recebe ainda o XII ENEMT — Encontro Nacional de Estudantes de Musicoterapia, com programação a ser divulgada posteriormente. Você também pode <a href="programacao-enpemt2026.pdf" download class="tl-link">baixar a programação em PDF</a>.',
-      'prog.dia1.label':'· Quinta','prog.dia2.label':'· Sexta','prog.dia3.label':'· Sábado','prog.dia4.label':'· Domingo',
       'prog.dia1.head':'8/out · Quinta','prog.dia2.head':'9/out · Sexta','prog.dia3.head':'10/out · Sábado','prog.dia4.head':'11/out · Domingo',
       'prog.vazio':'Nenhuma atividade encontrada para este filtro.',
       'prog.filtrar':'Filtrar:',
@@ -3148,7 +3097,7 @@ Os aplicativos de corrida, como Uber e 99 funcionam bem, além dos taxis tradici
       'tl.almoco.desc':'Restaurantes universitários disponíveis no campus: Praça de Serviços (perto do RU central), Restaurante da FAE e Restaurante da Faculdade de Letras. Veja a seção Restaurantes para detalhes.',
       'tl.almoco.sabado.desc':'Os restaurantes universitários estão fechados no sábado. Veja a seção Restaurantes para sugestões de lugares abertos na Pampulha e região do campus.',
       'tl.badge.almoco':'Almoço livre',
-      'tl.badge.coffee':'Cafezinho',
+      'tl.badge.coffee':'Coffeebreak',
       'tl.mesa2.title':'Mesa Redonda: Acessibilidade e Diversidade Metodológica',
       'tl.mesa2.desc':'<ul class="tl-pessoas"><li><strong>Queila Oliveira</strong><span class="tl-cargo">São Paulo</span></li><li><strong>Aline André</strong><span class="tl-cargo">UFMG</span></li></ul>',
       'tl.badge.ubam':'UBAM',
@@ -3159,12 +3108,6 @@ Os aplicativos de corrida, como Uber e 99 funcionam bem, além dos taxis tradici
       'tl.encerramento.title':'Entrega de Prêmios e Encerramento',
       'tl.encerramento.desc':'Entrega dos prêmios Cybelle Loureiro e Lia Rejane Mendes Barcellos, agradecimentos e encerramento do XXVI ENPEMT.',
       'tl.badge.encerramento':'Encerramento',
-      
-      
-      
-      
-      
-      
       
       
       'local.h3':'Um século de música, pesquisa e formação',
@@ -3236,8 +3179,7 @@ Os aplicativos de corrida, como Uber e 99 funcionam bem, além dos taxis tradici
       'insc.passo1':'Clique na sua categoria acima e preencha o formulário de inscrição com seus dados',
       'insc.passo2':'Realize o pagamento via <strong>PIX</strong> e envie o comprovante diretamente no formulário',
       'insc.passo3':'Aguarde a confirmação da inscrição por e-mail',
-      
-      'insc.cta':'REALIZAR INSCRIÇÃO','insc.cta.trabalhos':'ENVIAR TRABALHO',
+      'insc.cta':'REALIZAR INSCRIÇÃO',
       'insc.aviso.monitoria':'🙋 <strong>Quer ser monitor?</strong> São 20 vagas e os selecionados ficam isentos da taxa de inscrição — inscreva-se na seção <a href="#chamadas" style="color:var(--ouro-claro); text-decoration:none;">Chamadas Abertas</a>.','insc.duvidas':'Dúvidas?','insc.contato':'Entrar em contato via e-mail',
     },
     en: {
@@ -3255,7 +3197,7 @@ Os aplicativos de corrida, como Uber e 99 funcionam bem, além dos taxis tradici
       'tl.badge.palestra':'Lecture',
       'tl.d2.gt.title':'Working Groups on Research Contexts','tl.d2.gt.desc':'Topics defined from a survey of registered attendees. Selection form in preparation.',
       'tl.d2.divers.title':'Cultural Presentation of the DiVersxs Project — Musicovivências Queers','tl.d2.divers.desc':'Presentation of the project followed by a conversation with the audience. <a href="https://diversxs.com.br" target="_blank" rel="noopener" class="tl-link">Visit the official project website</a>',
-      'nav.evento':'Event','nav.trabalhos':'Papers','nav.chamadas':'Open Calls','nav.programacao':'Schedule',
+      'nav.evento':'Event','nav.chamadas':'Open Calls','nav.programacao':'Schedule',
       'prog.vista.grade':'Grid by room','prog.vista.lista':'Day by day',
       'prog.vista.dias':'Jump to a day',
       'prog.vista.aria':'Schedule format',
@@ -3276,20 +3218,11 @@ Os aplicativos de corrida, como Uber e 99 funcionam bem, além dos taxis tradici
       'sobre.info1':'School of Music — UFMG','sobre.info2':'Pampulha, Belo Horizonte – MG',
       'sobre.info3':'Lectures, panels and courses','sobre.info4':'Paper presentations',
       'sobre.info5':'UBAM Researchers Assembly','sobre.info6':'Musical experiences',
-      'sub.intro':'The XXVI ENPEMT accepts proposals in different formats. Full papers submitted as Oral Presentations may be granted the Cybelle Loureiro (student category) and Lia Rejane Mendes Barcellos (professional category) awards. Click the card below to access the external form and get more information on submission and paper formatting.',
-      'sub.clique':'👆 Click the card to access the submission form',
-      'sub.label':'Present your research','sub.title':'Paper <em>Submission</em>',
-      'sub.oral.nome':'Oral Presentation',
-      'sub.oral.desc':'Presentation of completed or ongoing research. Time: 15 min + 5 min for questions.',
-      'sub.poster.nome':'Poster',
-      'sub.poster.desc':'Visual research presentation. A1 printed format. Session with direct interaction with participants.',
       
       
       
-      
-      'sub.prazo':'📅 Deadline: August 15, 2026',
       'cham.label':'Take part','cham.title':'Open <em>calls</em>',
-      'cham.intro':'Besides paper submission, the XXVI ENPEMT has further open calls with their own forms. Click a card to access the corresponding form.',
+      'cham.intro':'The XXVI ENPEMT keeps open calls with their own forms. Click a card to access the corresponding form.',
       'cham.monitoria.nome':'Monitor Selection',
       'cham.monitoria.desc':'Monitors assist the rooms during the sessions, support presenters and the accessibility team, and help with check-in and welcoming attendees.',
       'cham.monitoria.badge':'20 places · those selected pay no registration fee',
@@ -3315,7 +3248,7 @@ Os aplicativos de corrida, como Uber e 99 funcionam bem, além dos taxis tradici
       'insc.f9':'Panels and roundtables',
       'footer.links':'Quick links','footer.realizacao':'Organized by',
       'footer.desc':'The National Meeting on Music Therapy Research brings together researchers, clinicians and students to share scientific production and promote the development of music therapy in Brazil.',
-      'footer.link.sobre':'About the event','footer.link.submissao':'Paper submission',
+      'footer.link.sobre':'About the event',
       'footer.link.local':'Venue & Map','footer.comissao':'Organizing Committee',
       'footer.apoio':'Support & Sponsorship',
       'footer.copy':'© <a class="credito-autor" href="#">Ivan Moriá Borges</a> 2026 · Belo Horizonte, Minas Gerais',
@@ -3325,7 +3258,6 @@ Os aplicativos de corrida, como Uber e 99 funcionam bem, além dos taxis tradici
       'sobre.text2':'Three days of research, art, connection and celebration of Brazilian music therapy. Come be part of this historic moment!',
       'sobre.text3':'A special date: the eve of the national holiday of October 12th, allowing participants from all over Brazil to enjoy the extended weekend in BH.',
       'prog.aviso':'Three days of immersion in research, clinical practice and musical experience at the <strong>XXVI ENPEMT</strong>, from October 8 to 10. Schedule subject to updates. On Sunday, October 11, the School of Music also hosts the XII ENEMT — National Meeting of Music Therapy Students, with its programme to be announced later. You can also <a href="programacao-enpemt2026.pdf" download class="tl-link">download the schedule as a PDF</a>.',
-      'prog.dia1.label':'· Thursday','prog.dia2.label':'· Friday','prog.dia3.label':'· Saturday','prog.dia4.label':'· Sunday',
       'prog.dia1.head':'Oct 8 · Thursday','prog.dia2.head':'Oct 9 · Friday','prog.dia3.head':'Oct 10 · Saturday','prog.dia4.head':'Oct 11 · Sunday',
       'prog.vazio':'No activities found for this filter.',
       'prog.filtrar':'Filter:',
@@ -3374,12 +3306,6 @@ Os aplicativos de corrida, como Uber e 99 funcionam bem, além dos taxis tradici
       'tl.encerramento.title':'Awards Ceremony and Closing',
       'tl.encerramento.desc':'Presentation of the Cybelle Loureiro and Lia Rejane Mendes Barcellos awards, acknowledgements and closing of the XXVI ENPEMT.',
       'tl.badge.encerramento':'Closing',
-      
-      
-      
-      
-      
-      
       
       
       'local.h3':'A century of music, research and education',
@@ -3451,8 +3377,7 @@ Os aplicativos de corrida, como Uber e 99 funcionam bem, além dos taxis tradici
       'insc.passo1':'Click on your category above and fill in the registration form with your details',
       'insc.passo2':'Make the payment via <strong>PIX</strong> and send the receipt directly in the form',
       'insc.passo3':'Wait for the registration confirmation by email',
-      
-      'insc.cta':'REGISTER NOW','insc.cta.trabalhos':'SUBMIT A PAPER',
+      'insc.cta':'REGISTER NOW',
       'insc.aviso.monitoria':'🙋 <strong>Want to be a monitor?</strong> There are 20 places and those selected pay no registration fee — apply in the <a href="#chamadas" style="color:var(--ouro-claro); text-decoration:none;">Open Calls</a> section.','insc.duvidas':'Questions?','insc.contato':'Contact us by email',
     },
     es: {
@@ -3470,7 +3395,7 @@ Os aplicativos de corrida, como Uber e 99 funcionam bem, além dos taxis tradici
       'tl.badge.palestra':'Conferencia',
       'tl.d2.gt.title':'Grupos de Trabajo sobre Contexto de Investigación','tl.d2.gt.desc':'Temas definidos a partir de una consulta a los inscritos. Formulario de elección en elaboración.',
       'tl.d2.divers.title':'Presentación Cultural del Proyecto DiVersxs — Musicovivências Queers','tl.d2.divers.desc':'Presentación del proyecto seguida de conversación con el público. <a href="https://diversxs.com.br" target="_blank" rel="noopener" class="tl-link">Acceda aquí al sitio oficial del proyecto</a>',
-      'nav.evento':'Evento','nav.trabalhos':'Trabajos','nav.chamadas':'Convocatorias','nav.programacao':'Programa',
+      'nav.evento':'Evento','nav.chamadas':'Convocatorias','nav.programacao':'Programa',
       'prog.vista.grade':'Cuadro por sala','prog.vista.lista':'Lista por día',
       'prog.vista.dias':'Ir al día',
       'prog.vista.aria':'Formato del programa',
@@ -3491,20 +3416,11 @@ Os aplicativos de corrida, como Uber e 99 funcionam bem, além dos taxis tradici
       'sobre.info1':'Escuela de Música — UFMG','sobre.info2':'Pampulha, Belo Horizonte – MG',
       'sobre.info3':'Conferencias, mesas y cursos','sobre.info4':'Presentación de trabajos',
       'sobre.info5':'Asamblea de Investigadores de la UBAM','sobre.info6':'Vivencias musicales',
-      'sub.intro':'El XXVI ENPEMT recibe propuestas en diferentes modalidades. Los trabajos completos enviados en el formato de Comunicación Oral pueden ser premiados con los premios Cybelle Loureiro (categoría estudiante) y Lia Rejane Mendes Barcellos (categoría profesional). Haga clic en la tarjeta de abajo para acceder al formulario externo y obtener más información sobre el envío y el formato de los trabajos.',
-      'sub.clique':'👆 Haga clic en la tarjeta para acceder al formulario de envío',
-      'sub.label':'Presente su investigación','sub.title':'Envío de <em>Trabajos</em>',
-      'sub.oral.nome':'Comunicación Oral',
-      'sub.oral.desc':'Presentación de resultados de investigación concluida o en curso. Tiempo: 15 min + 5 min de preguntas.',
-      'sub.poster.nome':'Póster',
-      'sub.poster.desc':'Presentación visual de investigación. Formato A1 impreso. Sesión con interacción directa con los participantes.',
       
       
       
-      
-      'sub.prazo':'📅 Plazo: hasta el 15 de agosto de 2026',
       'cham.label':'Participe del evento','cham.title':'Convocatorias <em>abiertas</em>',
-      'cham.intro':'Además del envío de trabajos, el XXVI ENPEMT abre otras convocatorias con formularios propios. Haga clic en la tarjeta para acceder al formulario correspondiente.',
+      'cham.intro':'El XXVI ENPEMT mantiene convocatorias abiertas con formularios propios. Haga clic en la tarjeta para acceder al formulario correspondiente.',
       'cham.monitoria.nome':'Selección de Monitores',
       'cham.monitoria.desc':'Los monitores acompañan las salas durante las actividades, dan soporte a los presentadores y al equipo de accesibilidad y ayudan en la acreditación y en la recepción de los participantes.',
       'cham.monitoria.badge':'20 vacantes · los seleccionados quedan exentos de la cuota de inscripción',
@@ -3530,7 +3446,7 @@ Os aplicativos de corrida, como Uber e 99 funcionam bem, além dos taxis tradici
       'insc.f9':'Mesas y paneles',
       'footer.links':'Enlaces rápidos','footer.realizacao':'Organizado por',
       'footer.desc':'El Encuentro Nacional de Investigación en Musicoterapia reúne investigadores, clínicos y estudiantes para compartir producción científica y promover el desarrollo de la musicoterapia en Brasil.',
-      'footer.link.sobre':'Sobre el evento','footer.link.submissao':'Envío de trabajos',
+      'footer.link.sobre':'Sobre el evento',
       'footer.link.local':'Local y Mapa','footer.comissao':'Comisión Organizadora',
       'footer.apoio':'Apoyo y Patrocinio',
       'footer.copy':'© <a class="credito-autor" href="#">Ivan Moriá Borges</a> 2026 · Belo Horizonte, Minas Gerais',
@@ -3540,7 +3456,6 @@ Os aplicativos de corrida, como Uber e 99 funcionam bem, além dos taxis tradici
       'sobre.text2':'Tres días de investigación, arte, conexión y celebración de la musicoterapia brasileña. ¡Venga a ser parte de este momento histórico!',
       'sobre.text3':'Una fecha especial: víspera del feriado nacional del 12 de octubre, lo que permite a participantes de todo Brasil disfrutar del fin de semana largo en BH.',
       'prog.aviso':'Tres días de inmersión en investigación, práctica clínica y vivencia musical en el <strong>XXVI ENPEMT</strong>, del 8 al 10 de octubre. Programa sujeto a actualizaciones. El domingo 11/10, la Escuela de Música recibe además el XII ENEMT — Encuentro Nacional de Estudiantes de Musicoterapia, con programa a divulgarse posteriormente. También puede <a href="programacao-enpemt2026.pdf" download class="tl-link">descargar el programa en PDF</a>.',
-      'prog.dia1.label':'· Jueves','prog.dia2.label':'· Viernes','prog.dia3.label':'· Sábado','prog.dia4.label':'· Domingo',
       'prog.dia1.head':'8/oct · Jueves','prog.dia2.head':'9/oct · Viernes','prog.dia3.head':'10/oct · Sábado','prog.dia4.head':'11/oct · Domingo',
       'prog.vazio':'Ninguna actividad encontrada para este filtro.',
       'prog.filtrar':'Filtrar:',
@@ -3589,12 +3504,6 @@ Os aplicativos de corrida, como Uber e 99 funcionam bem, além dos taxis tradici
       'tl.encerramento.title':'Entrega de Premios y Cierre',
       'tl.encerramento.desc':'Entrega de los premios Cybelle Loureiro y Lia Rejane Mendes Barcellos, agradecimientos y cierre del XXVI ENPEMT.',
       'tl.badge.encerramento':'Cierre',
-      
-      
-      
-      
-      
-      
       
       
       'local.h3':'Un siglo de música, investigación y formación',
@@ -3666,8 +3575,7 @@ Os aplicativos de corrida, como Uber e 99 funcionam bem, além dos taxis tradici
       'insc.passo1':'Haga clic en su categoría anterior y complete el formulario de inscripción con sus datos',
       'insc.passo2':'Realice el pago vía <strong>PIX</strong> y envíe el comprobante directamente en el formulario',
       'insc.passo3':'Espere la confirmación de la inscripción por correo electrónico',
-      
-      'insc.cta':'REALIZAR INSCRIPCIÓN','insc.cta.trabalhos':'ENVIAR TRABAJO',
+      'insc.cta':'REALIZAR INSCRIPCIÓN',
       'insc.aviso.monitoria':'🙋 <strong>¿Quiere ser monitor?</strong> Son 20 vacantes y los seleccionados quedan exentos de la cuota de inscripción — postúlese en la sección <a href="#chamadas" style="color:var(--ouro-claro); text-decoration:none;">Convocatorias Abiertas</a>.','insc.duvidas':'¿Consultas?','insc.contato':'Contactar por correo electrónico',
     }
   };
@@ -3999,8 +3907,8 @@ Os aplicativos de corrida, como Uber e 99 funcionam bem, além dos taxis tradici
      ═══════════════════════════════════════════════════════════════════ */
   (function () {
     // Planilha da comissão organizadora — páginas "sessoes" e "trabalhos"
-    var CSV_SESSOES   = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSiSQFgYB0pMaO2AWFNfewMCiz9U8ijZ4rECspRPZBAwesW1nxvmtCkJs_eCQCgNoXvE4vE3ifoeXhm/pub?gid=187586152&single=true&output=csv';
-    var CSV_TRABALHOS = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSiSQFgYB0pMaO2AWFNfewMCiz9U8ijZ4rECspRPZBAwesW1nxvmtCkJs_eCQCgNoXvE4vE3ifoeXhm/pub?gid=1383408156&single=true&output=csv';
+    var CSV_SESSOES   = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSiSQFgYB0pMaO2AWFNfewMCiz9U8ijZ4rECspRPZBAwesW1nxvmtCkJs_eCQCgNoXvE4vE3ifoeXhm/pub?gid=2030212469&single=true&output=csv';
+    var CSV_TRABALHOS = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSiSQFgYB0pMaO2AWFNfewMCiz9U8ijZ4rECspRPZBAwesW1nxvmtCkJs_eCQCgNoXvE4vE3ifoeXhm/pub?gid=2102327028&single=true&output=csv';
 
     var FALLBACK_SESSOES = 'id,data,dia,inicio,fim,sala,local,titulo,subtitulo,tipo,badge,responsaveis,descricao,link,link_texto,titulo_en,subtitulo_en,descricao_en,badge_en,local_en,dia_en,titulo_es,subtitulo_es,descricao_es,badge_es,local_es,dia_es\n\
 d08-01,2026-10-08,8/out · Quinta,08:00,,Hall de entrada,Hall de entrada da Escola de Música,Credenciamento,,abertura,Pré-ENPEMT,,Credenciamento dos participantes dos workshops do Pré-ENPEMT.,,,Registration,,Registration for participants in the Pre-ENPEMT workshops.,Pre-ENPEMT,School of Music entrance hall,Oct 8 · Thursday,Acreditación,,Acreditación de los participantes de los talleres del Pre-ENPEMT.,Pre-ENPEMT,Hall de entrada de la Escuela de Música,8/oct · Jueves\n\
@@ -4012,17 +3920,17 @@ d08-06,2026-10-08,8/out · Quinta,19:30,20:30,Auditório,Auditório da Escola de
 d08-07,2026-10-08,8/out · Quinta,20:30,22:00,Auditório,Auditório da Escola de Música,Atividade Cultural,,cultural,Atividade Cultural,,"Apresentação artística aberta ao público, celebrando a abertura do encontro. Atração a confirmar.",,,Cultural Activity,,"Artistic performance open to the public, celebrating the opening of the meeting. Act to be confirmed.",Cultural Activity,School of Music auditorium,Oct 8 · Thursday,Actividad Cultural,,"Presentación artística abierta al público, celebrando la apertura del encuentro. Atracción a confirmar.",Actividad Cultural,Auditorio de la Escuela de Música,8/oct · Jueves\n\
 d09-01,2026-10-09,9/out · Sexta,08:30,09:00,Hall de entrada,Hall de entrada da Escola de Música,Credenciamento,,abertura,Recepção,,Continuação do credenciamento e retirada de materiais.,,,Check-in,,"Check-in continues, along with materials pick-up.",Reception,School of Music entrance hall,Oct 9 · Friday,Acreditación,,Continuación de la acreditación y retirada de materiales.,Recepción,Hall de entrada de la Escuela de Música,9/oct · Viernes\n\
 d09-02,2026-10-09,9/out · Sexta,09:00,10:30,Auditório,Auditório da Escola de Música,Mesa Redonda: Fortalecimento da Cooperação Sul-Sul,,mesa-redonda,Mesa Redonda,"🇧🇷 Andressa Dias Arndt — UNESPAR — Paraná, Brasil; 🇿🇲 Nsamu Moonga — Zâmbia · Universidade de Pretória (África do Sul); 🇨🇴 Juanita Eslava-Mejía — Doutora em Musicoterapia — Colômbia",,,,Round Table: Strengthening South-South Cooperation,,,Round Table,School of Music auditorium,Oct 9 · Friday,Mesa Redonda: Fortalecimiento de la Cooperación Sur-Sur,,,Mesa Redonda,Auditorio de la Escuela de Música,9/oct · Viernes\n\
-d09-03,2026-10-09,9/out · Sexta,10:30,11:00,Hall de entrada,Hall de entrada da Escola de Música,Cafezinho com Palco Aberto,,livre cultural,Cafezinho,,Intervalo com palco aberto às apresentações artísticas dos participantes.,,,Coffee Break with Open Stage,,Break with an open stage for artistic performances by attendees.,Coffee Break,School of Music entrance hall,Oct 9 · Friday,Coffee Break con Escenario Abierto,,Intervalo con escenario abierto a las presentaciones artísticas de los participantes.,Coffee Break,Hall de entrada de la Escuela de Música,9/oct · Viernes\n\
+d09-03,2026-10-09,9/out · Sexta,10:30,11:00,Hall de entrada,Hall de entrada da Escola de Música,Coffee Break com Palco Aberto,,livre cultural,Coffeebreak,,Intervalo com palco aberto às apresentações artísticas dos participantes.,,,Coffee Break with Open Stage,,Break with an open stage for artistic performances by attendees.,Coffee Break,School of Music entrance hall,Oct 9 · Friday,Coffee Break con Escenario Abierto,,Intervalo con escenario abierto a las presentaciones artísticas de los participantes.,Coffee Break,Hall de entrada de la Escuela de Música,9/oct · Viernes\n\
 d09-04,2026-10-09,9/out · Sexta,11:00,12:30,Hall de entrada,Hall de entrada da Escola de Música,Painel de Pôsteres,,poster,Pôsteres,,"Exposição dos pôsteres aprovados, com interação direta entre autores e participantes.",,,Poster Panel,,"Display of the accepted posters, with direct interaction between authors and attendees.",Posters,School of Music entrance hall,Oct 9 · Friday,Panel de Pósteres,,"Exposición de los pósteres aprobados, con interacción directa entre autores y participantes.",Pósteres,Hall de entrada de la Escuela de Música,9/oct · Viernes\n\
 d09-05,2026-10-09,9/out · Sexta,12:30,14:00,,,🍽️ Almoço,,livre,Almoço livre,,"Restaurantes universitários disponíveis no campus: Praça de Serviços (perto do RU central), Restaurante da FAE e Restaurante da Faculdade de Letras. Veja a seção Restaurantes para detalhes.",,,🍽️ Lunch,,"University restaurants available on campus: Praça de Serviços (near the central cafeteria), FAE Restaurant and Faculty of Letters Restaurant. See the Restaurants section for details.",Free Lunch,,Oct 9 · Friday,🍽️ Almuerzo,,"Restaurantes universitarios disponibles en el campus: Praça de Serviços (cerca de la cafetería central), Restaurante de la FAE y Restaurante de la Facultad de Letras. Consulte la sección Restaurantes para más detalles.",Almuerzo libre,,9/oct · Viernes\n\
 d09-06,2026-10-09,9/out · Sexta,14:00,15:30,Auditório,Auditório da Escola de Música,Palestra: “Musicoterapeutas Brasileiros em Pós-Graduações Stricto Sensu: um estudo longitudinal e metacientífico”,,palestra,Palestra,Claudia Zanini; Clara Piazzetta — UNESPAR,,,,Lecture: “Musicoterapeutas Brasileiros em Pós-Graduações Stricto Sensu: um estudo longitudinal e metacientífico” (Brazilian Music Therapists in Stricto Sensu Graduate Programmes: a longitudinal and metascientific study),,,Lecture,School of Music auditorium,Oct 9 · Friday,Conferencia: “Musicoterapeutas Brasileiros em Pós-Graduações Stricto Sensu: um estudo longitudinal e metacientífico” (Musicoterapeutas Brasileños en Posgrados Stricto Sensu: un estudio longitudinal y metacientífico),,,Conferencia,Auditorio de la Escuela de Música,9/oct · Viernes\n\
-d09-07,2026-10-09,9/out · Sexta,15:30,16:00,Hall de entrada,Hall de entrada da Escola de Música,Cafezinho com Palco Aberto,,livre cultural,Cafezinho,,Intervalo com palco aberto às apresentações artísticas dos participantes.,,,Coffee Break with Open Stage,,Break with an open stage for artistic performances by attendees.,Coffee Break,School of Music entrance hall,Oct 9 · Friday,Coffee Break con Escenario Abierto,,Intervalo con escenario abierto a las presentaciones artísticas de los participantes.,Coffee Break,Hall de entrada de la Escuela de Música,9/oct · Viernes\n\
+d09-07,2026-10-09,9/out · Sexta,15:30,16:00,Hall de entrada,Hall de entrada da Escola de Música,Coffee Break com Palco Aberto,,livre cultural,Coffeebreak,,Intervalo com palco aberto às apresentações artísticas dos participantes.,,,Coffee Break with Open Stage,,Break with an open stage for artistic performances by attendees.,Coffee Break,School of Music entrance hall,Oct 9 · Friday,Coffee Break con Escenario Abierto,,Intervalo con escenario abierto a las presentaciones artísticas de los participantes.,Coffee Break,Hall de entrada de la Escuela de Música,9/oct · Viernes\n\
 d09-08,2026-10-09,9/out · Sexta,16:00,17:30,Auditório,Auditório da Escola de Música,Mesa Redonda: Acessibilidade e Diversidade Metodológica,,mesa-redonda,Mesa Redonda,Queila Oliveira — São Paulo; Aline André — UFMG,,,,Round Table: Accessibility and Methodological Diversity,,,Round Table,School of Music auditorium,Oct 9 · Friday,Mesa Redonda: Accesibilidad y Diversidad Metodológica,,,Mesa Redonda,Auditorio de la Escuela de Música,9/oct · Viernes\n\
 d09-09,2026-10-09,9/out · Sexta,17:30,19:00,Salas (a confirmar),Salas da Escola de Música (a confirmar),Grupos de Trabalho sobre Contexto de Pesquisa,,grupo-trabalho,Grupos de Trabalho,,Temas definidos a partir de consulta aos inscritos. Formulário de escolha em elaboração.,,,Working Groups on Research Contexts,,Topics defined from a survey of registered attendees. Selection form in preparation.,Working Groups,School of Music classrooms (to be confirmed),Oct 9 · Friday,Grupos de Trabajo sobre Contexto de Investigación,,Temas definidos a partir de una consulta a los inscritos. Formulario de elección en elaboración.,Grupos de Trabajo,Salas de la Escuela de Música (a confirmar),9/oct · Viernes\n\
 d09-10,2026-10-09,9/out · Sexta,19:00,,Auditório,Auditório da Escola de Música,Apresentação Cultural do Projeto DiVersxs — Musicovivências Queers,,cultural,Atividade Cultural,,Apresentação do projeto seguida de conversa com o público.,https://diversxs.com.br,Acesse aqui o site oficial do projeto,Cultural Presentation of the DiVersxs Project — Musicovivências Queers,,Presentation of the project followed by a conversation with the audience.,Cultural Activity,School of Music auditorium,Oct 9 · Friday,Presentación Cultural del Proyecto DiVersxs — Musicovivências Queers,,Presentación del proyecto seguida de conversación con el público.,Actividad Cultural,Auditorio de la Escuela de Música,9/oct · Viernes\n\
 d10-01,2026-10-10,10/out · Sábado,08:30,09:00,Hall de entrada,Hall de entrada da Escola de Música,Credenciamento,,abertura,Recepção,,Continuação do credenciamento e retirada de materiais.,,,Check-in,,"Check-in continues, along with materials pick-up.",Reception,School of Music entrance hall,Oct 10 · Saturday,Acreditación,,Continuación de la acreditación y retirada de materiales.,Recepción,Hall de entrada de la Escuela de Música,10/oct · Sábado\n\
 d10-02,2026-10-10,10/out · Sábado,09:00,10:30,Auditório,Auditório da Escola de Música,Mesa Redonda: Sistematização e Práticas Baseadas em Evidências,,mesa-redonda,Mesa Redonda,Camila A. Costa — UFRJ; Frederico Pedrosa — UFMG; Mayara Ribeiro — UFG,,,,Round Table: Systematization and Evidence-Based Practices,,,Round Table,School of Music auditorium,Oct 10 · Saturday,Mesa Redonda: Sistematización y Prácticas Basadas en Evidencias,,,Mesa Redonda,Auditorio de la Escuela de Música,10/oct · Sábado\n\
-d10-03,2026-10-10,10/out · Sábado,10:30,11:00,Hall de entrada,Hall de entrada da Escola de Música,Cafezinho com Palco Aberto,,livre cultural,Cafezinho,,Intervalo com palco aberto às apresentações artísticas dos participantes.,,,Coffee Break with Open Stage,,Break with an open stage for artistic performances by attendees.,Coffee Break,School of Music entrance hall,Oct 10 · Saturday,Coffee Break con Escenario Abierto,,Intervalo con escenario abierto a las presentaciones artísticas de los participantes.,Coffee Break,Hall de entrada de la Escuela de Música,10/oct · Sábado\n\
+d10-03,2026-10-10,10/out · Sábado,10:30,11:00,Hall de entrada,Hall de entrada da Escola de Música,Coffee Break com Palco Aberto,,livre cultural,Coffeebreak,,Intervalo com palco aberto às apresentações artísticas dos participantes.,,,Coffee Break with Open Stage,,Break with an open stage for artistic performances by attendees.,Coffee Break,School of Music entrance hall,Oct 10 · Saturday,Coffee Break con Escenario Abierto,,Intervalo con escenario abierto a las presentaciones artísticas de los participantes.,Coffee Break,Hall de entrada de la Escuela de Música,10/oct · Sábado\n\
 d10-04,2026-10-10,10/out · Sábado,11:00,12:30,Auditório,Auditório da Escola de Música,Painel 30 Anos da BRJMT: Trajetória e Inovação da Publicação em Musicoterapia no Brasil,,mesa-redonda,Painel,Clara Piazzetta — UNESPAR; Marco Antônio Carvalho Santos — Fiocruz,,,,Panel — 30 Years of the BRJMT: History and Innovation in Music Therapy Publishing in Brazil,,,Panel,School of Music auditorium,Oct 10 · Saturday,Panel 30 Años de la BRJMT: Trayectoria e Innovación de la Publicación en Musicoterapia en Brasil,,,Panel,Auditorio de la Escuela de Música,10/oct · Sábado\n\
 d10-05,2026-10-10,10/out · Sábado,12:30,14:00,,,🍽️ Almoço,,livre,Almoço livre,,Os restaurantes universitários estão fechados no sábado. Veja a seção Restaurantes para sugestões de lugares abertos na Pampulha e região do campus.,,,🍽️ Lunch,,University restaurants are closed on Saturday. See the Restaurants section for suggestions of places open in Pampulha and the campus area.,Free Lunch,,Oct 10 · Saturday,🍽️ Almuerzo,,Los restaurantes universitarios están cerrados el sábado. Consulte la sección Restaurantes para sugerencias de lugares abiertos en Pampulha y los alrededores del campus.,Almuerzo libre,,10/oct · Sábado\n\
 d10-06a,2026-10-10,10/out · Sábado,14:00,16:00,Sala 1,Sala 1 — Escola de Música (a confirmar),Comunicações Orais — Sala 1,,comunicacoes,Comunicações,,Apresentação dos trabalhos aprovados na modalidade comunicação oral.,,,Oral Presentations — Room 1,,Presentation of the papers accepted as oral communications.,Presentations,Room 1 — School of Music (to be confirmed),Oct 10 · Saturday,Comunicaciones Orales — Sala 1,,Presentación de los trabajos aprobados en la modalidad comunicación oral.,Comunicaciones,Sala 1 — Escuela de Música (a confirmar),10/oct · Sábado\n\
@@ -4033,7 +3941,7 @@ d10-06e,2026-10-10,10/out · Sábado,14:00,16:00,Sala 5,Sala 5 — Escola de Mú
 d10-06f,2026-10-10,10/out · Sábado,14:00,16:00,Sala 6,Sala 6 — Escola de Música (a confirmar),Comunicações Orais — Sala 6,,comunicacoes,Comunicações,,Apresentação dos trabalhos aprovados na modalidade comunicação oral.,,,Oral Presentations — Room 6,,Presentation of the papers accepted as oral communications.,Presentations,Room 6 — School of Music (to be confirmed),Oct 10 · Saturday,Comunicaciones Orales — Sala 6,,Presentación de los trabajos aprobados en la modalidad comunicación oral.,Comunicaciones,Sala 6 — Escuela de Música (a confirmar),10/oct · Sábado\n\
 d10-06g,2026-10-10,10/out · Sábado,14:00,16:00,Sala 7,Sala 7 — Escola de Música (a confirmar),Comunicações Orais — Sala 7,,comunicacoes,Comunicações,,Apresentação dos trabalhos aprovados na modalidade comunicação oral.,,,Oral Presentations — Room 7,,Presentation of the papers accepted as oral communications.,Presentations,Room 7 — School of Music (to be confirmed),Oct 10 · Saturday,Comunicaciones Orales — Sala 7,,Presentación de los trabajos aprobados en la modalidad comunicación oral.,Comunicaciones,Sala 7 — Escuela de Música (a confirmar),10/oct · Sábado\n\
 d10-06h,2026-10-10,10/out · Sábado,14:00,16:00,Sala 8,Sala 8 — Escola de Música (a confirmar),Comunicações Orais — Sala 8,,comunicacoes,Comunicações,,Apresentação dos trabalhos aprovados na modalidade comunicação oral.,,,Oral Presentations — Room 8,,Presentation of the papers accepted as oral communications.,Presentations,Room 8 — School of Music (to be confirmed),Oct 10 · Saturday,Comunicaciones Orales — Sala 8,,Presentación de los trabajos aprobados en la modalidad comunicación oral.,Comunicaciones,Sala 8 — Escuela de Música (a confirmar),10/oct · Sábado\n\
-d10-07,2026-10-10,10/out · Sábado,16:00,16:30,Hall de entrada,Hall de entrada da Escola de Música,Cafezinho com Palco Aberto,,livre cultural,Cafezinho,,Intervalo com palco aberto às apresentações artísticas dos participantes.,,,Coffee Break with Open Stage,,Break with an open stage for artistic performances by attendees.,Coffee Break,School of Music entrance hall,Oct 10 · Saturday,Coffee Break con Escenario Abierto,,Intervalo con escenario abierto a las presentaciones artísticas de los participantes.,Coffee Break,Hall de entrada de la Escuela de Música,10/oct · Sábado\n\
+d10-07,2026-10-10,10/out · Sábado,16:00,16:30,Hall de entrada,Hall de entrada da Escola de Música,Coffee Break com Palco Aberto,,livre cultural,Coffeebreak,,Intervalo com palco aberto às apresentações artísticas dos participantes.,,,Coffee Break with Open Stage,,Break with an open stage for artistic performances by attendees.,Coffee Break,School of Music entrance hall,Oct 10 · Saturday,Coffee Break con Escenario Abierto,,Intervalo con escenario abierto a las presentaciones artísticas de los participantes.,Coffee Break,Hall de entrada de la Escuela de Música,10/oct · Sábado\n\
 d10-08,2026-10-10,10/out · Sábado,16:30,17:00,Hall de entrada,Hall de entrada da Escola de Música,Lançamento de Livros,,cultural,Atividade Cultural,,"Lançamento das obras selecionadas na chamada, com apresentação e sessão de autógrafos.",,,Book Launches,,"Launch of the works selected in the open call, with a presentation and book signing.",Cultural Activity,School of Music entrance hall,Oct 10 · Saturday,Lanzamiento de Libros,,"Lanzamiento de las obras seleccionadas en la convocatoria, con presentación y sesión de autógrafos.",Actividad Cultural,Hall de entrada de la Escuela de Música,10/oct · Sábado\n\
 d10-09,2026-10-10,10/out · Sábado,17:00,18:30,Auditório,Auditório da Escola de Música (a confirmar),Assembleia de Pesquisadores da UBAM,,assembleia,UBAM,,"Reunião dos pesquisadores vinculados à União Brasileira das Associações de Musicoterapia, com discussão sobre as propostas dos Grupos de Trabalho.",,,UBAM Researchers Assembly,,"Meeting of researchers affiliated with the Brazilian Union of Music Therapy Associations, with discussion of the Working Group proposals.",UBAM,School of Music auditorium (to be confirmed),Oct 10 · Saturday,Asamblea de Investigadores de la UBAM,,"Reunión de los investigadores vinculados a la Unión Brasileña de las Asociaciones de Musicoterapia, con discusión sobre las propuestas de los Grupos de Trabajo.",UBAM,Auditorio de la Escuela de Música (a confirmar),10/oct · Sábado\n\
 d10-10,2026-10-10,10/out · Sábado,18:30,18:45,Auditório,Auditório da Escola de Música,Homenagens a Musicoterapeutas Pioneiras de Minas Gerais,,abertura,Homenagem,,Reconhecimento às musicoterapeutas que abriram caminho para a área no estado.,,,Tributes to Pioneer Music Therapists of Minas Gerais,,Recognition of the music therapists who opened the way for the field in the state.,Tribute,School of Music auditorium,Oct 10 · Saturday,Homenajes a Musicoterapeutas Pioneras de Minas Gerais,,Reconocimiento a las musicoterapeutas que abrieron camino para el área en el estado.,Homenaje,Auditorio de la Escuela de Música,10/oct · Sábado\n\
@@ -4369,24 +4277,39 @@ d11-01,2026-10-11,11/out · Domingo,Dia todo,,Escola de Música,Escola de Músic
       if (doSheet) fonte.textContent = t('gl.fonte', 'Atualizado a partir da planilha da comissão organizadora.');
     }
 
-    function buscar(url) {
-      // O Google serve o CSV publicado com cache de 5 minutos. O parâmetro
-      // extra muda a cada carregamento, então nenhum cache no caminho
-      // devolve uma cópia velha — a demora fica só por conta do Google.
-      var fresco = url + (url.indexOf('?') > -1 ? '&' : '?') + '_=' + Date.now();
-      return fetch(fresco, { cache: 'no-store' })
+    // Quando a publicação da planilha é interrompida, o Google responde com uma
+    // página HTML de erro em vez do CSV. Sem conferir as colunas, esse HTML
+    // entraria como se fosse dado e apagaria a grade. Só aceitamos o conteúdo
+    // se ele tiver mesmo o cabeçalho esperado; senão, a cópia embutida fica.
+    function validoCSV(txt, obrigatorias) {
+      if (!txt || /^\s*<(?:!doctype|html)/i.test(txt)) return null;
+      var mz = parseCSV(txt);
+      if (mz.length < 2) return null;
+      var cab = mz[0].map(normalizar);
+      for (var i = 0; i < obrigatorias.length; i++) {
+        if (cab.indexOf(obrigatorias[i]) === -1) return null;
+      }
+      return txt;
+    }
+
+    function buscar(url, obrigatorias) {
+      // Nada de parâmetro anti-cache aqui: o endereço publicado do Google
+      // recusa parâmetros extras com erro 400 em parte das requisições.
+      // O cache: 'no-store' já impede o navegador de usar cópia guardada;
+      // os 5 minutos de cache do próprio Google são inevitáveis.
+      return fetch(url, { cache: 'no-store' })
         .then(function (r) { if (!r.ok) throw new Error(r.status); return r.text(); })
-        .then(function (txt) { return (txt && txt.indexOf(',') > -1) ? txt : null; });
+        .then(function (txt) { return validoCSV(txt, obrigatorias); });
     }
 
     usar(FALLBACK_SESSOES, false);
 
     // Os trabalhos entram primeiro: assim a grade já nasce com as listas prontas
-    (CSV_TRABALHOS ? buscar(CSV_TRABALHOS).catch(function () { return null; }) : Promise.resolve(null))
+    (CSV_TRABALHOS ? buscar(CSV_TRABALHOS, ['sessao_id', 'titulo']).catch(function () { return null; }) : Promise.resolve(null))
       .then(function (txt) {
         if (txt) trabalhos = paraObjetos(parseCSV(txt));
         if (!CSV_SESSOES) return null;
-        return buscar(CSV_SESSOES).catch(function () { return null; });
+        return buscar(CSV_SESSOES, ['dia', 'inicio', 'titulo']).catch(function () { return null; });
       })
       .then(function (txt) { if (txt) usar(txt, true); });
 
