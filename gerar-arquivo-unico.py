@@ -73,6 +73,37 @@ def main():
             % (c, os.path.getsize(c) / 1024)
         )
 
+    # O PDF entra UMA vez só. Ele é citado em quatro lugares — a marcação e
+    # os três dicionários de idioma —, então embutir em cada ocorrência
+    # quadruplicaria o tamanho. No lugar do endereço fica uma marca, e um
+    # trecho de código aponta os links para o arquivo embutido, inclusive
+    # depois de trocar de idioma, quando os links são reescritos.
+    MARCA = 'about:pdf-programacao'
+    pdfs = sorted(set(re.findall(r'href="([^"]+\.pdf)"', s)))
+    for pdf in pdfs:
+        if not os.path.exists(pdf):
+            print('  PDF não encontrado, link mantido externo: ' + pdf)
+            continue
+        dados = base64.b64encode(io.open(pdf, 'rb').read()).decode('ascii')
+        s = s.replace('"' + pdf + '"', '"' + MARCA + '"')
+        total += os.path.getsize(pdf)
+        s = s.replace('</script>\n</body>', """
+  /* PDF da programação embutido neste arquivo (ver gerar-arquivo-unico.py) */
+  (function () {
+    var PDF = 'data:application/pdf;base64,%s';
+    function aplicar() {
+      document.querySelectorAll('a[href="%s"]').forEach(function (a) { a.href = PDF; });
+    }
+    aplicar();
+    // setLang reescreve os links ao trocar de idioma: reaplica depois disso
+    new MutationObserver(aplicar).observe(document.documentElement,
+      { attributes: true, attributeFilter: ['lang'] });
+  })();
+</script>
+</body>""" % (dados, MARCA), 1)
+        print('  embutido  %-38s %7.0f KB  (uma vez, %d referências)'
+              % (pdf, os.path.getsize(pdf) / 1024, 4))
+
     if faltando:
 
         print('\n  AVISO — não encontradas, ficaram como link:')

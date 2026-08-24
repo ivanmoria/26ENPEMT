@@ -371,7 +371,15 @@
     font-family: 'DM Sans', sans-serif; font-size: .9rem; font-weight: 600;
     cursor: pointer; transition: all .2s;
   }
-  .tab-btn.active, .tab-btn:hover { background: var(--verde); color: #fff; border-color: var(--verde); }
+  /* "Dia atual" e "mouse em cima" precisam ser visualmente diferentes: com o
+     mesmo estilo, o botão clicado continuava verde por causa do :hover
+     enquanto a rolagem já marcava outro, e apareciam dois selecionados.
+     O verde cheio fica só para o dia em que a pessoa está. */
+  .tab-btn.active { background: var(--verde); color: #fff; border-color: var(--verde); }
+  @media (hover: hover) and (pointer: fine) {
+    .tab-btn:hover:not(.active) { background: rgba(45,106,79,.1); border-color: var(--verde); }
+  }
+  .tab-btn:focus-visible { outline: 2px solid var(--verde); outline-offset: 2px; }
   .prog-dia { margin-bottom: 48px; scroll-margin-top: 84px; }
   .prog-dia:last-of-type { margin-bottom: 0; }
   .prog-dia[hidden], .tl-item[hidden] { display: none; }
@@ -704,13 +712,16 @@
   .lotes-fonte.falhou { color: rgba(232,184,109,.75); }
   .lotes-encerrados { display: none; margin: 10px 0 0; font-size: .78rem; color: rgba(255,255,255,.45); }
 
-  /* Celular: só a coluna do lote vigente */
+  /* Celular: as três colunas continuam, com rolagem lateral. A tabela abre
+     já posicionada no lote vigente, mas dá para arrastar e ver os outros —
+     assim ninguém fica preso a uma coluna se a marcação do lote sair errada. */
   @media (max-width: 700px) {
-    /* Só a coluna vigente: as encerradas e as futuras saem. No computador
-       as três continuam, com as encerradas riscadas. */
-    .lotes [data-lote]:not(.atual) { display: none; }
-    .lotes { min-width: 0; }
-    .lotes th, .lotes td { padding: 11px 14px; }
+    .lotes { min-width: 520px; }
+    .lotes th, .lotes td { padding: 11px 13px; }
+    .lotes thead th:first-child, .lotes tbody th {
+      position: sticky; left: 0; z-index: 1;
+      background: #1f4f39; box-shadow: 1px 0 0 rgba(255,255,255,.12);
+    }
     .lotes-encerrados { display: block; }
   }
   .lotes-nota { margin: 14px 0 0; font-size: .85rem; color: rgba(255,255,255,.7); }
@@ -2439,7 +2450,7 @@ Os aplicativos de corrida, como Uber e 99 funcionam bem, além dos taxis tradici
       </table>
     </div>
     <p class="lotes-fonte" id="lotes-fonte" hidden></p>
-    <p class="lotes-encerrados" data-i18n="insc.lotes.somente">Exibindo apenas o lote vigente. No computador, a tabela mostra os três.</p>
+    <p class="lotes-encerrados" data-i18n="insc.lotes.somente">Arraste a tabela para o lado para ver os três lotes.</p>
     <p class="lotes-nota reveal" data-i18n="insc.lotes.nota">O valor é definido pela data do pagamento. Clique na sua categoria abaixo para abrir o formulário.</p>
 
     <div class="preco-grid" id="preco-grid"></div>
@@ -2858,7 +2869,7 @@ Os aplicativos de corrida, como Uber e 99 funcionam bem, além dos taxis tradici
       'insc.lote2.n':'2º lote',
       'insc.lote3.n':'3º lote',
       'insc.clique':'👆 Clique para se inscrever',
-      'insc.lotes.somente':'Exibindo apenas o lote vigente. No computador, a tabela mostra os três.',
+      'insc.lotes.somente':'Arraste a tabela para o lado para ver os três lotes.',
       'insc.lotes.local':'valores da cópia embutida no site',
       'insc.lotes.cap':'Valores por categoria e lote','insc.lotes.cat':'Categoria','insc.lotes.aria':'Valores de inscrição por categoria e lote',
       'insc.lotes.nota':'O valor é definido pela data do pagamento. Clique na sua categoria abaixo para abrir o formulário.',
@@ -3005,7 +3016,7 @@ Os aplicativos de corrida, como Uber e 99 funcionam bem, além dos taxis tradici
       'insc.lote2.n':'2nd period',
       'insc.lote3.n':'3rd period',
       'insc.clique':'👆 Click to register',
-      'insc.lotes.somente':'Showing only the current registration period. On a computer, the table shows all three.',
+      'insc.lotes.somente':'Swipe the table sideways to see all three periods.',
       'insc.lotes.local':'values from the copy embedded in the site',
       'insc.lotes.cap':'Fees by category and registration period','insc.lotes.cat':'Category','insc.lotes.aria':'Registration fees by category and period',
       'insc.lotes.nota':'The fee is set by the payment date. Click your category below to open the form.',
@@ -3152,7 +3163,7 @@ Os aplicativos de corrida, como Uber e 99 funcionam bem, além dos taxis tradici
       'insc.lote2.n':'2º período',
       'insc.lote3.n':'3º período',
       'insc.clique':'👆 Haga clic para inscribirse',
-      'insc.lotes.somente':'Mostrando solo el período vigente. En la computadora, la tabla muestra los tres.',
+      'insc.lotes.somente':'Deslice la tabla hacia el lado para ver los tres períodos.',
       'insc.lotes.local':'valores de la copia incorporada en el sitio',
       'insc.lotes.cap':'Valores por categoría y período','insc.lotes.cat':'Categoría','insc.lotes.aria':'Valores de inscripción por categoría y período',
       'insc.lotes.nota':'El valor se define por la fecha de pago. Haga clic en su categoría abajo para abrir el formulario.',
@@ -3604,6 +3615,18 @@ Outras categorias profissionais,,"R$ 150,00","R$ 170,00","R$ 200,00",,,,,,https:
       return e;
     }
 
+    /* No celular a tabela não cabe inteira. Em vez de esconder colunas, ela
+       abre já rolada até o lote vigente: o valor que vale hoje aparece de
+       cara e os outros continuam alcançáveis arrastando. */
+    function posicionarNoLoteVigente() {
+      var caixa = document.querySelector('.lotes-wrap');
+      var atual = document.querySelector('.lotes thead th.atual');
+      if (!caixa || !atual) return;
+      if (caixa.scrollWidth <= caixa.clientWidth) { caixa.scrollLeft = 0; return; }
+      var categoria = document.querySelector('.lotes thead th:first-child');
+      caixa.scrollLeft = Math.max(0, atual.offsetLeft - (categoria ? categoria.offsetWidth : 0));
+    }
+
     function montar() {
       if (!dados.length) return;
       var est = estados();
@@ -3644,6 +3667,8 @@ Outras categorias profissionais,,"R$ 150,00","R$ 170,00","R$ 200,00",,,,,,https:
         cel.classList.toggle('atual',     e === 'atual');
         cel.classList.toggle('futuro',    e === 'futuro');
       });
+
+      posicionarNoLoteVigente();
       grade.querySelectorAll('.reveal').forEach(function (el) { el.classList.add('visible'); });
     }
 
